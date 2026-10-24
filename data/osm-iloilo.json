@@ -1396,6 +1396,18 @@
  },
  {
   "type": "node",
+  "id": 12909126401,
+  "lat": 10.7273038,
+  "lon": 122.5548916,
+  "tags": {
+   "addr:street": "Fajardo Street",
+   "contact:instagram": "mostlymatcha_",
+   "name": "Mostly Matcha",
+   "shop": "tea"
+  }
+ },
+ {
+  "type": "node",
   "id": 12925223422,
   "lat": 10.6995933,
   "lon": 122.559865,

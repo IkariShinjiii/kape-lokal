@@ -17,10 +17,17 @@ type OsmElement = {
   tags?: Record<string, string>;
 };
 
+// Cafes, plus tea and coffee shops (matcha places like Mostly Matcha are tagged shop=tea).
 const QUERY = `[out:json][timeout:60];
 area["name"="Iloilo City"]["boundary"="administrative"]->.a;
-nwr["amenity"="cafe"](area.a);
+(
+  nwr["amenity"="cafe"](area.a);
+  nwr["shop"~"^(tea|coffee)$"](area.a);
+);
 out center tags;`;
+
+// Entries tagged as cafes in OSM that are something else. Matched against the lowercased name.
+const NOT_CAFES = ["internet cafe", "pizza", "food house", "kalacs"];
 
 // Names that are chains in the Philippines. Matched against the lowercased name or brand.
 const KNOWN_CHAINS = [
@@ -117,12 +124,50 @@ async function fetchCafes(): Promise<OsmElement[]> {
   return json.elements;
 }
 
-function toRow(el: OsmElement, isChain: boolean, usedSlugs: Set<string>) {
+export function isNotCafe(name: string): boolean {
+  const lower = normalize(name);
+  return NOT_CAFES.some((n) => lower.includes(n));
+}
+
+type Spot = { lat: number; lon: number };
+const DUPLICATE_RADIUS_M = 15;
+
+function metersBetween(a: Spot, b: Spot): number {
+  const dLat = (b.lat - a.lat) * 111_320;
+  const dLon = (b.lon - a.lon) * 111_320 * Math.cos((a.lat * Math.PI) / 180);
+  return Math.hypot(dLat, dLon);
+}
+
+// The same name within 15 m of an earlier entry is a duplicate OSM node.
+// Returns true for a new spot and remembers it, false for a duplicate.
+export function registerSpot(
+  seen: Map<string, Spot[]>,
+  name: string,
+  lat: number,
+  lon: number,
+): boolean {
+  const key = normalize(name);
+  const spots = seen.get(key) ?? [];
+  if (spots.some((s) => metersBetween(s, { lat, lon }) <= DUPLICATE_RADIUS_M)) {
+    return false;
+  }
+  seen.set(key, [...spots, { lat, lon }]);
+  return true;
+}
+
+function toRow(
+  el: OsmElement,
+  isChain: boolean,
+  usedSlugs: Set<string>,
+  seen: Map<string, Spot[]>,
+) {
   const tags = el.tags ?? {};
   const lat = el.lat ?? el.center?.lat;
   const lon = el.lon ?? el.center?.lon;
   const name = tags.name?.trim();
   if (!name || lat === undefined || lon === undefined) return null;
+  if (isNotCafe(name)) return null;
+  if (!registerSpot(seen, name, lat, lon)) return null;
 
   const osmId = `${el.type}/${el.id}`;
   let slug = slugify(name) || "cafe";
@@ -192,9 +237,10 @@ async function main() {
   const elements = await fetchCafes();
   const chains = detectChains(elements);
   const usedSlugs = new Set<string>();
+  const seen = new Map<string, Spot[]>();
 
   const rows = elements
-    .map((el) => toRow(el, chains.has(`${el.type}/${el.id}`), usedSlugs))
+    .map((el) => toRow(el, chains.has(`${el.type}/${el.id}`), usedSlugs, seen))
     .filter((r): r is NonNullable<typeof r> => r !== null);
 
   const sql = toSql(rows);

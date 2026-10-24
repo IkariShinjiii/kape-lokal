@@ -6,19 +6,78 @@
   "home": {
     "heading": "Cafes near you",
     "tagline": "Local specialty coffee and matcha in Iloilo City.",
-    "comingSoon": "The map is coming soon."
+    "nearMe": "Near me",
+    "locating": "Finding you…",
+    "locationDenied": "Location is off. Allow it in your browser to sort by distance.",
+    "locationUnavailable": "We couldn't get your location. Showing all of Iloilo City.",
+    "results": "{count} cafes",
+    "resultsOne": "1 cafe",
+    "noResults": "No cafes match these filters yet.",
+    "selectHint": "Tap a pin to see a cafe.",
+    "suggest": "Know a cafe we're missing?"
   },
   "filters": {
+    "label": "Filters",
     "all": "All",
     "specialty": "Specialty",
     "matcha": "Matcha",
     "menu": "Has menu",
     "chains": "Include chains"
   },
+  "view": {
+    "label": "View",
+    "map": "Map",
+    "list": "List"
+  },
   "cafe": {
     "directions": "Directions",
     "viewMenu": "View menu",
-    "openUntil": "Open until {time}"
+    "viewCafe": "Details",
+    "away": "{distance} away",
+    "chain": "Chain",
+    "tags": {
+      "specialty_coffee": "Specialty",
+      "matcha": "Matcha",
+      "pastry": "Pastry",
+      "work_friendly": "Work-friendly",
+      "pet_friendly": "Pet-friendly"
+    }
+  },
+  "detail": {
+    "back": "Back to cafes",
+    "about": "About",
+    "menu": "Menu",
+    "noMenu": "No menu yet.",
+    "noMenuHelp": "This cafe hasn't shared its menu with us yet.",
+    "unavailable": "Unavailable",
+    "hours": "Hours",
+    "hoursUnknown": "Hours not listed",
+    "location": "Location",
+    "contact": "Contact",
+    "directionsInMaps": "Directions in Google Maps"
+  },
+  "report": {
+    "title": "Something wrong?",
+    "intro": "Tell us what's out of date, like hours, menu or location.",
+    "note": "What should we fix?",
+    "send": "Send report",
+    "success": "Thanks. We'll take a look.",
+    "error": "We couldn't send that. Please try again.",
+    "limit": "You've sent a few reports already. Please try again later.",
+    "empty": "Please write a short note first."
+  },
+  "suggest": {
+    "title": "Suggest a cafe",
+    "intro": "Missing a local favorite? Tell us about it and we'll check it before adding it.",
+    "name": "Cafe name",
+    "address": "Address or area",
+    "link": "Facebook, Instagram or Google Maps link",
+    "note": "Anything else? (specialty coffee, matcha, hours)",
+    "send": "Send suggestion",
+    "success": "Thanks. We'll review it soon.",
+    "error": "We couldn't send that. Please try again.",
+    "limit": "You've sent a few suggestions already. Please try again later.",
+    "back": "Back to cafes"
   },
   "language": {
     "label": "Language",

@@ -6,19 +6,78 @@
   "home": {
     "heading": "Mga cafe malapit sa iyo",
     "tagline": "Lokal na specialty coffee at matcha sa Iloilo City.",
-    "comingSoon": "Malapit nang dumating ang mapa."
+    "nearMe": "Malapit sa akin",
+    "locating": "Hinahanap ka…",
+    "locationDenied": "Naka-off ang lokasyon. Payagan ito sa browser para maisaayos ayon sa layo.",
+    "locationUnavailable": "Hindi namin makuha ang lokasyon mo. Ipinapakita ang buong Iloilo City.",
+    "results": "{count} cafe",
+    "resultsOne": "1 cafe",
+    "noResults": "Wala pang cafe na tugma sa mga filter na ito.",
+    "selectHint": "Pindutin ang pin para makita ang cafe.",
+    "suggest": "May kilala kang cafe na wala pa rito?"
   },
   "filters": {
+    "label": "Mga filter",
     "all": "Lahat",
     "specialty": "Specialty",
     "matcha": "Matcha",
     "menu": "May menu",
     "chains": "Isama ang mga chain"
   },
+  "view": {
+    "label": "Tanaw",
+    "map": "Mapa",
+    "list": "Listahan"
+  },
   "cafe": {
     "directions": "Direksyon",
     "viewMenu": "Tingnan ang menu",
-    "openUntil": "Bukas hanggang {time}"
+    "viewCafe": "Detalye",
+    "away": "{distance} ang layo",
+    "chain": "Chain",
+    "tags": {
+      "specialty_coffee": "Specialty",
+      "matcha": "Matcha",
+      "pastry": "Pastry",
+      "work_friendly": "Pang-trabaho",
+      "pet_friendly": "Pet-friendly"
+    }
+  },
+  "detail": {
+    "back": "Balik sa mga cafe",
+    "about": "Tungkol dito",
+    "menu": "Menu",
+    "noMenu": "Wala pang menu.",
+    "noMenuHelp": "Hindi pa ibinabahagi ng cafe na ito ang menu nila sa amin.",
+    "unavailable": "Wala ngayon",
+    "hours": "Oras",
+    "hoursUnknown": "Walang nakalistang oras",
+    "location": "Lokasyon",
+    "contact": "Kontak",
+    "directionsInMaps": "Direksyon sa Google Maps"
+  },
+  "report": {
+    "title": "May mali ba?",
+    "intro": "Sabihin sa amin kung ano ang luma na, tulad ng oras, menu o lokasyon.",
+    "note": "Ano ang dapat naming ayusin?",
+    "send": "Ipadala ang ulat",
+    "success": "Salamat. Titingnan namin ito.",
+    "error": "Hindi namin naipadala iyon. Pakisubukan ulit.",
+    "limit": "Ilang ulat na ang naipadala mo. Pakisubukan ulit mamaya.",
+    "empty": "Pakisulat muna ang maikling tala."
+  },
+  "suggest": {
+    "title": "Magmungkahi ng cafe",
+    "intro": "May paboritong lokal na wala pa rito? Sabihin sa amin at susuriin namin bago idagdag.",
+    "name": "Pangalan ng cafe",
+    "address": "Address o lugar",
+    "link": "Link ng Facebook, Instagram o Google Maps",
+    "note": "May iba pa? (specialty coffee, matcha, oras)",
+    "send": "Ipadala ang mungkahi",
+    "success": "Salamat. Susuriin namin ito agad.",
+    "error": "Hindi namin naipadala iyon. Pakisubukan ulit.",
+    "limit": "Ilang mungkahi na ang naipadala mo. Pakisubukan ulit mamaya.",
+    "back": "Balik sa mga cafe"
   },
   "language": {
     "label": "Wika",

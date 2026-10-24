@@ -10,6 +10,9 @@ dist/
 *.log
 graphify-out/
 
+# copied from node_modules by scripts/copy-maplibre-worker.mjs
+public/vendor/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

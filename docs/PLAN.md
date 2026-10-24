@@ -158,12 +158,44 @@ The `edit_flags` table lets anyone insert a report, so it can be spammed. Before
 - App domain and hosting plan (Vercel free tier is fine to start).
 
 ## Milestones
-1. Lock design tokens (done in the plan, to be coded as Tailwind theme).
-2. Project scaffold, Supabase project, schema with roles and row-level security, `next-intl` set up.
-3. OSM import script for Iloilo City, loaded as drafts. You review and publish the first 20 to 30 cafes.
-4. Map home, list view and filters.
-5. Cafe detail with menu and Directions link.
-6. Admin page: review drafts, edit cafes and menus, handle edit flags.
-7. Filipino translation pass.
-8. Deploy, then test on real phones around Iloilo. **This is the launch.**
+Status as of 2026-10-24:
+
+1. Design tokens: **done** (Tailwind theme in `globals.css`).
+2. Scaffold, Supabase project, schema, row-level security, language routing: **done**.
+3. OSM import for Iloilo City as drafts: **done**. Data gaps fixed (see below).
+4. Map home, list view, filters, Protomaps dark map: **done and checked in a browser**.
+5. Cafe detail with menu, mini map and Directions link: **done and checked in a browser** (Filipino version).
+6. Admin page (drafts, publish, tags, menus, photos, add cafe, suggestions, reports): **built, not yet exercised**, because it needs your sign-in. See "Admin setup".
+7. Filipino translation: **done, needs a native-speaker review**. Strings live in `src/app/[lang]/dictionaries/fil.json`. Admin screens are English only.
+8. Deploy and test on real phones around Iloilo: **needs you** (Vercel account, domain, Supabase redirect URL). This is the launch.
 9. After launch: owner claim flow and owner editing page, then the light theme toggle.
+
+### Admin setup (one step from you)
+
+Nobody is an admin until an email is on the allow-list. Run this once in the Supabase SQL editor with your email, then sign in at `/en/admin/login`. The sign-in link is emailed, so the Supabase project needs email sending, which is on by default with a low hourly limit.
+
+```sql
+insert into private.admin_emails (email) values ('you@example.com');
+```
+
+If you already signed in before adding it, also run the second statement from `supabase/migrations/20261024000400_admin_allowlist_and_cafe_coordinates.sql`.
+
+For a deployed site, add its address under Supabase > Authentication > URL Configuration (Site URL and Redirect URLs), or the sign-in link will point at localhost.
+
+### How the data gaps were fixed
+
+| Gap | Fix |
+|---|---|
+| Entries that are not cafes (internet cafe, pizza place, food house, cake stall) | `is_excluded` flag. Import script skips known non-cafe names, and the 4 already loaded are excluded, never deleted. Admin can exclude more. |
+| Duplicate OSM nodes | Import script drops the same name within 15 m. The one duplicate already loaded is excluded. |
+| Tea and matcha shops filed as `shop=tea` | Import query now includes `shop=tea` and `shop=coffee`. Added Mostly Matcha with its matcha tag. |
+| No specialty or matcha tags | The admin list shows a dashed "Maybe Specialty" hint when a name suggests it (roastery, espresso, matcha). Tags are only saved when you tick them. |
+| Cafes missing from OSM, like NuWave | Public "Know a cafe we're missing?" form (rate limited, with a honeypot) plus an admin "Add cafe" form. A suggestion becomes a cafe in one click. NuWave could not be found online, so it is not added. |
+
+### Known limits
+
+- Opening hours show the raw OpenStreetMap text (for example `Mo-Su 08:00-22:00`). There is no "open now" yet.
+- Map labels and icons load from the free Protomaps asset host on GitHub Pages. The map tiles themselves are our own file.
+- The 3 test rows from earlier are still in the database. The admin page can exclude them, or run the delete SQL given earlier.
+- Overlapping access policies cause a performance notice in Supabase. It does not matter at this size.
+- Report spam limit: the visitor id comes from the request IP in our server code, so someone calling the database API directly can vary it. The overall cap of 60 per hour per table still bounds the damage.
