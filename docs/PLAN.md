@@ -32,7 +32,9 @@ A local cafe finder. A visitor sees cafes near them and can tell at a glance whe
 | Geolocation | Browser Geolocation API | Free, no server work. Ask only when the visitor taps "Near me". |
 | Directions | Deep link to Google Maps | Decided: Google does the routing. |
 | Hosting | Vercel | Matches Next.js. |
-| Validation and forms | Zod + React Hook Form | For the admin forms. |
+| Validation and forms | Zod + React Hook Form | For the admin and owner forms. |
+| Translations | next-intl | English main, Filipino option. |
+| Data import | Overpass API script (Node/TypeScript) | Seeds Iloilo City cafes from OpenStreetMap. |
 | Testing | Vitest (logic), Playwright (key flows) | Small, focused set. |
 
 ## Data model (draft)
@@ -43,14 +45,47 @@ A local cafe finder. A visitor sees cafes near them and can tell at a glance whe
 - `menu_images`: cafe_id, image path. Fallback when a cafe only has a photo of its menu board.
 - A cafe's menu is "available" when it has either menu items or menu images.
 
-## Where cafe data comes from
+## Launch area and cafe data (decided)
 
-This is the biggest open risk. Options:
-1. Seed from OpenStreetMap (Overpass API), then curate by hand. Free and legal, but sparse in some areas.
-2. Enter cafes by hand, starting with one city. Highest quality, slowest.
-3. Google Places API. Rich data, but costs money and its terms limit storing the data.
+Launch area: **Iloilo City**. Data comes from public internet sources, then gets cleaned up by you and the cafe owners.
 
-Recommendation: option 1 plus 2. Seed from OSM, then hand-verify the specialty and matcha tags and menus.
+Checked on 2026-10-24: OpenStreetMap has **147 cafes** tagged `amenity=cafe` inside Iloilo City. 143 have names. Only 26 have opening hours, 53 have a cuisine tag, and 18 have a website, phone or Facebook link. So OSM gives us names and pins, and little else. It also includes chains (Starbucks, Dunkin', Coffee Break) that you may not want in a "local" app.
+
+Sources, in order of use:
+1. **OpenStreetMap via Overpass.** Free, and the data may be stored. Requires an "© OpenStreetMap contributors" credit in the app. This is the seed.
+2. **Cafe-submitted and owner-edited data.** Fills in hours, menus, photos and the specialty and matcha tags.
+3. **Your own hand verification** of the first batch, especially specialty and matcha.
+
+Not planned: copying from Google Maps, Facebook or Instagram. Scraping them breaks their terms, and Google Places data can't be stored long term. Owners can paste their own menu photos instead. If we want Google's data later, we'd use the paid Places API and follow its storage rules.
+
+Cleanup steps for the seed:
+- Import all 147 as unpublished drafts.
+- Add a `is_chain` flag and hide chains by default.
+- Publish a cafe only after it has at least a name, location and one verified detail.
+- Re-run the import monthly and merge new cafes without overwriting owner edits.
+
+## Owners and admin (decided)
+
+Both you and cafe owners can edit data.
+
+- **Roles:** `admin` (you) and `owner` (one or more cafes each). Everyone else is an anonymous visitor.
+- **Claim flow:** an owner finds their cafe, taps "Claim this cafe", signs in by email, and you approve the claim in the admin page. Approval is manual because there's no other way to prove ownership.
+- **Owners can edit:** description, hours, photos, tags, menu items and menu photos.
+- **Only admin can edit:** name, location, chain flag, publish state.
+- **Security:** Supabase row-level security enforces this in the database, not just in the UI.
+- **Suggest an edit:** visitors can flag wrong info on unclaimed cafes. Flags go to your review queue.
+
+Data model additions: `profiles` (user, role), `cafe_owners` (user, cafe, status: pending/approved), `edit_flags` (cafe, note, status), `source` and `osm_id` on `cafes`, and `is_chain`.
+
+## Languages (decided)
+
+English is the main language, with a Filipino option. Language switch lives in the settings and defaults to English.
+
+- Library: `next-intl`, with routes like `/en/...` and `/fil/...`.
+- UI text is translated. Cafe names, menus and owner descriptions are left as the owner wrote them.
+- Owners can add an optional Filipino description. If missing, the English one shows.
+- Dates, hours and prices (₱) use the locale formatters.
+- Filipino strings should be reviewed by a native speaker before launch.
 
 ## Design direction (decided)
 
@@ -62,17 +97,19 @@ Option 1 "Barako" colors on option 4 "Mapa" layout. Mockups: [design-direction.h
 - Pins use the tag colors, so the filter chips act as the legend.
 - Needs a dark map tile style. Candidates: MapTiler, Protomaps.
 
-## Decisions needed
-- Which city or area launches first.
-- Who maintains the data: you alone, or cafe owners too.
-- Whether to add a light theme for daylight use.
-- Language: English only, or English and Filipino.
+## Still open
+- Light theme for daylight use. Default for now: dark only at launch, light added later.
+- Dark map tile provider: MapTiler or Protomaps. Decide when we set up the map.
+- App domain and hosting plan (Vercel free tier is fine to start).
+- Whether to hide chains permanently or show them behind a filter.
 
 ## Milestones
-1. Pick a design and lock tokens (colors, type).
-2. Project scaffold, Supabase project, schema, seed 20 to 30 cafes.
-3. Nearby list and filters.
-4. Cafe detail with menu and Directions link.
-5. Map view.
-6. Admin editing.
-7. Deploy, then test on real phones.
+1. Lock design tokens (done in the plan, to be coded as Tailwind theme).
+2. Project scaffold, Supabase project, schema with roles and row-level security, `next-intl` set up.
+3. OSM import script for Iloilo City, loaded as drafts. You review and publish the first 20 to 30 cafes.
+4. Map home, list view and filters.
+5. Cafe detail with menu and Directions link.
+6. Admin page: review drafts, approve owner claims, edit flags.
+7. Owner page: claim a cafe and edit its details and menu.
+8. Filipino translation pass.
+9. Deploy, then test on real phones around Iloilo.
