@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { hasLocale, locales } from "@/lib/i18n";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 import { getDictionary } from "./dictionaries";
 import "../globals.css";
 
@@ -40,8 +41,18 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
+      data-theme="dark"
+      suppressHydrationWarning
       className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
+      <head>
+        {/* Apply the saved theme before first paint so there is no flash. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("${THEME_STORAGE_KEY}");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -168,7 +168,7 @@ Status as of 2026-10-24:
 6. Admin page (drafts, publish, tags, menus, photos, add cafe, suggestions, reports): **built, not yet exercised**, because it needs your sign-in. See "Admin setup".
 7. Filipino translation: **done, needs a native-speaker review**. Strings live in `src/app/[lang]/dictionaries/fil.json`. Admin screens are English only.
 8. Deploy and test on real phones around Iloilo: **needs you** (Vercel account, domain, Supabase redirect URL). This is the launch.
-9. After launch: owner claim flow and owner editing page, then the light theme toggle.
+9. After launch: owner claim flow and owner editing page. (The light theme toggle is done: tokens in `globals.css`, a saved choice applied before first paint, and a light Protomaps style. Motion animations use the `motion` package.)
 
 ### Admin setup (one step from you)
 

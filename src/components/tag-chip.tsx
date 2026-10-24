@@ -1,8 +1,8 @@
 import type { CafeTag } from "@/lib/tags";
 
 const STYLES: Record<CafeTag, string> = {
-  specialty_coffee: "bg-[#3a2b21] text-[#f0b184]",
-  matcha: "bg-[#26331f] text-leaf",
+  specialty_coffee: "bg-chip-specialty-bg text-chip-specialty-fg",
+  matcha: "bg-chip-matcha-bg text-leaf",
   pastry: "bg-crema text-foam border border-line",
   work_friendly: "bg-crema text-foam border border-line",
   pet_friendly: "bg-crema text-foam border border-line",

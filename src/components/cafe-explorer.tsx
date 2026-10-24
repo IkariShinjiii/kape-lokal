@@ -11,6 +11,7 @@ import type { Locale } from "@/lib/i18n";
 import { CafeCard } from "./cafe-card";
 import { LanguageSwitch } from "./language-switch";
 import { MapView } from "./map-view";
+import { ThemeToggle } from "./theme-toggle";
 
 type TagFilter = "all" | "specialty_coffee" | "matcha";
 type GeoState = "idle" | "locating" | "ok" | "denied" | "unavailable";
@@ -20,7 +21,7 @@ const MAX_DISTANCE_FROM_ILOILO_M = 40_000;
 const SHEET_HEIGHT = 230;
 
 const chipClass = (on: boolean) =>
-  `shrink-0 rounded border px-3 py-1.5 text-sm font-semibold ${
+  `shrink-0 rounded border px-3 py-1.5 text-sm font-semibold transition duration-200 active:scale-95 ${
     on
       ? "border-ember bg-ember text-roast"
       : "border-line bg-crema text-foam hover:border-ember"
@@ -115,10 +116,11 @@ export function CafeExplorer({
               type="button"
               onClick={locate}
               disabled={geo === "locating"}
-              className="rounded border border-line bg-crema px-3 py-1 text-sm font-semibold text-ember hover:border-ember disabled:opacity-60"
+              className="rounded border border-line bg-crema px-3 py-1 text-sm font-semibold text-ember transition duration-200 hover:border-ember active:scale-95 disabled:opacity-60"
             >
               ◎ {geo === "locating" ? dict.home.locating : dict.home.nearMe}
             </button>
+            <ThemeToggle toLight={dict.theme.toLight} toDark={dict.theme.toDark} />
             <LanguageSwitch
               current={lang}
               label={dict.language.label}
@@ -179,11 +181,18 @@ export function CafeExplorer({
                 type="button"
                 aria-pressed={view === v}
                 onClick={() => setView(v)}
-                className={`px-5 py-1.5 font-display text-sm font-bold uppercase tracking-widest ${
-                  view === v ? "bg-crema text-foam" : "text-mute"
+                className={`relative px-5 py-1.5 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
+                  view === v ? "text-foam" : "text-mute"
                 }`}
               >
-                {dict.view[v]}
+                {view === v && (
+                  <motion.span
+                    layoutId="view-pill"
+                    className="absolute inset-0 bg-crema"
+                    transition={{ type: "spring", stiffness: 500, damping: 38 }}
+                  />
+                )}
+                <span className="relative">{dict.view[v]}</span>
               </button>
             ))}
           </div>
@@ -194,8 +203,9 @@ export function CafeExplorer({
         {geoMessage && <p className="text-sm text-mute">{geoMessage}</p>}
       </header>
 
-      {view === "map" ? (
-        <div className="relative flex-1">
+      {/* The map stays mounted while the list is showing, so switching back is
+          instant instead of rebuilding the map. */}
+      <div className={`relative flex-1 ${view === "map" ? "" : "hidden"}`}>
           <MapView
             className="absolute inset-0"
             cafes={visibleCafes}
@@ -208,10 +218,10 @@ export function CafeExplorer({
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={selected ? selected.cafe.id : "hint"}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
+                initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.8 }}
               >
                 {selected ? (
                   <CafeCard
@@ -237,24 +247,41 @@ export function CafeExplorer({
               <span>{dict.footer.osmCredit}</span>
             </p>
           </div>
-        </div>
-      ) : (
-        <main className="flex-1 overflow-y-auto px-4 pb-8">
+      </div>
+
+      {view === "list" && (
+        <motion.main
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="flex-1 overflow-y-auto px-4 pb-8"
+        >
           {visible.length === 0 ? (
             <p className="py-10 text-center text-mute">{dict.home.noResults}</p>
           ) : (
-            <ul className="flex flex-col gap-3">
-              {visible.map(({ cafe, distance }, i) => (
-                <motion.li
-                  key={cafe.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  // Only the first screenful staggers; the rest appear together.
-                  transition={{ duration: 0.25, ease: "easeOut", delay: Math.min(i, 8) * 0.04 }}
-                >
-                  <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} />
-                </motion.li>
-              ))}
+            <ul className="relative flex flex-col gap-3">
+              <AnimatePresence mode="popLayout">
+                {visible.map(({ cafe, distance }, i) => (
+                  <motion.li
+                    key={cafe.id}
+                    // Cards glide to their new place when a filter or sort changes.
+                    // With a long list that is too much to animate, so skip it.
+                    layout={visible.length <= 40 ? "position" : false}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 32,
+                      // Only the first screenful staggers; the rest appear together.
+                      delay: Math.min(i, 8) * 0.035,
+                    }}
+                  >
+                    <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} />
+                  </motion.li>
+                ))}
+              </AnimatePresence>
             </ul>
           )}
           <p className="mt-6 flex flex-col gap-1 text-xs text-mute">
@@ -263,7 +290,7 @@ export function CafeExplorer({
             </Link>
             <span>{dict.footer.osmCredit}</span>
           </p>
-        </main>
+        </motion.main>
       )}
     </div>
     </MotionConfig>

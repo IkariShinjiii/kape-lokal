@@ -84,6 +84,10 @@
     "en": "English",
     "fil": "Filipino"
   },
+  "theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
   "footer": {
     "osmCredit": "Map data © OpenStreetMap contributors"
   }

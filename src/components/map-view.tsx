@@ -12,7 +12,8 @@ import { Protocol } from "pmtiles";
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import type { Cafe } from "@/lib/cafes";
 import { ILOILO_CENTER, type LatLng } from "@/lib/geo";
-import { PIN_COLORS } from "@/lib/theme";
+import { PIN_COLORS, type Theme } from "@/lib/theme";
+import { useTheme } from "./use-theme";
 
 type Props = {
   cafes: Cafe[];
@@ -40,14 +41,20 @@ function ensureProtocol() {
   protocolAdded = true;
 }
 
-function pinColor(c: Cafe): string {
-  if (c.isChain) return PIN_COLORS.chain;
-  if (c.tags.includes("specialty_coffee")) return PIN_COLORS.specialty;
-  if (c.tags.includes("matcha")) return PIN_COLORS.matcha;
-  return PIN_COLORS.other;
+type Colors = (typeof PIN_COLORS)[Theme];
+
+function pinColor(c: Cafe, colors: Colors): string {
+  if (c.isChain) return colors.chain;
+  if (c.tags.includes("specialty_coffee")) return colors.specialty;
+  if (c.tags.includes("matcha")) return colors.matcha;
+  return colors.other;
 }
 
-function toGeoJson(cafes: Cafe[], selectedId: string | null | undefined) {
+function toGeoJson(
+  cafes: Cafe[],
+  selectedId: string | null | undefined,
+  colors: Colors,
+) {
   return {
     type: "FeatureCollection" as const,
     features: cafes.map((c) => ({
@@ -55,19 +62,19 @@ function toGeoJson(cafes: Cafe[], selectedId: string | null | undefined) {
       geometry: { type: "Point" as const, coordinates: [c.lng, c.lat] },
       properties: {
         id: c.id,
-        color: pinColor(c),
+        color: pinColor(c, colors),
         selected: c.id === selectedId ? 1 : 0,
       },
     })),
   };
 }
 
-function buildStyle(): StyleSpecification {
+function buildStyle(theme: Theme): StyleSpecification {
   return {
     version: 8,
     glyphs:
       "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-    sprite: "https://protomaps.github.io/basemaps-assets/sprites/v4/dark",
+    sprite: `https://protomaps.github.io/basemaps-assets/sprites/v4/${theme}`,
     sources: {
       protomaps: {
         type: "vector",
@@ -76,7 +83,7 @@ function buildStyle(): StyleSpecification {
           '<a href="https://openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a>',
       },
     },
-    layers: layers("protomaps", namedFlavor("dark")),
+    layers: layers("protomaps", namedFlavor(theme)),
   };
 }
 
@@ -93,7 +100,12 @@ export function MapView({
   const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
   const fittedRef = useRef(false);
+  // Where the visitor was looking, kept across a theme change (the map is
+  // rebuilt with the other style).
+  const viewRef = useRef<{ center: [number, number]; zoom: number } | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const { theme } = useTheme();
+  const colors = PIN_COLORS[theme];
 
   useEffect(() => {
     onSelectRef.current = onSelect;
@@ -104,11 +116,13 @@ export function MapView({
     if (!containerRef.current) return;
     ensureProtocol();
 
+    const saved = viewRef.current;
+    if (saved) fittedRef.current = true;
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: buildStyle(),
-      center: [ILOILO_CENTER.lng, ILOILO_CENTER.lat],
-      zoom: 12.5,
+      style: buildStyle(theme),
+      center: saved?.center ?? [ILOILO_CENTER.lng, ILOILO_CENTER.lat],
+      zoom: saved?.zoom ?? 12.5,
       minZoom: 10,
       maxZoom: 18,
       maxBounds: BOUNDS,
@@ -130,7 +144,7 @@ export function MapView({
     }
 
     map.on("load", () => {
-      map.addSource("cafes", { type: "geojson", data: toGeoJson([], null) });
+      map.addSource("cafes", { type: "geojson", data: toGeoJson([], null, colors) });
       map.addSource("me", {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },
@@ -142,7 +156,7 @@ export function MapView({
         filter: ["==", ["get", "selected"], 1],
         paint: {
           "circle-radius": 17,
-          "circle-color": PIN_COLORS.specialty,
+          "circle-color": colors.specialty,
           "circle-opacity": 0.3,
         },
       });
@@ -154,7 +168,9 @@ export function MapView({
           "circle-radius": ["case", ["==", ["get", "selected"], 1], 10, 7],
           "circle-color": ["get", "color"],
           "circle-stroke-width": 2,
-          "circle-stroke-color": "#1a1411",
+          "circle-stroke-color": colors.outline,
+          // Pins ease between sizes when one is selected.
+          "circle-radius-transition": { duration: 200, delay: 0 },
         },
       });
       map.addLayer({
@@ -163,9 +179,9 @@ export function MapView({
         source: "me",
         paint: {
           "circle-radius": 7,
-          "circle-color": "#6aa8ff",
+          "circle-color": colors.me,
           "circle-stroke-width": 3,
-          "circle-stroke-color": "#1a1411",
+          "circle-stroke-color": colors.outline,
         },
       });
 
@@ -189,21 +205,25 @@ export function MapView({
     });
 
     return () => {
+      const c = map.getCenter();
+      viewRef.current = { center: [c.lng, c.lat], zoom: map.getZoom() };
       resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;
-      fittedRef.current = false;
       setLoaded(false);
     };
-  }, [interactive]);
+    // colors derives from theme; the map is rebuilt when either changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interactive, theme]);
 
   // Keep pins in step with filters and selection.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded) return;
-    (map.getSource("cafes") as GeoJSONSource).setData(
-      toGeoJson(cafes, selectedId),
-    );
+    // After a theme change the rebuilt map exists before its sources do.
+    const cafesSource = map.getSource("cafes") as GeoJSONSource | undefined;
+    if (!cafesSource) return;
+    cafesSource.setData(toGeoJson(cafes, selectedId, colors));
 
     // First fit: frame the cafes, or center on the only one (detail page).
     if (!fittedRef.current && cafes.length > 0) {
@@ -220,13 +240,16 @@ export function MapView({
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cafes, selectedId, loaded, userPos, bottomPadding]);
 
   // Show the visitor and fly to them when they share their location.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded) return;
-    (map.getSource("me") as GeoJSONSource).setData({
+    const meSource = map.getSource("me") as GeoJSONSource | undefined;
+    if (!meSource) return;
+    meSource.setData({
       type: "FeatureCollection",
       features: userPos
         ? [

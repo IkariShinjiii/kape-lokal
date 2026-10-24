@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* Barako palette. Dark is the default. A light theme will override these
-   tokens under :root[data-theme="light"] later, so components never use raw colors. */
+/* Barako palette. Dark is the default; the light theme overrides the same
+   tokens under :root[data-theme="light"], so components never use raw colors. */
 :root {
   --roast: #1a1411;
   --crema: #251c17;
@@ -10,7 +10,24 @@
   --leaf: #b5d98f;
   --foam: #f1e6d8;
   --mute: #a8998a;
+  --chip-specialty-bg: #3a2b21;
+  --chip-specialty-fg: #f0b184;
+  --chip-matcha-bg: #26331f;
   color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --roast: #f6efe6;
+  --crema: #ece1d3;
+  --line: #cdbba8;
+  --ember: #a8480f;
+  --leaf: #4f7a2a;
+  --foam: #2a1f18;
+  --mute: #6b5d52;
+  --chip-specialty-bg: #f3d9c3;
+  --chip-specialty-fg: #8a3a08;
+  --chip-matcha-bg: #dcebc9;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -21,6 +38,9 @@
   --color-leaf: var(--leaf);
   --color-foam: var(--foam);
   --color-mute: var(--mute);
+  --color-chip-specialty-bg: var(--chip-specialty-bg);
+  --color-chip-specialty-fg: var(--chip-specialty-fg);
+  --color-chip-matcha-bg: var(--chip-matcha-bg);
   --font-sans: var(--font-barlow);
   --font-display: var(--font-barlow-condensed);
 }
@@ -34,4 +54,26 @@ body {
 :focus-visible {
   outline: 2px solid var(--ember);
   outline-offset: 2px;
+}
+
+/* Colors ease across when the theme changes. The class is added only for the
+   moment of the switch, so ordinary hovers and scrolling are unaffected. */
+:root.theme-switching,
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    fill 0.3s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-switching,
+  :root.theme-switching *,
+  :root.theme-switching *::before,
+  :root.theme-switching *::after {
+    transition: none !important;
+  }
 }
