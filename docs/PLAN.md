@@ -66,7 +66,7 @@ Cleanup steps for the seed:
 
 ## Owners and admin (decided)
 
-Both you and cafe owners can edit data.
+You maintain the data at launch. Owners get their own editing access later, after launch. The database roles and row-level security are built from the start so the owner portal is an addition, not a rework.
 
 - **Roles:** `admin` (you) and `owner` (one or more cafes each). Everyone else is an anonymous visitor.
 - **Claim flow:** an owner finds their cafe, taps "Claim this cafe", signs in by email, and you approve the claim in the admin page. Approval is manual because there's no other way to prove ownership.
@@ -97,8 +97,11 @@ Option 1 "Barako" colors on option 4 "Mapa" layout. Mockups: [design-direction.h
 - Pins use the tag colors, so the filter chips act as the legend.
 - Needs a dark map tile style. Candidates: MapTiler, Protomaps.
 
+## Theme (decided)
+
+Dark first. A light theme comes later as a toggle, mainly for reading the map in bright sun. Build with color tokens from the start so adding light is a token swap, not a rewrite. The map needs a light tile style at that point too.
+
 ## Still open
-- Light theme for daylight use. Default for now: dark only at launch, light added later.
 - Dark map tile provider: MapTiler or Protomaps. Decide when we set up the map.
 - App domain and hosting plan (Vercel free tier is fine to start).
 - Whether to hide chains permanently or show them behind a filter.
@@ -109,7 +112,7 @@ Option 1 "Barako" colors on option 4 "Mapa" layout. Mockups: [design-direction.h
 3. OSM import script for Iloilo City, loaded as drafts. You review and publish the first 20 to 30 cafes.
 4. Map home, list view and filters.
 5. Cafe detail with menu and Directions link.
-6. Admin page: review drafts, approve owner claims, edit flags.
-7. Owner page: claim a cafe and edit its details and menu.
-8. Filipino translation pass.
-9. Deploy, then test on real phones around Iloilo.
+6. Admin page: review drafts, edit cafes and menus, handle edit flags.
+7. Filipino translation pass.
+8. Deploy, then test on real phones around Iloilo. **This is the launch.**
+9. After launch: owner claim flow and owner editing page, then the light theme toggle.
