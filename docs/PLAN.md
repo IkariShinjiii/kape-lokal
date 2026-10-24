@@ -101,10 +101,26 @@ Option 1 "Barako" colors on option 4 "Mapa" layout. Mockups: [design-direction.h
 
 Dark first. A light theme comes later as a toggle, mainly for reading the map in bright sun. Build with color tokens from the start so adding light is a token swap, not a rewrite. The map needs a light tile style at that point too.
 
+## Chains (decided)
+
+The goal is to promote local cafes, especially specialty coffee places such as NuWave. Chains (Starbucks, Dunkin', Coffee Break) are not removed. They stay hidden by default, and show on the map and list only when the visitor turns on an "Include chains" filter. Chain pins use a muted gray so local cafes stand out. Chains never appear in the default "Nearby" ranking.
+
+## Map tile provider (options researched 2026-10-24)
+
+| Option | Cost | Pros | Cons |
+|---|---|---|---|
+| Protomaps, self-hosted | Storage only. A cut-out for Iloilo is small, so cents per month | No per-view fees and no usage cap. No API key to leak. Built on OpenStreetMap, which we already use. Open source. Ships dark and light themes, so the later toggle is easy | Most setup work: extract the region, host the file, tune the style. We own updates. Needs "© OpenStreetMap contributors" credit |
+| MapTiler Cloud | Free: 5k map sessions per month, then service pauses. Paid from $30 per month | Hosted, quick to set up. Many ready-made styles. Good docs | The free plan page says "personal or non-commercial use". Free cap is low if the app grows. Needs an API key in the browser |
+| Stadia Maps | Free: 200k credits per month. Paid from $20 per month | Hosted, with dark styles. Cheapest paid step | The free plan says commercial use is not allowed, so a paid plan is likely needed at launch. API key needed |
+| Mapbox | Free: 50k map loads per month, then $5 per 1,000 | Polished styles and tools. Biggest free allowance of the hosted options | Costs rise quickly past the free tier. Uses its own SDK and terms. Account and token management |
+
+Notes: the Protomaps dark theme and region extract size come from its documentation and my own knowledge. I haven't downloaded the Iloilo extract yet, so its exact size is unconfirmed. Whether MapTiler's free plan fits a free community app is a question for MapTiler, not something I can settle.
+
+Recommendation: **Protomaps, self-hosted.** It costs almost nothing, never hits a usage cap, and keeps the dark and later light themes under our control. The extra setup is a one-time cost in milestone 4.
+
 ## Still open
-- Dark map tile provider: MapTiler or Protomaps. Decide when we set up the map.
+- Map tile provider: pick from the table above. Recommended: Protomaps.
 - App domain and hosting plan (Vercel free tier is fine to start).
-- Whether to hide chains permanently or show them behind a filter.
 
 ## Milestones
 1. Lock design tokens (done in the plan, to be coded as Tailwind theme).
