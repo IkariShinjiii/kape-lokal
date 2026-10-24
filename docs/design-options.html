@@ -1,0 +1,223 @@
+<title>Kape Lokal Design Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Bowlby+One&family=Nunito:wght@600;800&family=Quicksand:wght@500;700&family=Instrument+Serif&family=Manrope:wght@500;700;800&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: intro, then five option rows. Each row = a phone mockup beside its notes. */
+:root{
+  --bg:#f6f5f2; --fg:#1d1b19; --muted:#6b665f; --line:#dedad3; --panel:#ffffff; --accent:#3b6b4f;
+  --f-body:'DM Sans',system-ui,sans-serif; --f-mono:'DM Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161513;--fg:#efece6;--muted:#a09a90;--line:#33302b;--panel:#201e1b;--accent:#8fc4a2;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161513;--fg:#efece6;--muted:#a09a90;--line:#33302b;--panel:#201e1b;--accent:#8fc4a2;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;margin:0 0 12px;letter-spacing:-.02em;text-wrap:balance}
+.lede{max-width:62ch;color:var(--muted);margin:0}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.opt{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:40px;align-items:start;padding-top:40px;border-top:1px solid var(--line)}
+@media(max-width:760px){.opt{grid-template-columns:minmax(0,1fr);justify-items:center}.notes{justify-self:stretch}}
+.notes h2{font-size:1.6rem;margin:6px 0 8px;letter-spacing:-.01em;text-wrap:balance}
+.notes p{margin:0 0 14px;max-width:56ch}
+.notes dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:14px}
+.notes dt{color:var(--muted)} .notes dd{margin:0}
+.sw{display:flex;gap:6px;margin:4px 0 16px}
+.sw i{width:28px;height:28px;border-radius:50%;border:1px solid var(--line)}
+.pick{margin-top:6px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;color:var(--muted)}
+/* phone frame */
+.phone{width:320px;max-width:100%;height:640px;border-radius:38px;border:8px solid #111;background:#111;overflow:hidden;position:relative;box-shadow:0 18px 40px -18px rgba(0,0,0,.45)}
+.scr{width:100%;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.sb{height:26px;flex:none;font:600 11px/26px system-ui;padding:0 18px;display:flex;justify-content:space-between}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.dist{font-variant-numeric:tabular-nums}
+
+/* 1 BARAKO: dark roast, list first */
+.d1{background:#1a1411;color:#f1e6d8;font-family:'Barlow',sans-serif}
+.d1 .sb{color:#a8998a}
+.d1 h3{font:700 34px/.95 'Barlow Condensed';text-transform:uppercase;margin:6px 16px 10px;letter-spacing:.01em}
+.d1 .chips{display:flex;gap:6px;padding:0 16px 12px}
+.d1 .chip{font:600 12px 'Barlow';padding:6px 12px;border:1px solid #4a3a30;border-radius:4px;color:#cdbba8}
+.d1 .chip.on{background:#e8742c;border-color:#e8742c;color:#1a1411}
+.d1 .card{margin:0 16px 10px;background:#251c17;padding:12px;display:grid;grid-template-columns:64px 1fr;gap:12px;border-radius:4px}
+.d1 .ph{background:linear-gradient(135deg,#6b4a33,#3a271b);border-radius:3px}
+.d1 .nm{font:700 20px/1 'Barlow Condensed';text-transform:uppercase}
+.d1 .meta{font-size:12px;color:#a8998a;margin:3px 0 7px}
+.d1 .tag{background:#3a2b21;color:#f0b184;border-radius:3px}.d1 .tag.m{background:#26331f;color:#b5d98f}
+.d1 .go{margin-top:8px;font:700 12px 'Barlow Condensed';letter-spacing:.08em;text-transform:uppercase;color:#e8742c}
+
+/* 2 TINDAHAN: jeepney signage */
+.d2{background:#ffd93d;color:#1b1b3a;font-family:'Nunito',sans-serif}
+.d2 .sb{color:#1b1b3a}
+.d2 .top{margin:4px 14px 10px;background:#e63946;color:#fff;border-radius:14px;padding:10px 14px;border:3px solid #1b1b3a;box-shadow:4px 4px 0 #1b1b3a;font:400 24px/1 'Bowlby One'}
+.d2 .top small{display:block;font:800 11px 'Nunito';margin-top:5px;letter-spacing:.04em}
+.d2 .card{margin:0 14px 12px;background:#fff;border:3px solid #1b1b3a;border-radius:14px;padding:12px;box-shadow:4px 4px 0 #1b1b3a;position:relative}
+.d2 .nm{font:400 18px 'Bowlby One'}
+.d2 .meta{font-size:12px;font-weight:800;margin:3px 0 8px}
+.d2 .tag{border:2px solid #1b1b3a;font-weight:800;font-size:10px}
+.d2 .s{background:#ff9f1c}.d2 .m{background:#8ee27a}
+.d2 .go{position:absolute;right:12px;top:12px;background:#1b1b3a;color:#ffd93d;font:800 11px 'Nunito';padding:6px 10px;border-radius:99px}
+.d2 .nav{margin-top:auto;display:flex;justify-content:space-around;background:#1b1b3a;color:#ffd93d;font:800 11px 'Nunito';padding:12px 0}
+
+/* 3 MATCHA MIST: soft, airy */
+.d3{background:#eef3ea;color:#243126;font-family:'Quicksand',sans-serif}
+.d3 .sb{color:#6a7a6c}
+.d3 h3{font:400 38px/1 'Instrument Serif';margin:8px 20px 4px}
+.d3 h3 em{color:#5b8a5f}
+.d3 .sub{margin:0 20px 14px;font-size:13px;color:#6a7a6c;font-weight:500}
+.d3 .search{margin:0 16px 14px;background:#fff;border-radius:99px;padding:12px 18px;font-size:13px;color:#8a998c;box-shadow:0 6px 18px -10px #4a6b4d}
+.d3 .card{margin:0 16px 12px;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 10px 24px -16px #4a6b4d}
+.d3 .ph{height:84px;background:linear-gradient(120deg,#b9d3a8,#dfe9c8 60%,#f3e9cf)}
+.d3 .body{padding:12px 16px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 8px;align-items:center}
+.d3 .nm{font-weight:700;font-size:16px}.d3 .meta{font-size:12px;color:#6a7a6c;font-weight:500;grid-column:1}
+.d3 .tags{grid-column:1/-1;display:flex;gap:6px;margin-top:6px}
+.d3 .tag{background:#e3eed8;color:#3d6a43}.d3 .tag.s{background:#f6e7d3;color:#8a5a2b}
+.d3 .go{background:#5b8a5f;color:#fff;font-weight:700;font-size:12px;padding:8px 14px;border-radius:99px;grid-row:1/3;grid-column:2}
+
+/* 4 MAPA: map first, bottom sheet */
+.d4{background:#dfe6ea;color:#14202b;font-family:'Manrope',sans-serif}
+.d4 .map{position:absolute;inset:0}
+.d4 .bar{position:absolute;top:34px;left:14px;right:14px;background:#fff;border-radius:14px;padding:11px 14px;font-size:13px;font-weight:700;box-shadow:0 8px 20px -8px rgba(20,32,43,.4);display:flex;justify-content:space-between}
+.d4 .fl{position:absolute;top:84px;left:14px;display:flex;gap:6px}
+.d4 .fl span{background:#fff;border-radius:99px;font-size:11px;font-weight:800;padding:6px 11px;box-shadow:0 4px 10px -4px rgba(20,32,43,.35)}
+.d4 .fl .on{background:#14202b;color:#fff}
+.d4 .pin{position:absolute;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#0b6e4f;border:3px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,.3)}
+.d4 .pin.m{background:#6aa84f}.d4 .pin.sel{background:#e4572e;width:34px;height:34px}
+.d4 .sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:24px 24px 0 0;padding:10px 18px 18px;box-shadow:0 -10px 30px -10px rgba(20,32,43,.4)}
+.d4 .grab{width:38px;height:4px;background:#cfd6dc;border-radius:9px;margin:0 auto 12px}
+.d4 .nm{font-weight:800;font-size:18px}.d4 .meta{font-size:12px;color:#5b6b78;font-weight:600;margin:2px 0 10px}
+.d4 .tag{background:#e2f1ea;color:#0b6e4f;margin-right:4px}.d4 .tag.m{background:#e8f3de;color:#4a7a2e}
+.d4 .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.d4 .btns b{text-align:center;font-size:13px;padding:11px;border-radius:12px;background:#eef2f5}
+.d4 .btns b.p{background:#0b6e4f;color:#fff}
+
+/* 5 RISO ZINE: two-ink print */
+.d5{background:#f7f2e8;color:#2236c8;font-family:'IBM Plex Mono',monospace}
+.d5 .sb{color:#2236c8}
+.d5 .mast{margin:2px 14px 0;border-top:3px solid #2236c8;border-bottom:3px solid #2236c8;padding:6px 0;display:flex;justify-content:space-between;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.d5 h3{font:400 44px/.9 'Archivo Black';margin:12px 14px 12px;text-transform:uppercase;letter-spacing:-.02em}
+.d5 h3 span{color:#ff4f9a}
+.d5 .row{margin:0 14px;padding:12px 0;border-top:1.5px dashed #2236c8;display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:start}
+.d5 .no{font:400 22px 'Archivo Black';color:#ff4f9a}
+.d5 .nm{font:400 15px 'Archivo Black';text-transform:uppercase}
+.d5 .meta{font-size:11px;margin:2px 0 6px}
+.d5 .tag{border:1.5px solid #2236c8;border-radius:0;padding:2px 6px;font-size:9px;text-transform:uppercase}
+.d5 .tag.s{background:#ff4f9a;border-color:#ff4f9a;color:#fff}
+.d5 .go{background:#2236c8;color:#f7f2e8;font-size:10px;font-weight:500;padding:6px 8px;text-transform:uppercase;letter-spacing:.06em}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="mono">Kape Lokal · design options · sample data</div>
+    <h1>Five directions for Kape Lokal</h1>
+    <p class="lede">Each phone shows the same home screen: nearby cafes, the Specialty and Matcha tags, and a Directions button that hands off to Google Maps. Cafe names, distances and tags are made up for the mockups. Pick one, or tell me what to borrow from each.</p>
+  </header>
+
+  <!-- 1 -->
+  <section class="opt" id="barako">
+    <div class="phone"><div class="scr d1">
+      <div class="sb"><span>9:41</span><span>●●●</span></div>
+      <h3>Cafes near<br>you</h3>
+      <div class="chips"><span class="chip on">All</span><span class="chip">Specialty</span><span class="chip">Matcha</span><span class="chip">Menu</span></div>
+      <div class="card"><div class="ph"></div><div><div class="nm">Barako &amp; Co.</div><div class="meta"><span class="dist">0.4 km</span> · Open till 9 PM</div><span class="tag">SPECIALTY</span> <span class="tag m">MATCHA</span><div class="go">Directions →</div></div></div>
+      <div class="card"><div class="ph"></div><div><div class="nm">Tasa Roasters</div><div class="meta"><span class="dist">0.9 km</span> · Open till 8 PM</div><span class="tag">SPECIALTY</span><div class="go">Directions →</div></div></div>
+      <div class="card"><div class="ph"></div><div><div class="nm">Haw Tea Bar</div><div class="meta"><span class="dist">1.3 km</span> · Open till 10 PM</div><span class="tag m">MATCHA</span><div class="go">Directions →</div></div></div>
+    </div></div>
+    <div class="notes">
+      <div class="mono">Option 1</div><h2>Barako</h2>
+      <p>Dark roast colors, tall condensed headings, a list that reads like a menu board. Serious and warm. Best for browsing many cafes quickly at night.</p>
+      <div class="sw"><i style="background:#1a1411"></i><i style="background:#251c17"></i><i style="background:#e8742c"></i><i style="background:#b5d98f"></i><i style="background:#f1e6d8"></i></div>
+      <dl><dt>Type</dt><dd>Barlow Condensed + Barlow</dd><dt>Home view</dt><dd>List first, map one tap away</dd><dt>Theme</dt><dd>Dark by default</dd></dl>
+      <div class="pick">Risk: dark UI is harder to read in bright daylight, when people are outside looking for a cafe.</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="opt" id="tindahan">
+    <div class="phone"><div class="scr d2">
+      <div class="sb"><span>9:41</span><span>●●●</span></div>
+      <div class="top">KAPE LOKAL<small>3 CAFES MALAPIT SA IYO</small></div>
+      <div class="card"><div class="nm">Barako &amp; Co.</div><div class="meta"><span class="dist">0.4 km</span> · Open na</div><span class="tag s">SPECIALTY</span> <span class="tag m">MATCHA</span><div class="go">Directions</div></div>
+      <div class="card"><div class="nm">Tasa Roasters</div><div class="meta"><span class="dist">0.9 km</span> · Open na</div><span class="tag s">SPECIALTY</span><div class="go">Directions</div></div>
+      <div class="card"><div class="nm">Haw Tea Bar</div><div class="meta"><span class="dist">1.3 km</span> · Open na</div><span class="tag m">MATCHA</span><div class="go">Directions</div></div>
+      <div class="nav"><span>LISTAHAN</span><span>MAPA</span><span>SAVED</span></div>
+    </div></div>
+    <div class="notes">
+      <div class="mono">Option 2</div><h2>Tindahan</h2>
+      <p>Jeepney and sari-sari signage: thick outlines, hard shadows, loud yellow and red. Friendly and unmistakably Filipino. Labels can mix English and Filipino.</p>
+      <div class="sw"><i style="background:#ffd93d"></i><i style="background:#e63946"></i><i style="background:#1b1b3a"></i><i style="background:#ff9f1c"></i><i style="background:#8ee27a"></i></div>
+      <dl><dt>Type</dt><dd>Bowlby One + Nunito</dd><dt>Home view</dt><dd>Sticker-style cards</dd><dt>Theme</dt><dd>Bright, one look</dd></dl>
+      <div class="pick">Risk: the strongest personality of the five. It can feel less like a specialty coffee guide and more like a street food app.</div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="opt" id="matcha-mist">
+    <div class="phone"><div class="scr d3">
+      <div class="sb"><span>9:41</span><span>●●●</span></div>
+      <h3>Find your <em>cup</em></h3>
+      <p class="sub">Specialty coffee and matcha, close by.</p>
+      <div class="search">Search cafes or drinks</div>
+      <div class="card"><div class="ph"></div><div class="body"><div class="nm">Barako &amp; Co.</div><div class="meta"><span class="dist">0.4 km</span> · Open</div><div class="tags"><span class="tag s">Specialty</span><span class="tag">Matcha</span></div><div class="go">Directions</div></div></div>
+      <div class="card"><div class="ph" style="background:linear-gradient(120deg,#e9d9bd,#f3e9cf 60%,#dfe9c8)"></div><div class="body"><div class="nm">Haw Tea Bar</div><div class="meta"><span class="dist">1.3 km</span> · Open</div><div class="tags"><span class="tag">Matcha</span></div><div class="go">Directions</div></div></div>
+    </div></div>
+    <div class="notes">
+      <div class="mono">Option 3</div><h2>Matcha Mist</h2>
+      <p>Pale green, big photos, rounded cards, a soft serif for headings. Calm and clean. Photos carry the design, so cafes with good photos look great and cafes without need a placeholder plan.</p>
+      <div class="sw"><i style="background:#eef3ea"></i><i style="background:#b9d3a8"></i><i style="background:#5b8a5f"></i><i style="background:#243126"></i><i style="background:#f6e7d3"></i></div>
+      <dl><dt>Type</dt><dd>Instrument Serif + Quicksand</dd><dt>Home view</dt><dd>Photo cards, search on top</dd><dt>Theme</dt><dd>Light, with a deep green dark mode</dd></dl>
+      <div class="pick">Risk: matcha is the hero visually, so coffee-only cafes may feel like second-class listings.</div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="opt" id="mapa">
+    <div class="phone"><div class="scr d4">
+      <svg class="map" viewBox="0 0 304 624" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="304" height="624" fill="#dfe6ea"/>
+        <rect x="200" y="30" width="110" height="140" fill="#c9dfc4"/>
+        <path d="M-10 420 C80 360 140 400 320 300 L320 360 C150 450 90 430 -10 480Z" fill="#b8d3e6"/>
+        <g stroke="#fff" stroke-width="9" fill="none"><path d="M0 200H304M0 330H304M70 0V624M190 0V624"/></g>
+        <g stroke="#fff" stroke-width="4" fill="none"><path d="M0 120L304 260M0 520L304 470M130 0L250 624"/></g>
+      </svg>
+      <div class="bar"><span>Kape Lokal</span><span>Near me ◎</span></div>
+      <div class="fl"><span class="on">All</span><span>Specialty</span><span>Matcha</span></div>
+      <div class="pin m" style="left:62px;top:230px"></div>
+      <div class="pin" style="left:206px;top:196px"></div>
+      <div class="pin m" style="left:132px;top:300px"></div>
+      <div class="pin sel" style="left:110px;top:176px"></div>
+      <div class="sheet"><div class="grab"></div>
+        <div class="nm">Barako &amp; Co.</div><div class="meta"><span class="dist">0.4 km</span> · Open till 9 PM · Menu available</div>
+        <span class="tag">SPECIALTY</span><span class="tag m">MATCHA</span>
+        <div class="btns"><b>View menu</b><b class="p">Directions</b></div></div>
+    </div></div>
+    <div class="notes">
+      <div class="mono">Option 4</div><h2>Mapa</h2>
+      <p>The map is the home screen. Pins are colored by what the cafe serves, and tapping a pin raises a sheet with the key facts and a Directions button. Familiar to anyone who has used a ride app.</p>
+      <div class="sw"><i style="background:#dfe6ea"></i><i style="background:#0b6e4f"></i><i style="background:#6aa84f"></i><i style="background:#e4572e"></i><i style="background:#14202b"></i></div>
+      <dl><dt>Type</dt><dd>Manrope</dd><dt>Home view</dt><dd>Full-screen map, bottom sheet</dd><dt>Theme</dt><dd>Light, with a dark map style</dd></dl>
+      <div class="pick">Risk: depends on the map tile quality in your area. Needs a list view for people who want to compare cafes.</div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="opt" id="riso">
+    <div class="phone"><div class="scr d5">
+      <div class="sb"><span>9:41</span><span>●●●</span></div>
+      <div class="mast"><span>Kape Lokal</span><span>Vol. 1</span><span>Malapit</span></div>
+      <h3>Cafes<br><span>near</span> you</h3>
+      <div class="row"><div class="no">01</div><div><div class="nm">Barako &amp; Co.</div><div class="meta"><span class="dist">0.4 km</span> · open</div><span class="tag s">Specialty</span> <span class="tag">Matcha</span></div><div class="go">Go →</div></div>
+      <div class="row"><div class="no">02</div><div><div class="nm">Tasa Roasters</div><div class="meta"><span class="dist">0.9 km</span> · open</div><span class="tag s">Specialty</span></div><div class="go">Go →</div></div>
+      <div class="row"><div class="no">03</div><div><div class="nm">Haw Tea Bar</div><div class="meta"><span class="dist">1.3 km</span> · open</div><span class="tag">Matcha</span></div><div class="go">Go →</div></div>
+    </div></div>
+    <div class="notes">
+      <div class="mono">Option 5</div><h2>Riso Zine</h2>
+      <p>Two-ink print look, like a local zine: blue and pink on paper, mono type, dashed rules. The list numbers are real here, because they rank by distance. Distinct, indie, and cheap to build since it needs few images.</p>
+      <div class="sw"><i style="background:#f7f2e8"></i><i style="background:#2236c8"></i><i style="background:#ff4f9a"></i></div>
+      <dl><dt>Type</dt><dd>Archivo Black + IBM Plex Mono</dd><dt>Home view</dt><dd>Ranked text list, almost no photos</dd><dt>Theme</dt><dd>Paper and ink, with an inverted night mode</dd></dl>
+      <div class="pick">Risk: mono text and a bold look are less approachable for casual users. The pink tag needs care for contrast.</div>
+    </div>
+  </section>
+
+  <footer class="mono">My pick for a first build: Option 3 or Option 4. Option 4 matches the map-centered brief best.</footer>
+</div>
