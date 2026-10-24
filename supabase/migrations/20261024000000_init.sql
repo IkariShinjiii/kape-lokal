@@ -1,5 +1,5 @@
 -- Kape Lokal initial schema.
--- Not applied to any Supabase project yet. Review before running.
+-- Applied to the kape-lokal Supabase project (gfwnhqvcmqqobptrvcfd) on 2026-10-24.
 
 create extension if not exists postgis with schema extensions;
 
@@ -96,6 +96,7 @@ create table public.cafe_owners (
   created_at timestamptz not null default now(),
   primary key (user_id, cafe_id)
 );
+create index cafe_owners_cafe_idx on public.cafe_owners (cafe_id);
 
 create table public.edit_flags (
   id uuid primary key default gen_random_uuid(),
@@ -104,6 +105,7 @@ create table public.edit_flags (
   resolved boolean not null default false,
   created_at timestamptz not null default now()
 );
+create index edit_flags_cafe_idx on public.edit_flags (cafe_id);
 
 -- Nearby search -------------------------------------------------------
 -- Published cafes within p_radius_m meters, nearest first. Chains are

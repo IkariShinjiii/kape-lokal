@@ -134,6 +134,13 @@ Options, from simplest to most work:
 
 Starting plan: build a single reusable `<AdSlot>` component with a placeholder, launch without ads, and turn on option 2 and then option 1 once there is real traffic. Costs to cover are estimated at launch: domain (yearly), Supabase and Vercel free tiers (likely $0 at first), and map file storage (cents).
 
+## Supabase project (created 2026-10-24)
+
+- Project: `kape-lokal`, ref `gfwnhqvcmqqobptrvcfd`, region ap-southeast-1 (Singapore), free plan.
+- The free plan allows 2 active projects, so the existing `acua` project was paused to make room. Restore it from the Supabase dashboard if needed, which will require pausing another.
+- Schema and access rules are applied. Security advisor is clean.
+- Connection settings live in `.env.local` (git-ignored). `.env.example` lists the names.
+
 ## Still open
 - Map tile provider: pick from the table above. Recommended: Protomaps.
 - App domain and hosting plan (Vercel free tier is fine to start).
