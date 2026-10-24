@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Kape Lokal",
+    "description": "Find local specialty coffee and matcha cafes near you in Iloilo City."
+  },
+  "home": {
+    "heading": "Cafes near you",
+    "tagline": "Local specialty coffee and matcha in Iloilo City.",
+    "comingSoon": "The map is coming soon."
+  },
+  "filters": {
+    "all": "All",
+    "specialty": "Specialty",
+    "matcha": "Matcha",
+    "menu": "Has menu",
+    "chains": "Include chains"
+  },
+  "cafe": {
+    "directions": "Directions",
+    "viewMenu": "View menu",
+    "openUntil": "Open until {time}"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "fil": "Filipino"
+  },
+  "footer": {
+    "osmCredit": "Map data © OpenStreetMap contributors"
+  }
+}

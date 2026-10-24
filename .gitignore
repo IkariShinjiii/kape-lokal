@@ -9,3 +9,8 @@ dist/
 .DS_Store
 *.log
 graphify-out/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+

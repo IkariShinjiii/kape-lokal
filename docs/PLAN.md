@@ -33,7 +33,7 @@ A local cafe finder. A visitor sees cafes near them and can tell at a glance whe
 | Directions | Deep link to Google Maps | Decided: Google does the routing. |
 | Hosting | Vercel | Matches Next.js. |
 | Validation and forms | Zod + React Hook Form | For the admin and owner forms. |
-| Translations | next-intl | English main, Filipino option. |
+| Translations | Next.js built-in pattern: `proxy.ts` locale redirect + JSON dictionaries | English main, Filipino option. No extra library, which suits this Next.js version's `cacheComponents` mode. |
 | Data import | Overpass API script (Node/TypeScript) | Seeds Iloilo City cafes from OpenStreetMap. |
 | Testing | Vitest (logic), Playwright (key flows) | Small, focused set. |
 
@@ -116,7 +116,23 @@ The goal is to promote local cafes, especially specialty coffee places such as N
 
 Notes: the Protomaps dark theme and region extract size come from its documentation and my own knowledge. I haven't downloaded the Iloilo extract yet, so its exact size is unconfirmed. Whether MapTiler's free plan fits a free community app is a question for MapTiler, not something I can settle.
 
-Recommendation: **Protomaps, self-hosted.** It costs almost nothing, never hits a usage cap, and keeps the dark and later light themes under our control. The extra setup is a one-time cost in milestone 4.
+Decided: **Protomaps, self-hosted.** It costs almost nothing, never hits a usage cap, and keeps the dark and later light themes under our control. The extra setup is a one-time cost in milestone 4. Self-hosting also means no provider terms stop us from running ads.
+
+## Making the project pay for itself (decided in principle)
+
+You are putting money in, so the app should earn at least its running costs. Goal: cover hosting, the database and map storage with a small amount of advertising, without turning the app into an ad wall or hurting the local-cafe mission.
+
+Ground rules:
+- Few ad slots. One small banner in the list view and one on the cafe detail page. No ads over the map and none that cover the Directions button.
+- Anything paid is labeled "Sponsored". A paid placement never changes the honest ranking of the normal Nearby list.
+- Local first: prefer local sponsors over generic ad networks.
+
+Options, from simplest to most work:
+1. **Ad network banner (for example Google AdSense).** Quick to add, low income at first, and the ads are not under our control. Needs a privacy notice and cookie consent.
+2. **Local sponsor slot.** A cafe or local business pays a flat monthly fee for a labeled "Featured" spot at the top of the list or a banner. Fits the mission and pays better per slot, but needs you to sell it.
+3. **Cafe owner perks, after owner accounts exist.** Optional paid extras such as more photos or a highlighted pin.
+
+Starting plan: build a single reusable `<AdSlot>` component with a placeholder, launch without ads, and turn on option 2 and then option 1 once there is real traffic. Costs to cover are estimated at launch: domain (yearly), Supabase and Vercel free tiers (likely $0 at first), and map file storage (cents).
 
 ## Still open
 - Map tile provider: pick from the table above. Recommended: Protomaps.

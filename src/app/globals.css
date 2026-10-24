@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+/* Barako palette. Dark is the default. A light theme will override these
+   tokens under :root[data-theme="light"] later, so components never use raw colors. */
+:root {
+  --roast: #1a1411;
+  --crema: #251c17;
+  --line: #4a3a30;
+  --ember: #e8742c;
+  --leaf: #b5d98f;
+  --foam: #f1e6d8;
+  --mute: #a8998a;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-roast: var(--roast);
+  --color-crema: var(--crema);
+  --color-line: var(--line);
+  --color-ember: var(--ember);
+  --color-leaf: var(--leaf);
+  --color-foam: var(--foam);
+  --color-mute: var(--mute);
+  --font-sans: var(--font-barlow);
+  --font-display: var(--font-barlow-condensed);
+}
+
+body {
+  background: var(--roast);
+  color: var(--foam);
+  font-family: var(--font-barlow), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}
