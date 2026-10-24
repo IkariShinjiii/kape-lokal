@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
@@ -102,6 +103,7 @@ export function CafeExplorer({
       : t(dict.home.results, { count: visible.length });
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="flex h-dvh flex-col">
       <header className="flex flex-col gap-3 px-4 pt-4 pb-3">
         <div className="flex items-center justify-between gap-3">
@@ -203,21 +205,31 @@ export function CafeExplorer({
             bottomPadding={SHEET_HEIGHT}
           />
           <div className="absolute inset-x-0 bottom-0 rounded-t-2xl border-t border-line bg-roast/95 p-3 pb-5 backdrop-blur">
-            {selected ? (
-              <CafeCard
-                sheet
-                cafe={selected.cafe}
-                distance={selected.distance}
-                lang={lang}
-                dict={dict}
-              />
-            ) : (
-              <p className="py-6 text-center text-mute">
-                {visible.length === 0
-                  ? dict.home.noResults
-                  : dict.home.selectHint}
-              </p>
-            )}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={selected ? selected.cafe.id : "hint"}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
+                {selected ? (
+                  <CafeCard
+                    sheet
+                    cafe={selected.cafe}
+                    distance={selected.distance}
+                    lang={lang}
+                    dict={dict}
+                  />
+                ) : (
+                  <p className="py-6 text-center text-mute">
+                    {visible.length === 0
+                      ? dict.home.noResults
+                      : dict.home.selectHint}
+                  </p>
+                )}
+              </motion.div>
+            </AnimatePresence>
             <p className="mt-2 flex items-center justify-between gap-3 text-xs text-mute">
               <Link href={`/${lang}/suggest`} className="underline">
                 {dict.home.suggest}
@@ -232,10 +244,16 @@ export function CafeExplorer({
             <p className="py-10 text-center text-mute">{dict.home.noResults}</p>
           ) : (
             <ul className="flex flex-col gap-3">
-              {visible.map(({ cafe, distance }) => (
-                <li key={cafe.id}>
+              {visible.map(({ cafe, distance }, i) => (
+                <motion.li
+                  key={cafe.id}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  // Only the first screenful staggers; the rest appear together.
+                  transition={{ duration: 0.25, ease: "easeOut", delay: Math.min(i, 8) * 0.04 }}
+                >
                   <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} />
-                </li>
+                </motion.li>
               ))}
             </ul>
           )}
@@ -248,5 +266,6 @@ export function CafeExplorer({
         </main>
       )}
     </div>
+    </MotionConfig>
   );
 }
