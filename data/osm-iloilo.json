@@ -1,0 +1,2003 @@
+[
+ {
+  "type": "node",
+  "id": 627790741,
+  "lat": 10.7190212,
+  "lon": 122.5598274,
+  "tags": {
+   "amenity": "cafe",
+   "internet_access": "public"
+  }
+ },
+ {
+  "type": "node",
+  "id": 663951398,
+  "lat": 10.7263247,
+  "lon": 122.5567495,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Coffee Break"
+  }
+ },
+ {
+  "type": "node",
+  "id": 942493172,
+  "lat": 10.697197,
+  "lon": 122.56918,
+  "tags": {
+   "alt_name": "Dunkin' Donuts",
+   "amenity": "cafe",
+   "brand": "Dunkin'",
+   "brand:wikidata": "Q847743",
+   "brand:wikipedia": "en:Dunkin' Donuts",
+   "cuisine": "donut;coffee_shop",
+   "name": "Dunkin'",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 942498029,
+  "lat": 10.7004635,
+  "lon": 122.5575492,
+  "tags": {
+   "addr:street": "General Luna Street",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Coffee Break"
+  }
+ },
+ {
+  "type": "node",
+  "id": 942506036,
+  "lat": 10.7054521,
+  "lon": 122.552023,
+  "tags": {
+   "amenity": "cafe",
+   "name": "David Tea House"
+  }
+ },
+ {
+  "type": "node",
+  "id": 1242068507,
+  "lat": 10.6998241,
+  "lon": 122.5605645,
+  "tags": {
+   "addr:housename": "FerryMar Hotel",
+   "amenity": "cafe",
+   "name": "Sailor's Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 2724847361,
+  "lat": 10.7046339,
+  "lon": 122.5506896,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop;dessert",
+   "name": "Coffee Break"
+  }
+ },
+ {
+  "type": "node",
+  "id": 2724850084,
+  "lat": 10.7045087,
+  "lon": 122.5507887,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Nothing But Desserts"
+  }
+ },
+ {
+  "type": "node",
+  "id": 2724881951,
+  "lat": 10.6982147,
+  "lon": 122.5678681,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Dulgies"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3120848462,
+  "lat": 10.6948512,
+  "lon": 122.5649553,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housename": "Robinsons Place Iloilo",
+   "amenity": "cafe",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "brand:wikipedia": "en:Starbucks",
+   "cuisine": "coffee_shop",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3150838395,
+  "lat": 10.7086876,
+  "lon": 122.5678366,
+  "tags": {
+   "air_conditioning": "no",
+   "amenity": "cafe",
+   "bar": "no",
+   "brand": "Madge Café",
+   "check_date": "2024-04-07",
+   "cuisine": "regional;coffee_shop",
+   "drive_through": "no",
+   "highchair": "no",
+   "name": "Madge Café",
+   "payment:cards": "no",
+   "payment:cash": "yes",
+   "payment:credit_cards": "no",
+   "payment:debit_cards": "no",
+   "payment:qr_code": "yes",
+   "source": "survey",
+   "start_date": "1951",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3315755828,
+  "lat": 10.7086097,
+  "lon": 122.5497506,
+  "tags": {
+   "addr:city": "Iloilo City",
+   "addr:floor": "G",
+   "addr:postcode": "5000",
+   "addr:street": "Donato Pison Avenue",
+   "amenity": "cafe",
+   "contact:facebook": "https://www.facebook.com/DessertInTheSky",
+   "cuisine": "dessert",
+   "email": "dessertsinthesky@yahoo.com.ph",
+   "internet_access": "yes",
+   "level": "0",
+   "name": "Dessert in the Sky",
+   "opening_hours": "Mo-Th 10:00-20:00, Fr-Sa 10:00-21:00",
+   "phone": "+63 033 321 5229",
+   "smoking": "no",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3537850318,
+  "lat": 10.7251563,
+  "lon": 122.5510838,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:place": "Cuartero",
+   "addr:postcode": "5000",
+   "amenity": "cafe",
+   "cuisine": "fusion;malaysian;vietnamese;regional",
+   "name": "Takuri Cafe",
+   "opening_hours": "Mo-Su 10:30-19:00",
+   "phone": "+639497130559"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3537855599,
+  "lat": 10.7083408,
+  "lon": 122.5517082,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Madge Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3537856743,
+  "lat": 10.6913582,
+  "lon": 122.5691204,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Kapehan ni Akhoy"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3537889075,
+  "lat": 10.6961936,
+  "lon": 122.5514725,
+  "tags": {
+   "addr:street": "Timawa Street",
+   "amenity": "cafe",
+   "name": "Le Reve Deli & Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3764685449,
+  "lat": 10.6929973,
+  "lon": 122.5723069,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:postcode": "5000",
+   "addr:street": "J. M. Basa Street",
+   "amenity": "cafe",
+   "cuisine": "pizza",
+   "internet_access": "no",
+   "name": "Love and Kisses Pizza",
+   "opening_hours": "09:00-18:00",
+   "smoking": "no"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3833693430,
+  "lat": 10.724937,
+  "lon": 122.5492642,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Carlo's Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3866104012,
+  "lat": 10.6965546,
+  "lon": 122.5438074,
+  "tags": {
+   "addr:street": "Lopez Jaena Street",
+   "amenity": "cafe",
+   "name": "Café Panay"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3885525087,
+  "lat": 10.696283,
+  "lon": 122.5434397,
+  "tags": {
+   "addr:street": "Lopez Jaena Street",
+   "amenity": "cafe",
+   "name": "Coffee Stroll",
+   "outdoor": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 3885654973,
+  "lat": 10.6891462,
+  "lon": 122.5218382,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Pie's Surprise"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4027322963,
+  "lat": 10.706408,
+  "lon": 122.5487943,
+  "tags": {
+   "addr:building": "Block 4",
+   "addr:housename": "The Shops at Atria",
+   "addr:street": "Donato Pison Avenue",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "bar": "no",
+   "branch": "Atria",
+   "brand": "Madge Café",
+   "check_date": "2024-06-12",
+   "cuisine": "coffee_shop;regional",
+   "food": "yes",
+   "internet_access": "no",
+   "name": "Madge Café",
+   "outdoor_seating": "yes",
+   "payment:cash": "yes",
+   "payment:credit_cards": "yes",
+   "payment:debit_cards": "yes",
+   "smoking": "no",
+   "source": "survey",
+   "takeaway": "yes",
+   "toilets": "no",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4273019301,
+  "lat": 10.7067063,
+  "lon": 122.5532604,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:street": "East Service Road",
+   "amenity": "cafe",
+   "name": "Fuel.ph"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4518966189,
+  "lat": 10.6964141,
+  "lon": 122.5445598,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Cafe et Al",
+   "name:en": "Cafe et Al"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4519127091,
+  "lat": 10.7008885,
+  "lon": 122.5535712,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Café Augusto",
+   "name:en": "Cafe San Angel"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4547791193,
+  "lat": 10.7131584,
+  "lon": 122.5293084,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Papoo Cafe",
+   "name:en": "Papoo Cafe",
+   "phone": "5144960"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4584886692,
+  "lat": 10.7372522,
+  "lon": 122.5547045,
+  "tags": {
+   "addr:street": "Dama de Noche Street",
+   "amenity": "cafe",
+   "name": "Jom's Coffee",
+   "name:en": "Jom's Coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4586246889,
+  "lat": 10.7203418,
+  "lon": 122.5396875,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Cafe Tercero",
+   "name:en": "Cafe Tercero"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4590671989,
+  "lat": 10.7164396,
+  "lon": 122.5431076,
+  "tags": {
+   "amenity": "cafe",
+   "name": "13th Street Espresso",
+   "name:en": "13th Street Espresso"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4728752991,
+  "lat": 10.7040949,
+  "lon": 122.5515258,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Sharetea",
+   "name:en": "Sharetea"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4788974722,
+  "lat": 10.711721,
+  "lon": 122.569906,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Dova Cafe",
+   "name:en": "Dova Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4893712822,
+  "lat": 10.7641451,
+  "lon": 122.5791787,
+  "tags": {
+   "amenity": "cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4928561721,
+  "lat": 10.6962344,
+  "lon": 122.5453295,
+  "tags": {
+   "addr:housename": "GT Plaza Mall",
+   "addr:street": "Marcelo H. del Pilar Street",
+   "amenity": "cafe",
+   "name": "Moonleaf Cafe",
+   "name:en": "Moonleaf Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4933470421,
+  "lat": 10.6927932,
+  "lon": 122.5692009,
+  "tags": {
+   "addr:street": "Fermin Caram Avenue",
+   "amenity": "cafe",
+   "name": "De Leonian's Kapehan",
+   "name:en": "De Leonian's Kapehan"
+  }
+ },
+ {
+  "type": "node",
+  "id": 4956389422,
+  "lat": 10.700252,
+  "lon": 122.5602756,
+  "tags": {
+   "addr:postcode": "5000",
+   "addr:street": "General Luna Street",
+   "amenity": "cafe",
+   "name": "Newpost",
+   "name:en": "Newpost"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5049855022,
+  "lat": 10.7205095,
+  "lon": 122.5594316,
+  "tags": {
+   "addr:street": "Eugenio Lopez Street",
+   "amenity": "cafe",
+   "name": "Coffee BrewTherhood",
+   "name:en": "Coffee BrewTherhood",
+   "opening_hours": "Mo-Sa 10:00-22:00; Su 13:00-22:00"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5259602724,
+  "lat": 10.6950473,
+  "lon": 122.5653831,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housename": "Robinsons Place Iloilo",
+   "amenity": "cafe",
+   "name": "J.Co Donuts"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5292763029,
+  "lat": 10.703471,
+  "lon": 122.5509545,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Bluejay Coffee & Co"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5760074822,
+  "lat": 10.7233566,
+  "lon": 122.5590119,
+  "tags": {
+   "addr:street": "Commission Civil Street",
+   "amenity": "cafe",
+   "name": "C U Tomorrow"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5999838787,
+  "lat": 10.6923141,
+  "lon": 122.5717323,
+  "tags": {
+   "addr:street": "Ortiz Street",
+   "amenity": "cafe",
+   "name": "Bistro Marino Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 5999838791,
+  "lat": 10.6907839,
+  "lon": 122.5715101,
+  "tags": {
+   "addr:street": "Ortiz Street",
+   "amenity": "cafe",
+   "brand": "Mister Donut",
+   "brand:wikipedia": "en:Mister Donut",
+   "cuisine": "donut",
+   "name": "Mister Donut",
+   "name:en": "Mister Donut",
+   "website": "https://www.mister-donut.com"
+  }
+ },
+ {
+  "type": "node",
+  "id": 6035830285,
+  "lat": 10.7176774,
+  "lon": 122.547545,
+  "tags": {
+   "addr:street": "Megaworld Boulevard",
+   "amenity": "cafe",
+   "name": "Coffee Break"
+  }
+ },
+ {
+  "type": "node",
+  "id": 7018636986,
+  "lat": 10.6883942,
+  "lon": 122.52475,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Iloilo Coffee House"
+  }
+ },
+ {
+  "type": "node",
+  "id": 7020661885,
+  "lat": 10.7059232,
+  "lon": 122.5635921,
+  "tags": {
+   "addr:street": "Hechanova Street",
+   "amenity": "cafe",
+   "name": "Miracle\"s Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 7291359085,
+  "lat": 10.7566449,
+  "lon": 122.5925252,
+  "tags": {
+   "amenity": "cafe",
+   "name": "bebor & mila talabahan"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8385675341,
+  "lat": 10.7154919,
+  "lon": 122.5378191,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:postcode": "5000",
+   "addr:street": "Tabucan Road",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop;bubble_tea;cake",
+   "delivery": "yes",
+   "name": "StirBear Coffee Milktea Pastries",
+   "opening_hours": "Mo-Su 08:00-20:00",
+   "phone": "+63 999 309 6477",
+   "website": "https://stirbear.com"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8633764817,
+  "lat": 10.6873032,
+  "lon": 122.5198145,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Glory's Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8670423138,
+  "lat": 10.697181,
+  "lon": 122.5605362,
+  "tags": {
+   "amenity": "cafe",
+   "fixme": "name",
+   "opening_hours": "24/7"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8671715406,
+  "lat": 10.6982646,
+  "lon": 122.5678682,
+  "tags": {
+   "addr:street": "Valeria Street",
+   "amenity": "cafe",
+   "name": "Xin Café"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8672033118,
+  "lat": 10.7010982,
+  "lon": 122.5660662,
+  "tags": {
+   "addr:street": "General Luna Street",
+   "amenity": "cafe",
+   "name": "Loco"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8678189338,
+  "lat": 10.6951905,
+  "lon": 122.5705831,
+  "tags": {
+   "addr:street": "Aldeguer Street",
+   "amenity": "cafe",
+   "name": "Harbor Town Café"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8681534736,
+  "lat": 10.6976363,
+  "lon": 122.5618364,
+  "tags": {
+   "addr:street": "Jalandoni Street",
+   "amenity": "cafe",
+   "name": "Celo Café"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8681719102,
+  "lat": 10.696735,
+  "lon": 122.561595,
+  "tags": {
+   "addr:street": "Jalandoni Street",
+   "amenity": "cafe",
+   "name": "Rapha Palm"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8707302917,
+  "lat": 10.726491,
+  "lon": 122.5488055,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Santey Barley"
+  }
+ },
+ {
+  "type": "node",
+  "id": 8903396536,
+  "lat": 10.6870929,
+  "lon": 122.5173496,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housenumber": "8",
+   "addr:postcode": "5000",
+   "addr:street": "Quezon Street",
+   "amenity": "cafe",
+   "internet_access": "yes",
+   "name": "Toykits Internet Cafe",
+   "outdoor_seating": "no"
+  }
+ },
+ {
+  "type": "node",
+  "id": 9882995817,
+  "lat": 10.6935849,
+  "lon": 122.537739,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Kofi & Kompany"
+  }
+ },
+ {
+  "type": "node",
+  "id": 9961144286,
+  "lat": 10.7085842,
+  "lon": 122.5514934,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housenumber": "PH52+FJ9",
+   "addr:postcode": "5000",
+   "addr:street": "Benigno S. Aquino, Jr. Avenue",
+   "amenity": "cafe",
+   "contact:facebook": "https://www.facebook.com/monkeygroundscoffee",
+   "contact:mobile": "+63 917 179 9027",
+   "cuisine": "coffee_shop;sandwich",
+   "delivery": "yes",
+   "diet:vegan": "yes",
+   "diet:vegetarian": "yes",
+   "email": "monkeygrounds.coffee@gmail.com",
+   "name": "Monkey Grounds Coffee",
+   "opening_hours": "Mo-Su 06:30-22:00",
+   "outdoor_seating": "yes",
+   "phone": "+63 33 323 3438",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10030114252,
+  "lat": 10.7072082,
+  "lon": 122.5491833,
+  "tags": {
+   "addr:building": "Block 2",
+   "addr:housename": "The Shops at Atria",
+   "addr:street": "Donato Pison Avenue",
+   "amenity": "cafe",
+   "brand": "Bo's Coffee",
+   "brand:wikidata": "Q30591352",
+   "check_date": "2024-06-12",
+   "cuisine": "coffee_shop",
+   "delivery": "yes",
+   "name": "Bo's Coffee",
+   "opening_hours": "07:00-23:00",
+   "takeaway": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10030114323,
+  "lat": 10.708193,
+  "lon": 122.5493024,
+  "tags": {
+   "amenity": "cafe",
+   "contact:facebook": "https://www.facebook.com/tigersugarphilippines",
+   "cuisine": "bubble_tea",
+   "delivery": "yes",
+   "name": "Tiger Sugar",
+   "takeaway": "yes",
+   "wikidata": "Q76099070",
+   "wikimedia_commons": "Category:Tiger Sugar (Food shop) 老虎堂"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10159350318,
+  "lat": 10.7351418,
+  "lon": 122.539315,
+  "tags": {
+   "addr:street": "East Service Road",
+   "amenity": "cafe",
+   "contact:instagram": "bnc_iloilocity",
+   "name": "BnC"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10692456581,
+  "lat": 10.7221424,
+  "lon": 122.560209,
+  "tags": {
+   "addr:street": "Commission Civil Street",
+   "amenity": "cafe",
+   "level": "0",
+   "name": "Tinukib Café",
+   "opening_hours": "Mo-Fr 08:30-16:00"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10699411412,
+  "lat": 10.7066854,
+  "lon": 122.5679354,
+  "tags": {
+   "addr:street": "Commissioner Efraim B. Treñas Boulevard",
+   "amenity": "cafe",
+   "cuisine": "regional;breakfast",
+   "description": "Serves coffee with egg \"cream\", made with egg yolks, condensed milk, and sugar; ala Vietnamese Cà phê trứng",
+   "name": "Mac's Garahe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10792273843,
+  "lat": 10.710171,
+  "lon": 122.5663056,
+  "tags": {
+   "addr:street": "Luna Street",
+   "amenity": "cafe",
+   "name": "Coffeebreak"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10796191375,
+  "lat": 10.7099048,
+  "lon": 122.5660609,
+  "tags": {
+   "addr:street": "Luna Street",
+   "amenity": "cafe",
+   "name": "Hereafter"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10796215509,
+  "lat": 10.7024143,
+  "lon": 122.5713802,
+  "tags": {
+   "addr:street": "Rizal Street",
+   "amenity": "cafe",
+   "name": "Abyan's"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10810579505,
+  "lat": 10.732288,
+  "lon": 122.5505645,
+  "tags": {
+   "addr:city": "Iloilo City",
+   "addr:district": "Jaro",
+   "addr:floor": "2F",
+   "addr:postcode": "5000",
+   "addr:province": "Iloilo",
+   "addr:street": "Lopez Jaena Street",
+   "amenity": "cafe",
+   "internet_access": "wlan",
+   "level": "1",
+   "name": "Ceylon Coffee Club",
+   "opening_hours": "Mo-Su 08:00-22:00",
+   "operator": "Island Tea Co."
+  }
+ },
+ {
+  "type": "node",
+  "id": 10814043547,
+  "lat": 10.6963505,
+  "lon": 122.5435443,
+  "tags": {
+   "addr:street": "Lopez Jaena Street",
+   "amenity": "cafe",
+   "name": "Kurukape",
+   "outdoor_seating": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10831166805,
+  "lat": 10.7225082,
+  "lon": 122.531921,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Kape Benderan"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10866476937,
+  "lat": 10.7248891,
+  "lon": 122.550093,
+  "tags": {
+   "addr:street": "East Service Road",
+   "amenity": "cafe",
+   "level": "2",
+   "name": "The Clinic Coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10907545584,
+  "lat": 10.7194898,
+  "lon": 122.5354819,
+  "tags": {
+   "amenity": "cafe",
+   "currency:XBT": "yes",
+   "name": "Kurtos Kalacs",
+   "payment:lightning": "yes",
+   "payment:onchain": "yes",
+   "survey:date": "2023-05-18",
+   "website": "https://pouch.ph/kurtoskalacs"
+  }
+ },
+ {
+  "type": "node",
+  "id": 10923449608,
+  "lat": 10.7232298,
+  "lon": 122.5588824,
+  "tags": {
+   "addr:street": "Commission Civil Street",
+   "amenity": "cafe",
+   "name": "Cafe Lilia",
+   "payment:lightning": "yes",
+   "payment:onchain": "yes",
+   "survey:date": "2023-05-24",
+   "website": "https://pouch.ph/cafelilia"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11230976437,
+  "lat": 10.7263934,
+  "lon": 122.5566301,
+  "tags": {
+   "addr:street": "Lopez Jaena Street",
+   "amenity": "cafe",
+   "name": "Superhouse Café",
+   "opening_hours": "Mo-Su 09:00-18:00",
+   "website": "https://superhouse-cafecorp.com/"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11554126669,
+  "lat": 10.6799146,
+  "lon": 122.5080974,
+  "tags": {
+   "addr:postcode": "5000",
+   "addr:street": "Iloilo South Coastal Road",
+   "amenity": "cafe",
+   "contact:facebook": "cafegloriaph",
+   "name": "Café Gloria"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11743043171,
+  "lat": 10.725284,
+  "lon": 122.5447453,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:neighbourhood": "Zone 4",
+   "addr:postcode": "5000",
+   "addr:quarter": "Mandurriao",
+   "amenity": "cafe",
+   "cuisine": "asian;breakfast;coffee_shop;filipino",
+   "internet_access": "wlan",
+   "name": "The Meating Point Cafe",
+   "opening_hours": "Mo-Su 06:00-18:00",
+   "phone": "3325009"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11759467669,
+  "lat": 10.7082812,
+  "lon": 122.5526569,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Seventy N Coffee + Drinkery"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11762540988,
+  "lat": 10.6891737,
+  "lon": 122.5218386,
+  "tags": {
+   "addr:street": "J. V. Jocson Street",
+   "amenity": "cafe",
+   "name": "Sanctis"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11762553869,
+  "lat": 10.6891813,
+  "lon": 122.522066,
+  "tags": {
+   "addr:street": "J. V. Jocson Street",
+   "amenity": "cafe",
+   "name": "Roven Coffee Hub"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11974311931,
+  "lat": 10.7059261,
+  "lon": 122.545847,
+  "tags": {
+   "addr:housename": "Tower 1",
+   "amenity": "cafe",
+   "brand": "The Coffee Bean & Tea Leaf",
+   "brand:wikidata": "Q1141384",
+   "check_date": "2024-06-12",
+   "cuisine": "coffee_shop",
+   "name": "The Coffee Bean & Tea Leaf",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11975181555,
+  "lat": 10.7070393,
+  "lon": 122.548967,
+  "tags": {
+   "addr:building": "Block 2",
+   "addr:housename": "The Shops at Atria",
+   "addr:street": "Donato Pison Avenue",
+   "amenity": "cafe",
+   "check_date": "2024-06-12",
+   "name": "Neighbor Coffee",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11976731843,
+  "lat": 10.7069981,
+  "lon": 122.5487013,
+  "tags": {
+   "addr:building": "Block 1",
+   "addr:housename": "The Shops at Atria",
+   "addr:street": "Donato Pison Avenue",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "check_date": "2024-06-17",
+   "contact:facebook": "HOUSEOFMONKEYSCAFE",
+   "cuisine": "regional;coffee_shop",
+   "delivery": "yes",
+   "diet:keto": "yes",
+   "diet:vegetarian": "yes",
+   "highchair": "yes",
+   "internet_access": "wlan",
+   "internet_access:fee": "customers",
+   "name": "House of Monkeys Café",
+   "opening_hours": "06:00-21:00",
+   "outdoor_seating": "yes",
+   "payment:cash": "yes",
+   "payment:credit_cards": "yes",
+   "payment:debit_cards": "yes",
+   "payment:qr_code": "yes",
+   "smoking": "no",
+   "source": "survey",
+   "takeaway": "yes",
+   "toilets": "no",
+   "toilets:wheelchair": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 11987126222,
+  "lat": 10.7143522,
+  "lon": 122.5459425,
+  "tags": {
+   "addr:housename": "Three Techno Place",
+   "addr:street": "Megaworld Boulevard",
+   "addr:unit": "4",
+   "amenity": "cafe",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "check_date": "2024-06-17",
+   "cuisine": "coffee_shop",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12027591232,
+  "lat": 10.6961736,
+  "lon": 122.5515857,
+  "tags": {
+   "addr:city": "Iloilo City",
+   "addr:postcode": "5000",
+   "addr:province": "Iloilo",
+   "addr:street": "Timawa Street",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "internet_access": "yes",
+   "internet_access:fee": "customers",
+   "name": "D' Cupp Coffee And Tea",
+   "opening_hours": "Mon-Sat 9:00-20:00",
+   "outdoor_seating": "no",
+   "phone": "3296014",
+   "website": "https://www.facebook.com/profile.php?id=61555726804048"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12135989444,
+  "lat": 10.7174789,
+  "lon": 122.5467701,
+  "tags": {
+   "addr:floor": "1",
+   "amenity": "cafe",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "check_date": "2025-09-30",
+   "cuisine": "coffee_shop",
+   "level": "1",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12139312635,
+  "lat": 10.7006435,
+  "lon": 122.5604039,
+  "tags": {
+   "amenity": "cafe",
+   "name": "JD Bakeshop"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12178150977,
+  "lat": 10.7129567,
+  "lon": 122.5506555,
+  "tags": {
+   "amenity": "cafe",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "cuisine": "coffee_shop",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "opening_hours": "Mo-Su 08:00-22:00",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12178150995,
+  "lat": 10.7149746,
+  "lon": 122.5518674,
+  "tags": {
+   "addr:housename": "SM City Iloilo",
+   "amenity": "cafe",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "cuisine": "coffee_shop",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "opening_hours": "07:00-22:00",
+   "takeaway": "yes",
+   "toilets": "separate"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12213377080,
+  "lat": 10.7175134,
+  "lon": 122.5481088,
+  "tags": {
+   "addr:housename": "Festive Walk Parade",
+   "amenity": "cafe",
+   "name": "Book Latté Café",
+   "strapline": "Library & Art Space"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12213377083,
+  "lat": 10.7171319,
+  "lon": 122.5479607,
+  "tags": {
+   "amenity": "cafe",
+   "brand": "Sharetea",
+   "brand:wikidata": "Q64827032",
+   "cuisine": "bubble_tea",
+   "name": "Sharetea",
+   "name:en": "Sharetea",
+   "name:zh": "歇腳亭",
+   "shop": "tea",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12260360303,
+  "lat": 10.7336437,
+  "lon": 122.5486965,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Kai Royal Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12260361001,
+  "lat": 10.7337142,
+  "lon": 122.5488574,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Cafe Lilia"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12383581391,
+  "lat": 10.7128841,
+  "lon": 122.5510514,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Kurukape"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12383581393,
+  "lat": 10.7155103,
+  "lon": 122.5513268,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Bluejay Coffee & Company"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12388074792,
+  "lat": 10.7077029,
+  "lon": 122.5545147,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Krema"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12410550801,
+  "lat": 10.7070457,
+  "lon": 122.5596689,
+  "tags": {
+   "addr:postcode": "5000",
+   "addr:street": "Prime Estate Iloilo",
+   "amenity": "cafe",
+   "email": "em.chaptercoffee@gmail.com",
+   "internet_access": "wlan",
+   "name": "Chapter Coffee Roastery & Café Inc",
+   "website": "https://chaptercoffee.shop/"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12422541390,
+  "lat": 10.7148858,
+  "lon": 122.5508592,
+  "tags": {
+   "amenity": "cafe",
+   "brand": "The Coffee Bean & Tea Leaf",
+   "brand:wikidata": "Q1141384",
+   "cuisine": "coffee_shop",
+   "name": "The Coffee Bean & Tea Leaf",
+   "opening_hours": "Mo-Su,PH 10:00-22:00",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12422541391,
+  "lat": 10.7166605,
+  "lon": 122.5461907,
+  "tags": {
+   "addr:floor": "1",
+   "amenity": "cafe",
+   "brand": "The Coffee Bean & Tea Leaf",
+   "brand:wikidata": "Q1141384",
+   "check_date": "2025-09-30",
+   "cuisine": "coffee_shop",
+   "level": "1",
+   "name": "The Coffee Bean & Tea Leaf",
+   "opening_hours": "Mo-Su,PH 10:00-21:00",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12430355533,
+  "lat": 10.7130673,
+  "lon": 122.5526237,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Café Seoul"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12591784118,
+  "lat": 10.7152381,
+  "lon": 122.546211,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Coffeebreak NXT",
+   "opening_hours": "24/7"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12591784123,
+  "lat": 10.7178314,
+  "lon": 122.5466583,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Cafégasm"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12591784125,
+  "lat": 10.7179995,
+  "lon": 122.5469081,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "bubble_tea",
+   "name": "Macao Imperial Tea"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12591895841,
+  "lat": 10.7156035,
+  "lon": 122.5508751,
+  "tags": {
+   "amenity": "cafe",
+   "brand": "Seattle's Best Coffee",
+   "brand:wikidata": "Q766329",
+   "cuisine": "coffee_shop",
+   "name": "Seattle's Best Coffee",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12591895844,
+  "lat": 10.7157077,
+  "lon": 122.5510975,
+  "tags": {
+   "addr:floor": "G",
+   "addr:housename": "SM City Iloilo",
+   "addr:street": "Benigno S. Aquino, Jr. Avenue",
+   "amenity": "cafe",
+   "check_date": "2026-07-04",
+   "cuisine": "coffee_shop",
+   "level": "0",
+   "name": "Bluejay Coffee & Co"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12611770086,
+  "lat": 10.7027141,
+  "lon": 122.5601031,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Chapter Coffee La Paz"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12819380802,
+  "lat": 10.7025784,
+  "lon": 122.550756,
+  "tags": {
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "check_date": "2025-12-06",
+   "cuisine": "coffee_shop",
+   "internet_access": "wlan",
+   "internet_access:fee": "customers",
+   "name": "Mauro's Latte Coffee Cafe",
+   "opening_hours": "10:00-21:00",
+   "outdoor_seating": "yes",
+   "payment:cash": "yes",
+   "payment:credit_cards": "yes",
+   "payment:qr_code": "yes",
+   "toilets": "yes",
+   "toilets:wheelchair": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 12925223422,
+  "lat": 10.6995933,
+  "lon": 122.559865,
+  "tags": {
+   "addr:housename": "Bernwood Tower",
+   "amenity": "cafe",
+   "name": "Space Bar",
+   "opening_hours": "Mo-Su 07:00-22:00",
+   "website": "https://bar.space.com.ph"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13229703201,
+  "lat": 10.6976463,
+  "lon": 122.5673204,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2025-10-13",
+   "name": "Hide Away"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13230206942,
+  "lat": 10.7033918,
+  "lon": 122.5516498,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2025-10-13",
+   "name": "Local Coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13230206943,
+  "lat": 10.7035252,
+  "lon": 122.5516467,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2025-10-13",
+   "name": "The Cravery",
+   "start_date": "2024"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13232125026,
+  "lat": 10.6976785,
+  "lon": 122.5671982,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2025-10-14",
+   "name": "JD",
+   "shop": "bakery"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13232125027,
+  "lat": 10.6976732,
+  "lon": 122.5672818,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2025-10-14",
+   "cuisine": "coffee_shop",
+   "name": "Cicada Cafe",
+   "opening_hours": "Mo-Sa 09:00-18:00"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13354771995,
+  "lat": 10.6966044,
+  "lon": 122.5618942,
+  "tags": {
+   "addr:housename": "RBG Building",
+   "addr:housenumber": "19",
+   "addr:street": "Jalandoni Street",
+   "amenity": "cafe",
+   "check_date": "2025-12-05",
+   "cuisine": "coffee_shop",
+   "description": "They showcase their collection of vintage cameras, vinyl records (and old telephones.)",
+   "internet_access": "wlan",
+   "internet_access:fee": "customers",
+   "level": "0",
+   "man_made": "charge_point",
+   "name": "The Coffee Studio",
+   "opening_hours": "09:00-21:00",
+   "outdoor_seating": "no",
+   "payment:cards": "no",
+   "payment:cash": "yes",
+   "payment:credit_cards": "no",
+   "payment:debit_cards": "no",
+   "power_supply": "yes",
+   "toilets": "separate",
+   "tourism": "yes",
+   "wheelchair": "no"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13360565350,
+  "lat": 10.718786,
+  "lon": 122.5506188,
+  "tags": {
+   "addr:housename": "B Hive Hotel",
+   "addr:street": "Taft Street",
+   "amenity": "cafe",
+   "indoor_seating": "yes",
+   "name": "Benito's Place",
+   "outdoor_seating": "no"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13572556030,
+  "lat": 10.7136385,
+  "lon": 122.5463798,
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housenumber": "PH52+FJ9",
+   "addr:postcode": "5000",
+   "addr:street": "Benigno S. Aquino, Jr. Avenue",
+   "amenity": "cafe",
+   "contact:facebook": "https://www.facebook.com/monkeygroundscoffee",
+   "contact:mobile": "+63 917 179 9027",
+   "cuisine": "coffee_shop;sandwich",
+   "delivery": "yes",
+   "diet:vegan": "yes",
+   "diet:vegetarian": "yes",
+   "email": "monkeygrounds.coffee@gmail.com",
+   "name": "Monkey Grounds Coffee",
+   "opening_hours": "Mo-Su 06:30-22:00",
+   "outdoor_seating": "yes",
+   "phone": "+63 33 323 3438",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13631311879,
+  "lat": 10.6927588,
+  "lon": 122.5641889,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13631311880,
+  "lat": 10.6926479,
+  "lon": 122.5644349,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "bean there. coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13793406401,
+  "lat": 10.6950288,
+  "lon": 122.5404045,
+  "tags": {
+   "addr:housenumber": "142",
+   "addr:postcode": "5000",
+   "addr:street": "San Juan Street",
+   "amenity": "cafe",
+   "name": "Celina's Pastry Café"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13860437235,
+  "lat": 10.6818981,
+  "lon": 122.5145229,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2022",
+   "name": "Kabuki Cafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13979096052,
+  "lat": 10.7128544,
+  "lon": 122.5516902,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2026-07-01",
+   "name": "Coffee Break Nxt",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13979346001,
+  "lat": 10.7128544,
+  "lon": 122.5516902,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2026-07-01",
+   "name": "Coffee Break Nxt",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13982131083,
+  "lat": 10.6993207,
+  "lon": 122.551697,
+  "tags": {
+   "amenity": "cafe",
+   "check_date": "2026-07-01",
+   "name": "Bruskoffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13982320502,
+  "lat": 10.6940612,
+  "lon": 122.5430215,
+  "tags": {
+   "addr:street": "San Antonio Street",
+   "amenity": "cafe",
+   "name": "Coffee But Better",
+   "opening_hours": "08:00-21:00",
+   "operator": "JC Iloilo",
+   "toilets": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13982979506,
+  "lat": 10.692983,
+  "lon": 122.5693424,
+  "tags": {
+   "addr:housename": "SM at Iloilo Central Market",
+   "amenity": "cafe",
+   "level": "0",
+   "name": "Bean there."
+  }
+ },
+ {
+  "type": "node",
+  "id": 13985057194,
+  "lat": 10.6929278,
+  "lon": 122.5695066,
+  "tags": {
+   "addr:housename": "SM at Iloilo Central Market",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "food": "yes",
+   "indoor_seating": "yes",
+   "level": "1",
+   "name": "Taza Verde",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13985057200,
+  "lat": 10.6926353,
+  "lon": 122.5692863,
+  "tags": {
+   "addr:housename": "SM at Iloilo Central Market",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "food": "prepared_meals",
+   "level": "0",
+   "name": "Madge Cafe",
+   "takeaway": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13985063103,
+  "lat": 10.6925328,
+  "lon": 122.5693711,
+  "tags": {
+   "addr:housename": "SM at Iloilo Central Market",
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "food": "prepared_meals",
+   "level": "0",
+   "name": "Centrale",
+   "strapline": "By Kucho",
+   "takeaway": "yes",
+   "wheelchair": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13985063104,
+  "lat": 10.6926185,
+  "lon": 122.5697705,
+  "tags": {
+   "addr:housename": "SM at Iloilo Central Market",
+   "amenity": "cafe",
+   "level": "0",
+   "name": "Sa Poste"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13987362192,
+  "lat": 10.7153398,
+  "lon": 122.5508549,
+  "tags": {
+   "addr:floor": "G",
+   "addr:housename": "SM City Iloilo",
+   "addr:street": "Benigno S. Aquino, Jr. Avenue",
+   "addr:unit": "EX 137",
+   "amenity": "cafe",
+   "check_date": "2026-07-04",
+   "level": "0",
+   "name": "Kucho-kucho",
+   "name:etymology:description": "In the local language, Hiligaynon, \"Kucho-Kucho\" refers to small talk.",
+   "official_name": "Kucho-kucho Coffee Shop",
+   "ref:vatin": "PH93897308600003",
+   "short_name": "Kucho",
+   "wheelchair": "limited"
+  }
+ },
+ {
+  "type": "node",
+  "id": 13987607716,
+  "lat": 10.7153002,
+  "lon": 122.55165,
+  "tags": {
+   "addr:housename": "SM City Iloilo",
+   "addr:street": "Benigno S. Aquino, Jr. Avenue",
+   "amenity": "cafe",
+   "check_date": "2026-07-04",
+   "name": "Kurucafe"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14026664979,
+  "lat": 10.7484504,
+  "lon": 122.5692481,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Oriens Keurig Cafe & Bakery",
+   "outdoor_seating": "no"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14026705715,
+  "lat": 10.7537995,
+  "lon": 122.5594963,
+  "tags": {
+   "air_conditioning": "yes",
+   "amenity": "cafe",
+   "cuisine": "coffee_shop;sandwich;cake;dessert",
+   "internet_access:fee": "customers",
+   "name": "Coffeebreak",
+   "outdoor_seating": "no",
+   "toilets": "yes"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14030933229,
+  "lat": 10.7157617,
+  "lon": 122.547128,
+  "tags": {
+   "amenity": "cafe",
+   "name": "Cafe Aroma Festive Walk Parade"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242453,
+  "lat": 10.7112871,
+  "lon": 122.5444209,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242454,
+  "lat": 10.7170699,
+  "lon": 122.5476149,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee",
+   "shop": "kiosk"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242455,
+  "lat": 10.7110873,
+  "lon": 122.5513927,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee",
+   "shop": "kiosk"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242456,
+  "lat": 10.7071392,
+  "lon": 122.5495355,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee",
+   "shop": "kiosk"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242457,
+  "lat": 10.6941742,
+  "lon": 122.5619198,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee",
+   "shop": "kiosk"
+  }
+ },
+ {
+  "type": "node",
+  "id": 14196242458,
+  "lat": 10.6997464,
+  "lon": 122.5531009,
+  "tags": {
+   "amenity": "cafe",
+   "cuisine": "coffee_shop",
+   "name": "Pickup Coffee",
+   "shop": "kiosk"
+  }
+ },
+ {
+  "type": "way",
+  "id": 381213832,
+  "center": {
+   "lat": 10.7185459,
+   "lon": 122.5428382
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "commercial",
+   "cuisine": "coffee_shop;sandwich",
+   "name": "Coffeebreak Café"
+  }
+ },
+ {
+  "type": "way",
+  "id": 383926983,
+  "center": {
+   "lat": 10.7166139,
+   "lon": 122.551821
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes",
+   "name": "K Spice Cafe"
+  }
+ },
+ {
+  "type": "way",
+  "id": 398949664,
+  "center": {
+   "lat": 10.700178,
+   "lon": 122.5679456
+  },
+  "tags": {
+   "addr:city": "Iloilo",
+   "addr:housenumber": "184-A",
+   "addr:postcode": "5000",
+   "addr:street": "Valeria Street",
+   "amenity": "cafe",
+   "building": "yes",
+   "internet_access": "yes",
+   "name": "ChowFun Food House"
+  }
+ },
+ {
+  "type": "way",
+  "id": 514285133,
+  "center": {
+   "lat": 10.7612172,
+   "lon": 122.5774842
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes",
+   "cuisine": "donut",
+   "name": "Dunkin Donuts"
+  }
+ },
+ {
+  "type": "way",
+  "id": 625011422,
+  "center": {
+   "lat": 10.7127555,
+   "lon": 122.5611272
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes"
+  }
+ },
+ {
+  "type": "way",
+  "id": 1339381298,
+  "center": {
+   "lat": 10.721281,
+   "lon": 122.533169
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes",
+   "cuisine": "coffee_shop",
+   "name": "Shortcut to Coffee"
+  }
+ },
+ {
+  "type": "way",
+  "id": 1347088284,
+  "center": {
+   "lat": 10.7314371,
+   "lon": 122.559399
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes",
+   "name": "Cafe Año"
+  }
+ },
+ {
+  "type": "way",
+  "id": 1392882517,
+  "center": {
+   "lat": 10.7061164,
+   "lon": 122.5470761
+  },
+  "tags": {
+   "amenity": "cafe",
+   "branch": "Atria Park District",
+   "brand": "Starbucks",
+   "brand:wikidata": "Q37158",
+   "cuisine": "coffee_shop",
+   "name": "Starbucks",
+   "official_name": "Starbucks Coffee",
+   "takeaway": "yes"
+  }
+ },
+ {
+  "type": "way",
+  "id": 1456610155,
+  "center": {
+   "lat": 10.718011,
+   "lon": 122.5444644
+  },
+  "tags": {
+   "addr:street": "Q. Abeto Street",
+   "amenity": "cafe",
+   "contact:facebook": "@healthykitchencafe.ilo",
+   "contact:instagram": "healthykitchencafe.ilo",
+   "contact:phone": "+63 945 978 6995",
+   "cuisine": "regional;international",
+   "indoor_seating": "yes",
+   "name": "Healthy Kitchen Cafe",
+   "opening_hours": "Mo-Fr 10:00-21:00; Sa-Su 10:00-22:00",
+   "outdoor_seating": "patio",
+   "panoramax": "paf3573de-f6e1-4a8b-a90a-208b681db561",
+   "takeaway": "yes",
+   "toilets": "separate",
+   "wheelchair": "limited"
+  }
+ },
+ {
+  "type": "way",
+  "id": 1529282543,
+  "center": {
+   "lat": 10.7164043,
+   "lon": 122.5520512
+  },
+  "tags": {
+   "amenity": "cafe",
+   "building": "yes",
+   "name": "Basic"
+  }
+ }
+]

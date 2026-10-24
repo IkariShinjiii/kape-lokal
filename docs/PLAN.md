@@ -141,6 +141,18 @@ Starting plan: build a single reusable `<AdSlot>` component with a placeholder, 
 - Schema and access rules are applied. Security advisor is clean.
 - Connection settings live in `.env.local` (git-ignored). `.env.example` lists the names.
 
+## OSM import (milestone 3, done 2026-10-24)
+
+- Script: `npm run import:osm` ([scripts/import-osm.ts](../scripts/import-osm.ts)). It fetches Iloilo City cafes from Overpass, saves the raw snapshot to `data/osm-iloilo.json` and writes `supabase/seed/osm_cafes.sql`.
+- Loaded 143 named cafes as unpublished drafts: 105 local, 38 chains. 4 OSM entries had no name and were skipped.
+- Re-running is safe. It only refreshes OSM-sourced fields on rows whose source is `osm`. Publish state, descriptions, tags, menus and the chain flag are never overwritten.
+- Chain detection: a list of known chains, OSM brand tags, or a name repeated 3 or more times. Locally owned multi-branch cafes (Madge Café, Kurukape, Bluejay) are not flagged. The admin page will let you flip the flag.
+- Known gaps to fix in review: some entries are not cafes (an internet cafe, a pizza place, a bakery), a few are duplicates (two "Coffee Break Nxt" at the same spot), and no cafe has a specialty or matcha tag yet. Specialty cafes like NuWave may be missing from OSM, so the admin page needs an "add cafe" form.
+
+## Later: protect the "report wrong info" button
+
+The `edit_flags` table lets anyone insert a report, so it can be spammed. Before launch, add: a per-visitor rate limit, a hidden honeypot field, a hard cap on note length (already 1,000 characters in the database), and a way for you to bulk-resolve junk. Scheduled for the admin page milestone (6).
+
 ## Still open
 - Map tile provider: pick from the table above. Recommended: Protomaps.
 - App domain and hosting plan (Vercel free tier is fine to start).
