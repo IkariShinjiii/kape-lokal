@@ -52,10 +52,20 @@ This is the biggest open risk. Options:
 
 Recommendation: option 1 plus 2. Seed from OSM, then hand-verify the specialty and matcha tags and menus.
 
+## Design direction (decided)
+
+Option 1 "Barako" colors on option 4 "Mapa" layout. Mockups: [design-direction.html](design-direction.html). Earlier options: [design-options.html](design-options.html).
+
+- Map is the home screen, with a Map / List switch and the same filter chips on both.
+- Palette: roast `#1a1411`, crema `#251c17`, ember `#e8742c` (specialty, actions), leaf `#b5d98f` (matcha), foam `#f1e6d8` (text).
+- Type: Barlow Condensed for headings and labels, Barlow for body.
+- Pins use the tag colors, so the filter chips act as the legend.
+- Needs a dark map tile style. Candidates: MapTiler, Protomaps.
+
 ## Decisions needed
 - Which city or area launches first.
 - Who maintains the data: you alone, or cafe owners too.
-- Which of the 5 designs to build.
+- Whether to add a light theme for daylight use.
 - Language: English only, or English and Filipino.
 
 ## Milestones
