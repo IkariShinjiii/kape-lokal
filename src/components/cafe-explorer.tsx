@@ -149,7 +149,9 @@ export function CafeExplorer({
               onClick={locate}
               disabled={geo === "locating"}
               aria-label={dict.home.nearMe}
-              className={`${pillBase} border-line bg-crema/90 px-0 text-ember hover:border-ember disabled:opacity-60 max-sm:size-10 sm:px-4`}
+              // Not pillBase: its side padding would push the icon off-centre in the
+              // 40px circle used on phones.
+              className="grid h-10 min-w-10 shrink-0 place-items-center rounded-full border border-line bg-crema/90 text-sm font-semibold text-ember shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95 disabled:opacity-60 sm:px-4"
             >
               <span
                 aria-hidden
