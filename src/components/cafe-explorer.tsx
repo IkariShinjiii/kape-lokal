@@ -9,8 +9,9 @@ import { t } from "@/lib/format";
 import { distanceMeters, ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { CafeCard } from "./cafe-card";
+import { CafePreview } from "./cafe-preview";
 import { LanguageSwitch } from "./language-switch";
-import { MapView } from "./map-view";
+import { MapView, type HoverInfo } from "./map-view";
 import { ThemeToggle } from "./theme-toggle";
 
 type TagFilter = "all" | "specialty_coffee" | "matcha";
@@ -19,12 +20,17 @@ type GeoState = "idle" | "locating" | "ok" | "denied" | "unavailable";
 // Visitors farther than this from Iloilo get the whole-city view instead.
 const MAX_DISTANCE_FROM_ILOILO_M = 40_000;
 const SHEET_HEIGHT = 230;
+// The hover preview is 256px wide and about 230px tall.
+const PREVIEW_HALF_WIDTH = 136;
+const PREVIEW_FLIP_BELOW_Y = 270;
 
-const chipClass = (on: boolean) =>
-  `shrink-0 rounded border px-3 py-1.5 text-sm font-semibold transition duration-200 active:scale-95 ${
+const pillBase =
+  "shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-semibold shadow-sm backdrop-blur transition duration-200 active:scale-95";
+const pillClass = (on: boolean) =>
+  `${pillBase} ${
     on
       ? "border-ember bg-ember text-roast"
-      : "border-line bg-crema text-foam hover:border-ember"
+      : "border-line bg-crema/90 text-foam hover:border-ember"
   }`;
 
 // With no location, local specialty cafes come first, then other local cafes, then chains.
@@ -47,6 +53,7 @@ export function CafeExplorer({
   const [menuOnly, setMenuOnly] = useState(false);
   const [includeChains, setIncludeChains] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [hover, setHover] = useState<HoverInfo | null>(null);
   const [userPos, setUserPos] = useState<LatLng | null>(null);
   const [geo, setGeo] = useState<GeoState>("idle");
 
@@ -70,6 +77,16 @@ export function CafeExplorer({
 
   const visibleCafes = useMemo(() => visible.map((v) => v.cafe), [visible]);
   const selected = visible.find((v) => v.cafe.id === selectedId) ?? null;
+  // The sheet already shows the selected cafe, so only other pins get a preview.
+  const hovered =
+    hover && hover.id !== selectedId
+      ? (visible.find((v) => v.cafe.id === hover.id)?.cafe ?? null)
+      : null;
+
+  function select(id: string | null) {
+    setSelectedId(id);
+    setHover(null);
+  }
 
   function locate() {
     if (!navigator.geolocation) {
@@ -102,21 +119,29 @@ export function CafeExplorer({
     visible.length === 1
       ? dict.home.resultsOne
       : t(dict.home.results, { count: visible.length });
+  const mapMode = view === "map";
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="flex h-dvh flex-col">
-      <header className="flex flex-col gap-3 px-4 pt-4 pb-3">
-        <div className="flex items-center justify-between gap-3">
-          <h1 className="font-display text-2xl font-bold uppercase leading-none">
+    <div className="relative flex h-dvh flex-col">
+      {/* On the map the controls float over it, so the map gets the whole screen. */}
+      <header
+        className={
+          mapMode
+            ? "pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-col gap-2 p-3"
+            : "flex flex-col gap-2 border-b border-line px-3 py-3"
+        }
+      >
+        <div className="flex items-center justify-between gap-2">
+          <h1 className="pointer-events-auto rounded-full border border-line bg-crema/90 px-4 py-1.5 font-display text-xl font-bold uppercase leading-none shadow-sm backdrop-blur">
             {dict.meta.title}
           </h1>
-          <div className="flex items-center gap-2">
+          <div className="pointer-events-auto flex items-center gap-2">
             <button
               type="button"
               onClick={locate}
               disabled={geo === "locating"}
-              className="rounded border border-line bg-crema px-3 py-1 text-sm font-semibold text-ember transition duration-200 hover:border-ember active:scale-95 disabled:opacity-60"
+              className={`${pillBase} border-line bg-crema/90 text-ember hover:border-ember disabled:opacity-60`}
             >
               ◎ {geo === "locating" ? dict.home.locating : dict.home.nearMe}
             </button>
@@ -132,8 +157,34 @@ export function CafeExplorer({
         <div
           role="group"
           aria-label={dict.filters.label}
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1"
+          className="pointer-events-auto -mx-3 flex items-center gap-2 overflow-x-auto px-3 pb-1"
         >
+          <div
+            role="group"
+            aria-label={dict.view.label}
+            className="flex shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-0.5 shadow-sm backdrop-blur"
+          >
+            {(["map", "list"] as const).map((v) => (
+              <button
+                key={v}
+                type="button"
+                aria-pressed={view === v}
+                onClick={() => setView(v)}
+                className={`relative rounded-full px-4 py-1 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
+                  view === v ? "text-roast" : "text-mute"
+                }`}
+              >
+                {view === v && (
+                  <motion.span
+                    layoutId="view-pill"
+                    className="absolute inset-0 rounded-full bg-ember"
+                    transition={{ type: "spring", stiffness: 500, damping: 38 }}
+                  />
+                )}
+                <span className="relative">{dict.view[v]}</span>
+              </button>
+            ))}
+          </div>
           {(
             [
               ["all", dict.filters.all],
@@ -146,7 +197,7 @@ export function CafeExplorer({
               type="button"
               aria-pressed={tagFilter === key}
               onClick={() => setTagFilter(key)}
-              className={chipClass(tagFilter === key)}
+              className={pillClass(tagFilter === key)}
             >
               {label}
             </button>
@@ -155,7 +206,7 @@ export function CafeExplorer({
             type="button"
             aria-pressed={menuOnly}
             onClick={() => setMenuOnly((v) => !v)}
-            className={chipClass(menuOnly)}
+            className={pillClass(menuOnly)}
           >
             {dict.filters.menu}
           </button>
@@ -163,90 +214,129 @@ export function CafeExplorer({
             type="button"
             aria-pressed={includeChains}
             onClick={() => setIncludeChains((v) => !v)}
-            className={chipClass(includeChains)}
+            className={pillClass(includeChains)}
           >
             {dict.filters.chains}
           </button>
+          {!mapMode && (
+            <p className="shrink-0 pl-1 text-sm text-mute" aria-live="polite">
+              {count}
+            </p>
+          )}
         </div>
-
-        <div className="flex items-center justify-between gap-3">
-          <div
-            role="group"
-            aria-label={dict.view.label}
-            className="grid grid-cols-2 overflow-hidden rounded border border-line"
-          >
-            {(["map", "list"] as const).map((v) => (
-              <button
-                key={v}
-                type="button"
-                aria-pressed={view === v}
-                onClick={() => setView(v)}
-                className={`relative px-5 py-1.5 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
-                  view === v ? "text-foam" : "text-mute"
-                }`}
-              >
-                {view === v && (
-                  <motion.span
-                    layoutId="view-pill"
-                    className="absolute inset-0 bg-crema"
-                    transition={{ type: "spring", stiffness: 500, damping: 38 }}
-                  />
-                )}
-                <span className="relative">{dict.view[v]}</span>
-              </button>
-            ))}
-          </div>
-          <p className="text-sm text-mute" aria-live="polite">
-            {count}
+        {geoMessage && (
+          <p className="pointer-events-auto w-fit rounded-full border border-line bg-crema/90 px-3 py-1 text-sm text-mute shadow-sm backdrop-blur">
+            {geoMessage}
           </p>
-        </div>
-        {geoMessage && <p className="text-sm text-mute">{geoMessage}</p>}
+        )}
       </header>
 
       {/* The map stays mounted while the list is showing, so switching back is
           instant instead of rebuilding the map. */}
-      <div className={`relative flex-1 ${view === "map" ? "" : "hidden"}`}>
-          <MapView
-            className="absolute inset-0"
-            cafes={visibleCafes}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-            userPos={userPos}
-            bottomPadding={SHEET_HEIGHT}
-          />
-          <div className="absolute inset-x-0 bottom-0 rounded-t-2xl border-t border-line bg-roast/95 p-3 pb-5 backdrop-blur">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={selected ? selected.cafe.id : "hint"}
-                initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 420, damping: 34, mass: 0.8 }}
+      <div className={mapMode ? "absolute inset-0" : "hidden"}>
+        <MapView
+          className="absolute inset-0"
+          cafes={visibleCafes}
+          selectedId={selectedId}
+          onSelect={select}
+          onHover={setHover}
+          userPos={userPos}
+          bottomPadding={selected ? SHEET_HEIGHT : 0}
+        />
+
+        <AnimatePresence>
+          {hovered && hover && (
+            <motion.div
+              key={hovered.id}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.14, ease: "easeOut" }}
+              className="pointer-events-none absolute z-10"
+              style={{
+                left: Math.min(
+                  Math.max(hover.x, PREVIEW_HALF_WIDTH),
+                  hover.width - PREVIEW_HALF_WIDTH,
+                ),
+                translateX: "-50%",
+                ...(hover.y > PREVIEW_FLIP_BELOW_Y
+                  ? { bottom: hover.height - hover.y + 18 }
+                  : { top: hover.y + 20 }),
+              }}
+            >
+              <CafePreview cafe={hovered} dict={dict} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {!selected && (
+            <motion.div
+              key="map-footer"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.18 }}
+              className="pointer-events-none absolute bottom-6 left-3 z-10 flex max-w-[calc(100%-5rem)] flex-wrap items-center gap-2"
+            >
+              <p
+                aria-live="polite"
+                className="pointer-events-auto rounded-full border border-line bg-crema/90 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur"
               >
-                {selected ? (
-                  <CafeCard
-                    sheet
-                    cafe={selected.cafe}
-                    distance={selected.distance}
-                    lang={lang}
-                    dict={dict}
-                  />
-                ) : (
-                  <p className="py-6 text-center text-mute">
-                    {visible.length === 0
-                      ? dict.home.noResults
-                      : dict.home.selectHint}
-                  </p>
-                )}
-              </motion.div>
-            </AnimatePresence>
-            <p className="mt-2 flex items-center justify-between gap-3 text-xs text-mute">
-              <Link href={`/${lang}/suggest`} className="underline">
+                {visible.length === 0 ? dict.home.noResults : count}
+              </p>
+              <Link
+                href={`/${lang}/suggest`}
+                className="pointer-events-auto rounded-full border border-line bg-crema/90 px-3 py-1 text-xs text-mute shadow-sm backdrop-blur transition-colors hover:text-foam"
+              >
                 {dict.home.suggest}
               </Link>
-              <span>{dict.footer.osmCredit}</span>
-            </p>
-          </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Hidden until a pin is picked, so the map has the whole screen. */}
+        <AnimatePresence>
+          {selected && (
+            <motion.div
+              key="sheet"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
+              className="absolute inset-x-0 bottom-0 z-20 rounded-t-2xl border-t border-line bg-roast/95 p-3 pb-5 backdrop-blur"
+            >
+              <button
+                type="button"
+                onClick={() => select(null)}
+                aria-label={dict.home.close}
+                className="absolute -top-11 right-3 grid size-9 place-items-center rounded-full border border-line bg-crema/90 text-foam shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95"
+              >
+                ✕
+              </button>
+              <motion.div
+                key={selected.cafe.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.18 }}
+              >
+                <CafeCard
+                  sheet
+                  cafe={selected.cafe}
+                  distance={selected.distance}
+                  lang={lang}
+                  dict={dict}
+                />
+              </motion.div>
+              <p className="mt-2 flex items-center justify-between gap-3 text-xs text-mute">
+                <Link href={`/${lang}/suggest`} className="underline">
+                  {dict.home.suggest}
+                </Link>
+                <span>{dict.footer.osmCredit}</span>
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {view === "list" && (
@@ -259,7 +349,7 @@ export function CafeExplorer({
           {visible.length === 0 ? (
             <p className="py-10 text-center text-mute">{dict.home.noResults}</p>
           ) : (
-            <ul className="relative flex flex-col gap-3">
+            <ul className="relative mt-3 flex flex-col gap-3">
               <AnimatePresence mode="popLayout">
                 {visible.map(({ cafe, distance }, i) => (
                   <motion.li

@@ -9,17 +9,20 @@ type Props = {
 
 export function LanguageSwitch({ current, label, names }: Props) {
   return (
-    <nav aria-label={label} className="flex gap-2">
+    <nav
+      aria-label={label}
+      className="flex gap-0.5 rounded-full border border-line bg-crema/90 p-0.5 shadow-sm backdrop-blur"
+    >
       {locales.map((locale) => (
         <Link
           key={locale}
           href={`/${locale}`}
           hrefLang={locale}
           aria-current={locale === current ? "true" : undefined}
-          className={`rounded border px-3 py-1 text-sm font-semibold ${
+          className={`rounded-full px-3 py-1 text-sm font-semibold transition-colors duration-200 ${
             locale === current
-              ? "border-ember bg-ember text-roast"
-              : "border-line text-mute hover:text-foam"
+              ? "bg-ember text-roast"
+              : "text-mute hover:text-foam"
           }`}
         >
           {names[locale]}

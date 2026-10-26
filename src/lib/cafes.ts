@@ -13,6 +13,7 @@ export type Cafe = {
   hours: string | null;
   tags: CafeTag[];
   hasMenu: boolean;
+  coverImagePath: string | null;
 };
 
 export type MenuItem = {
@@ -32,7 +33,6 @@ export type CafeDetail = Cafe & {
   website: string | null;
   facebook: string | null;
   instagram: string | null;
-  coverImagePath: string | null;
   menuItems: MenuItem[];
   menuImages: { id: string; image_path: string }[];
 };
@@ -48,6 +48,8 @@ type ListRow = {
   opening_hours_osm: string | null;
   tags: CafeTag[];
   has_menu: boolean;
+  // Missing until the cover-image migration has been applied.
+  cover_image_path?: string | null;
 };
 
 const toCafe = (r: ListRow): Cafe => ({
@@ -61,6 +63,7 @@ const toCafe = (r: ListRow): Cafe => ({
   hours: r.opening_hours_osm,
   tags: r.tags ?? [],
   hasMenu: r.has_menu,
+  coverImagePath: r.cover_image_path ?? null,
 });
 
 // All published cafes, chains included. The client hides chains unless asked.
@@ -106,7 +109,7 @@ export async function getCafeBySlug(slug: string): Promise<CafeDetail | null> {
     website: data.website,
     facebook: data.facebook,
     instagram: data.instagram,
-    coverImagePath: data.cover_image_path,
+    coverImagePath: data.cover_image_path ?? base.coverImagePath,
     menuItems,
     menuImages,
   };

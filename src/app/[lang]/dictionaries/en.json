@@ -14,6 +14,7 @@
     "resultsOne": "1 cafe",
     "noResults": "No cafes match these filters yet.",
     "selectHint": "Tap a pin to see a cafe.",
+    "close": "Close",
     "suggest": "Know a cafe we're missing?"
   },
   "filters": {

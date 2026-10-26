@@ -15,10 +15,14 @@ import { ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import { PIN_COLORS, type Theme } from "@/lib/theme";
 import { useTheme } from "./use-theme";
 
+/** A pin under the mouse: where it sits inside the map, and the map's size. */
+export type HoverInfo = { id: string; x: number; y: number; width: number; height: number };
+
 type Props = {
   cafes: Cafe[];
   selectedId?: string | null;
   onSelect?: (id: string | null) => void;
+  onHover?: (hover: HoverInfo | null) => void;
   userPos?: LatLng | null;
   /** A small, fixed map (cafe detail page). */
   interactive?: boolean;
@@ -91,6 +95,7 @@ export function MapView({
   cafes,
   selectedId,
   onSelect,
+  onHover,
   userPos,
   interactive = true,
   bottomPadding = 0,
@@ -99,6 +104,7 @@ export function MapView({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const onSelectRef = useRef(onSelect);
+  const onHoverRef = useRef(onHover);
   const fittedRef = useRef(false);
   // Where the visitor was looking, kept across a theme change (the map is
   // rebuilt with the other style).
@@ -109,7 +115,8 @@ export function MapView({
 
   useEffect(() => {
     onSelectRef.current = onSelect;
-  }, [onSelect]);
+    onHoverRef.current = onHover;
+  }, [onSelect, onHover]);
 
   // Create the map once.
   useEffect(() => {
@@ -130,8 +137,8 @@ export function MapView({
       attributionControl: false,
     });
     mapRef.current = map;
-    // Top right, so it never sits under the bottom sheet.
-    map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-right");
+    // Bottom right: the filters float over the top of the map.
+    map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
 
     // The container can get its final size after the map starts (flex layouts,
     // streaming). Keep the canvas in step with it.
@@ -194,12 +201,38 @@ export function MapView({
           const hit = map.queryRenderedFeatures(e.point, { layers: ["cafes"] });
           if (hit.length === 0) onSelectRef.current?.(null);
         });
+        // Hover preview. Anchored to the pin, not the mouse, so it stays put while
+        // the mouse moves across the pin.
+        let hoveredId: string | null = null;
+        const clearHover = () => {
+          if (hoveredId === null) return;
+          hoveredId = null;
+          onHoverRef.current?.(null);
+        };
+        map.on("mousemove", "cafes", (e) => {
+          const f = e.features?.[0];
+          const id = f?.properties?.id as string | undefined;
+          if (!f || !id || id === hoveredId) return;
+          hoveredId = id;
+          const [lng, lat] = (f.geometry as GeoJSON.Point).coordinates;
+          const p = map.project([lng, lat]);
+          const box = map.getContainer();
+          onHoverRef.current?.({
+            id,
+            x: p.x,
+            y: p.y,
+            width: box.clientWidth,
+            height: box.clientHeight,
+          });
+        });
         map.on("mouseenter", "cafes", () => {
           map.getCanvas().style.cursor = "pointer";
         });
         map.on("mouseleave", "cafes", () => {
           map.getCanvas().style.cursor = "";
+          clearHover();
         });
+        map.on("movestart", clearHover);
       }
       setLoaded(true);
     });

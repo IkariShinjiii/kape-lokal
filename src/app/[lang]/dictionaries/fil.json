@@ -14,6 +14,7 @@
     "resultsOne": "1 cafe",
     "noResults": "Wala pang cafe na tugma sa mga filter na ito.",
     "selectHint": "Pindutin ang pin para makita ang cafe.",
+    "close": "Isara",
     "suggest": "May kilala kang cafe na wala pa rito?"
   },
   "filters": {
