@@ -49,5 +49,18 @@ Held back, with SQL waiting in [pending-db-updates.sql](pending-db-updates.sql):
 
 Marked as a chain: JD (JD Bakery Cafe, several branches). Left unclassified: Carlo's Cafe (looks like the Carlo's Bakeshop chain).
 
+## Round 3 (2026-10-26)
+Published (open on Google, pin within 15 m for single results): Kucho Cafe (SM City), Kurukape (Molo), Monkey Grounds Coffee (Aquino Ave), Neighbor Coffee, Loco, Oriens Keurig, Sa Poste (SM Central Market), Seventy N Coffee + Drinkery, Shortcut to Coffee, Space Bar, Takuri Cafe, The Clinic Coffee, The Coffee Studio.
+Excluded: Nothing But Desserts, Miracle's Cafe and two Kurukape points near Kucho (permanently closed), Rapha Palm (wellness centre).
+Held back as drafts: Papoo Cafe, Roven Coffee Hub, Sanctis, Santé Barley, Taza Verde Garden Cafe and The Cravery (one to three Google reviews, so not enough evidence it is open and a cafe), Pie's Surprise (category unclear), Tinukib (a pasalubong centre), Mac's Garahe (Google pin 1.4 km from ours), the second Monkey Grounds point, Local Coffee (HQ, needs an address), Madge x2 (need addresses), Madge at 10.70834,122.55171 (no match within 150 m), Le Reve, Mauro's, Newpost, Sailor's, The Meating Point (not found), Xin Café (lookup failed).
+Lookup lesson: a closed label on a list page can belong to any card, and the phone and rating read from a list sidebar can belong to a neighbouring result. Trust a closed flag, but read phone, rating and hours only from a single-result page.
+
+## Specialty tag evidence
+Only three cafes carry the specialty tag, each with a source:
+- The Yield Specialty Coffee: SCA-certified member, Cup of Excellence beans and pour-over on the menu (ibsdigital.net, 2025 and 2026).
+- Ñuwave Specialty Coffee: its own Instagram bio says "Serving Specialty Coffee". Its bio hours are 11am-1am.
+- Drip Coffee & Community: Inquirer Lifestyle recommends it for specialty coffee (lifestyle.inquirer.net, "new coffee shops on our radar").
+No evidence found for Cicada, Coffee Brewtherhood, Chapter Coffee, Superhouse or bean there., so they stay untagged. Madge is a traditional coffee shop (since 1940), not specialty.
+
 ## Method
 Each cafe was looked up on Google Maps with a search centered on its OSM point. A cafe counted as verified only if Google listed it as open (or with hours or a phone) and its pin sat within about 150 m of ours. Where Google's pin was farther, the pin was corrected from Google's place coordinates, since those are more exact than a hand-placed OSM node.
