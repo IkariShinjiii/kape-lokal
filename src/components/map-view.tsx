@@ -12,6 +12,7 @@ import { Protocol } from "pmtiles";
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import type { Cafe } from "@/lib/cafes";
 import { ILOILO_CENTER, type LatLng } from "@/lib/geo";
+import { PIN_KINDS, PIN_SIZE, drawPin, pinImageId, pinKind } from "@/lib/pin-icons";
 import { PIN_COLORS, type Theme } from "@/lib/theme";
 import { useTheme } from "./use-theme";
 
@@ -45,31 +46,24 @@ function ensureProtocol() {
   protocolAdded = true;
 }
 
-type Colors = (typeof PIN_COLORS)[Theme];
-
-function pinColor(c: Cafe, colors: Colors): string {
-  if (c.isChain) return colors.chain;
-  if (c.tags.includes("specialty_coffee")) return colors.specialty;
-  if (c.tags.includes("matcha")) return colors.matcha;
-  return colors.other;
-}
-
-function toGeoJson(
-  cafes: Cafe[],
-  selectedId: string | null | undefined,
-  colors: Colors,
-) {
+function toGeoJson(cafes: Cafe[], selectedId: string | null | undefined) {
   return {
     type: "FeatureCollection" as const,
-    features: cafes.map((c) => ({
-      type: "Feature" as const,
-      geometry: { type: "Point" as const, coordinates: [c.lng, c.lat] },
-      properties: {
-        id: c.id,
-        color: pinColor(c, colors),
-        selected: c.id === selectedId ? 1 : 0,
-      },
-    })),
+    features: cafes.map((c) => {
+      const kind = pinKind(c);
+      const selected = c.id === selectedId;
+      return {
+        type: "Feature" as const,
+        geometry: { type: "Point" as const, coordinates: [c.lng, c.lat] },
+        properties: {
+          id: c.id,
+          icon: pinImageId(kind),
+          // The selected pin grows; chains are drawn smaller.
+          size: PIN_SIZE[kind] * (selected ? 1.3 : 1),
+          selected: selected ? 1 : 0,
+        },
+      };
+    }),
   };
 }
 
@@ -151,7 +145,10 @@ export function MapView({
     }
 
     map.on("load", () => {
-      map.addSource("cafes", { type: "geojson", data: toGeoJson([], null, colors) });
+      for (const kind of PIN_KINDS) {
+        map.addImage(pinImageId(kind), drawPin(kind, colors), { pixelRatio: 2 });
+      }
+      map.addSource("cafes", { type: "geojson", data: toGeoJson([], null) });
       map.addSource("me", {
         type: "geojson",
         data: { type: "FeatureCollection", features: [] },
@@ -162,22 +159,21 @@ export function MapView({
         source: "cafes",
         filter: ["==", ["get", "selected"], 1],
         paint: {
-          "circle-radius": 17,
+          "circle-radius": 24,
           "circle-color": colors.specialty,
           "circle-opacity": 0.3,
         },
       });
       map.addLayer({
         id: "cafes",
-        type: "circle",
+        type: "symbol",
         source: "cafes",
-        paint: {
-          "circle-radius": ["case", ["==", ["get", "selected"], 1], 10, 7],
-          "circle-color": ["get", "color"],
-          "circle-stroke-width": 2,
-          "circle-stroke-color": colors.outline,
-          // Pins ease between sizes when one is selected.
-          "circle-radius-transition": { duration: 200, delay: 0 },
+        layout: {
+          "icon-image": ["get", "icon"],
+          "icon-size": ["get", "size"],
+          // Every cafe stays visible, even where pins crowd together.
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true,
         },
       });
       map.addLayer({
@@ -256,7 +252,7 @@ export function MapView({
     // After a theme change the rebuilt map exists before its sources do.
     const cafesSource = map.getSource("cafes") as GeoJSONSource | undefined;
     if (!cafesSource) return;
-    cafesSource.setData(toGeoJson(cafes, selectedId, colors));
+    cafesSource.setData(toGeoJson(cafes, selectedId));
 
     // First fit: frame the cafes, or center on the only one (detail page).
     if (!fittedRef.current && cafes.length > 0) {
@@ -273,7 +269,6 @@ export function MapView({
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cafes, selectedId, loaded, userPos, bottomPadding]);
 
   // Show the visitor and fly to them when they share their location.
