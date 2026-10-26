@@ -29,12 +29,15 @@ const pillBase =
   "grid min-h-10 shrink-0 place-items-center whitespace-nowrap rounded-full border px-4 text-sm font-semibold shadow-sm backdrop-blur transition duration-200 active:scale-95";
 // Keeps the controls clear of the notch and the screen edges.
 const safeX = "pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))]";
+// On/off filters: outlined when on, so solid orange only ever marks the chosen
+// option inside a segmented group.
 const pillClass = (on: boolean) =>
-  `${pillBase} ${
-    on
-      ? "border-ember bg-ember text-roast"
-      : "border-line bg-crema/90 text-foam hover:border-ember"
+  `${pillBase} bg-crema/90 ${
+    on ? "border-ember text-ember" : "border-line text-foam hover:border-ember"
   }`;
+// A 40px rounded frame holding pick-one options (Map/List, All/Specialty/Matcha).
+const segmentGroup =
+  "box-border flex h-10 shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-[3px] shadow-sm backdrop-blur";
 
 // With no location, local specialty cafes come first, then other local cafes, then chains.
 function rank(c: Cafe): number {
@@ -182,7 +185,7 @@ export function CafeExplorer({
           <div
             role="group"
             aria-label={dict.view.label}
-            className="box-border flex h-10 shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-[3px] shadow-sm backdrop-blur"
+            className={segmentGroup}
           >
             {(["map", "list"] as const).map((v) => (
               <button
@@ -205,23 +208,36 @@ export function CafeExplorer({
               </button>
             ))}
           </div>
-          {(
-            [
-              ["all", dict.filters.all],
-              ["specialty_coffee", dict.filters.specialty],
-              ["matcha", dict.filters.matcha],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              aria-pressed={tagFilter === key}
-              onClick={() => setTagFilter(key)}
-              className={pillClass(tagFilter === key)}
-            >
-              {label}
-            </button>
-          ))}
+          {/* Pick-one filters share the Map/List segmented style, so every solid
+              orange marker in the row is the same size. */}
+          <div className={segmentGroup}>
+            {(
+              [
+                ["all", dict.filters.all],
+                ["specialty_coffee", dict.filters.specialty],
+                ["matcha", dict.filters.matcha],
+              ] as const
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={tagFilter === key}
+                onClick={() => setTagFilter(key)}
+                className={`relative h-full whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors duration-200 ${
+                  tagFilter === key ? "text-roast" : "text-foam hover:text-ember"
+                }`}
+              >
+                {tagFilter === key && (
+                  <motion.span
+                    layoutId="tag-pill"
+                    className="absolute inset-0 rounded-full bg-ember"
+                    transition={{ type: "spring", stiffness: 500, damping: 38 }}
+                  />
+                )}
+                <span className="relative">{label}</span>
+              </button>
+            ))}
+          </div>
           <button
             type="button"
             aria-pressed={menuOnly}
