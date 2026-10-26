@@ -19,7 +19,7 @@ type GeoState = "idle" | "locating" | "ok" | "denied" | "unavailable";
 
 // Visitors farther than this from Iloilo get the whole-city view instead.
 const MAX_DISTANCE_FROM_ILOILO_M = 40_000;
-const SHEET_HEIGHT = 250;
+const SHEET_HEIGHT = 215;
 // The hover preview is 256px wide and about 230px tall.
 const PREVIEW_HALF_WIDTH = 136;
 const PREVIEW_FLIP_BELOW_Y = 270;
@@ -182,7 +182,7 @@ export function CafeExplorer({
           <div
             role="group"
             aria-label={dict.view.label}
-            className="flex shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-0.5 shadow-sm backdrop-blur"
+            className="box-border flex h-10 shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-[3px] shadow-sm backdrop-blur"
           >
             {(["map", "list"] as const).map((v) => (
               <button
@@ -190,7 +190,7 @@ export function CafeExplorer({
                 type="button"
                 aria-pressed={view === v}
                 onClick={() => setView(v)}
-                className={`relative min-h-9 rounded-full px-4 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
+                className={`relative h-full rounded-full px-4 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
                   view === v ? "text-roast" : "text-mute"
                 }`}
               >
@@ -255,7 +255,7 @@ export function CafeExplorer({
           instant instead of rebuilding the map. */}
       <div className={mapMode ? "absolute inset-0" : "hidden"}>
         <MapView
-          className="absolute inset-0"
+          className="map-floating absolute inset-0"
           cafes={visibleCafes}
           selectedId={selectedId}
           onSelect={select}

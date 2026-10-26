@@ -16,7 +16,15 @@ type Props = {
 
 export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
   return (
-    <article className="flex flex-col gap-3 rounded bg-crema p-3 transition-shadow duration-300 hover:shadow-lg hover:shadow-black/10">
+    <article
+      // In the map's bottom sheet the card sits flush on the sheet itself, so its
+      // edges line up with the sheet's footer and close button.
+      className={`flex flex-col gap-3 ${
+        sheet
+          ? "pt-1"
+          : "rounded-xl bg-crema p-3 transition-shadow duration-300 hover:shadow-lg hover:shadow-black/10"
+      }`}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <h3 className="font-display text-2xl font-bold uppercase leading-none">
@@ -41,12 +49,15 @@ export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
         )}
       </div>
 
-      <div className="flex flex-wrap gap-1.5">
-        {cafe.tags.map((tag) => (
-          <TagChip key={tag} tag={tag} label={dict.cafe.tags[tag]} />
-        ))}
-        {cafe.isChain && <ChainChip label={dict.cafe.chain} />}
-      </div>
+      {/* Skipped when empty: an empty row would still add a flex gap. */}
+      {(cafe.tags.length > 0 || cafe.isChain) && (
+        <div className="flex flex-wrap gap-1.5">
+          {cafe.tags.map((tag) => (
+            <TagChip key={tag} tag={tag} label={dict.cafe.tags[tag]} />
+          ))}
+          {cafe.isChain && <ChainChip label={dict.cafe.chain} />}
+        </div>
+      )}
 
       <div className="grid grid-cols-[1fr_1.3fr] gap-2">
         <Link

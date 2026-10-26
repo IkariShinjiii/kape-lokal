@@ -69,20 +69,21 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
 
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-6 pb-28">
-      <div className="relative h-40 bg-gradient-to-br from-[#7a5238] to-[#2e1f16]">
+      {/* Inset to the same 16px edges as the content below, on every screen width. */}
+      <div className="relative mx-4 mt-[max(1rem,env(safe-area-inset-top))] h-44 overflow-hidden rounded-2xl bg-gradient-to-br from-[#7a5238] to-[#2e1f16]">
         {cafe.coverImagePath && (
           <Image
             src={mediaUrl(cafe.coverImagePath)}
             alt=""
             fill
-            sizes="(max-width: 576px) 100vw, 576px"
+            sizes="(max-width: 576px) 100vw, 544px"
             className="object-cover"
             priority
           />
         )}
         <Link
           href={`/${lang}`}
-          className="absolute left-4 top-4 rounded bg-roast/80 px-3 py-1 text-sm font-semibold backdrop-blur"
+          className="absolute left-3 top-3 grid min-h-10 place-items-center rounded-full border border-line bg-roast/80 px-4 text-sm font-semibold backdrop-blur"
         >
           ← {dict.detail.back}
         </Link>
@@ -93,15 +94,17 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
           <h1 className="font-display text-5xl font-bold uppercase leading-none">
             {cafe.name}
           </h1>
-          <div className="flex flex-wrap gap-1.5">
-            {cafe.tags.map((tag) => (
-              <TagChip key={tag} tag={tag} label={dict.cafe.tags[tag]} />
-            ))}
-            {cafe.isChain && <ChainChip label={dict.cafe.chain} />}
-          </div>
+          {(cafe.tags.length > 0 || cafe.isChain) && (
+            <div className="flex flex-wrap gap-1.5">
+              {cafe.tags.map((tag) => (
+                <TagChip key={tag} tag={tag} label={dict.cafe.tags[tag]} />
+              ))}
+              {cafe.isChain && <ChainChip label={dict.cafe.chain} />}
+            </div>
+          )}
           {cafe.address && <p className="text-mute">{cafe.address}</p>}
           <p className="text-sm text-mute">
-            {dict.detail.hours}: {cafe.hours ?? dict.detail.hoursUnknown}
+            {cafe.hours ? `${dict.detail.hours}: ${cafe.hours}` : dict.detail.hoursUnknown}
           </p>
         </header>
 
@@ -119,7 +122,7 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
             {dict.detail.menu}
           </h2>
           {!hasMenu && (
-            <p className="rounded bg-crema p-4 text-mute">
+            <p className="rounded-xl bg-crema p-4 text-mute">
               {dict.detail.noMenu} {dict.detail.noMenuHelp}
             </p>
           )}
@@ -171,7 +174,7 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
             {dict.detail.location}
           </h2>
           <MapView
-            className="h-48 overflow-hidden rounded border border-line"
+            className="h-48 overflow-hidden rounded-xl border border-line"
             cafes={[cafe]}
             interactive={false}
           />
@@ -208,15 +211,18 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
         <p className="text-xs text-mute">{dict.footer.osmCredit}</p>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-roast from-40% to-transparent px-4 pb-4 pt-8">
-        <a
-          href={directionsUrl(cafe)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-auto block max-w-xl rounded bg-ember py-3 text-center font-display text-lg font-bold uppercase tracking-widest text-roast"
-        >
-          {dict.detail.directionsInMaps} ↗
-        </a>
+      {/* Same column and side inset as the content above, so the edges line up. */}
+      <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-roast from-40% to-transparent pb-[max(1rem,env(safe-area-inset-bottom))] pt-8">
+        <div className="mx-auto max-w-xl px-4">
+          <a
+            href={directionsUrl(cafe)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="grid min-h-12 place-items-center rounded-full bg-ember text-center font-display text-lg font-bold uppercase tracking-widest text-roast transition duration-200 hover:opacity-90 active:scale-[0.98]"
+          >
+            {dict.detail.directionsInMaps} ↗
+          </a>
+        </div>
       </div>
     </main>
   );

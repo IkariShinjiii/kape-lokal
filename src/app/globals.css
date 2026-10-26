@@ -77,3 +77,13 @@ body {
     transition: none !important;
   }
 }
+
+/* The map credit shares the floating controls' margins: 12px from the side and the
+   same baseline as the bottom pills (36px tall; the credit is 24px, so +6px centres it). */
+.map-floating .maplibregl-ctrl-bottom-right {
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: calc(max(1.25rem, env(safe-area-inset-bottom) + 0.5rem) + 6px);
+}
+.map-floating .maplibregl-ctrl-bottom-right .maplibregl-ctrl {
+  margin: 0;
+}
