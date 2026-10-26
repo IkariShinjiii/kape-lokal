@@ -52,18 +52,18 @@ export function ReportForm({ cafeId, strings }: { cafeId: string; strings: Strin
           name="note"
           rows={3}
           maxLength={1000}
-          className="rounded border border-line bg-crema p-2 text-foam"
+          className="rounded-xl border border-line bg-crema px-3 py-2.5 text-base text-foam transition-colors duration-200 placeholder:text-mute focus:border-ember focus:outline-none"
         />
       </label>
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded border border-line px-4 py-2 font-display text-sm font-bold uppercase tracking-widest hover:border-ember disabled:opacity-60"
+        className="grid min-h-11 place-items-center self-start rounded-full border border-line px-6 font-display text-sm font-bold uppercase tracking-widest transition duration-200 hover:border-ember active:scale-[0.97] disabled:opacity-60"
       >
         {strings.send}
       </button>
       {message && (
-        <p role="status" className="text-sm text-leaf">
+        <p role="status" className={`text-sm ${state.status === "success" ? "text-leaf" : "text-ember"}`}>
           {message}
         </p>
       )}

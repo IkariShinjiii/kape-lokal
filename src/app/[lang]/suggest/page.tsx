@@ -12,7 +12,7 @@ export default async function SuggestPage({ params }: PageProps<"/[lang]/suggest
 
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-6 px-4 py-8">
-      <Link href={`/${lang}`} className="text-sm text-ember underline">
+      <Link href={`/${lang}`} className="grid min-h-10 w-fit place-items-center rounded-full border border-line bg-crema/90 px-4 text-sm font-semibold transition-colors duration-200 hover:border-ember">
         ← {dict.suggest.back}
       </Link>
       <h1 className="font-display text-5xl font-bold uppercase leading-none">

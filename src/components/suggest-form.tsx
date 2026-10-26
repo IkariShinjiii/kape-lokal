@@ -14,7 +14,8 @@ type Strings = {
   limit: string;
 };
 
-const input = "rounded border border-line bg-crema p-2 text-foam";
+// 16px text stops iOS zooming in on focus.
+const input = "rounded-xl border border-line bg-crema px-3 py-2.5 text-base text-foam transition-colors duration-200 placeholder:text-mute focus:border-ember focus:outline-none";
 
 export function SuggestForm({ strings, emptyMessage }: { strings: Strings; emptyMessage: string }) {
   const [state, action, pending] = useActionState<FormState, FormData>(
@@ -62,12 +63,12 @@ export function SuggestForm({ strings, emptyMessage }: { strings: Strings; empty
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded bg-ember px-5 py-2 font-display text-sm font-bold uppercase tracking-widest text-roast disabled:opacity-60"
+        className="grid min-h-11 place-items-center self-start rounded-full bg-ember px-6 font-display text-sm font-bold uppercase tracking-widest text-roast transition duration-200 hover:opacity-90 active:scale-[0.97] disabled:opacity-60"
       >
         {strings.send}
       </button>
       {message && (
-        <p role="status" className="text-sm text-leaf">
+        <p role="status" className={`text-sm ${state.status === "success" ? "text-leaf" : "text-ember"}`}>
           {message}
         </p>
       )}
