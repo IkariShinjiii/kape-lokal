@@ -247,8 +247,12 @@ export function MapView({
     });
 
     return () => {
-      const c = map.getCenter();
-      viewRef.current = { center: [c.lng, c.lat], zoom: map.getZoom() };
+      // Keep the view only once it has been framed. A rebuild right after mount
+      // (the theme settling) would otherwise save the default view and skip the fit.
+      if (fittedRef.current) {
+        const c = map.getCenter();
+        viewRef.current = { center: [c.lng, c.lat], zoom: map.getZoom() };
+      }
       resizeObserver.disconnect();
       map.remove();
       mapRef.current = null;
