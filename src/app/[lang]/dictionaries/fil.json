@@ -7,7 +7,7 @@
     "heading": "Mga cafe malapit sa iyo",
     "tagline": "Lokal na specialty coffee at matcha sa Iloilo City.",
     "nearMe": "Malapit sa akin",
-    "locating": "Hinahanap ka…",
+    "locating": "Hinahanap ang lokasyon mo…",
     "locationDenied": "Naka-off ang lokasyon. Payagan ito sa browser para maisaayos ayon sa layo.",
     "locationUnavailable": "Hindi namin makuha ang lokasyon mo. Ipinapakita ang buong Iloilo City.",
     "results": "{count} cafe",
@@ -39,7 +39,7 @@
       "specialty_coffee": "Specialty",
       "matcha": "Matcha",
       "pastry": "Pastry",
-      "work_friendly": "Pang-trabaho",
+      "work_friendly": "Pwedeng pang-trabaho",
       "pet_friendly": "Pet-friendly"
     }
   },
