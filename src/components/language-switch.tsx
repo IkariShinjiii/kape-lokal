@@ -19,13 +19,16 @@ export function LanguageSwitch({ current, label, names }: Props) {
           href={`/${locale}`}
           hrefLang={locale}
           aria-current={locale === current ? "true" : undefined}
-          className={`rounded-full px-3 py-1 text-sm font-semibold transition-colors duration-200 ${
+          aria-label={names[locale]}
+          className={`grid min-h-9 place-items-center rounded-full px-3 text-sm font-semibold transition-colors duration-200 ${
             locale === current
               ? "bg-ember text-roast"
               : "text-mute hover:text-foam"
           }`}
         >
-          {names[locale]}
+          {/* Short codes on phones keep the header on one row. */}
+          <span className="uppercase sm:hidden" aria-hidden>{locale}</span>
+          <span className="hidden sm:inline" aria-hidden>{names[locale]}</span>
         </Link>
       ))}
     </nav>

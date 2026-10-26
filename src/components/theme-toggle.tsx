@@ -15,7 +15,7 @@ export function ThemeToggle({ toLight, toDark }: Props) {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? toLight : toDark}
       title={isDark ? toLight : toDark}
-      className="grid size-9 place-items-center overflow-hidden rounded-full border border-line bg-crema/90 text-ember shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95"
+      className="grid size-10 place-items-center overflow-hidden rounded-full border border-line bg-crema/90 text-ember shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

@@ -19,8 +19,14 @@ export const pinImageId = (kind: PinKind) => `pin-${kind}`;
 // Chains are drawn smaller so local cafes stand out.
 export const PIN_SIZE: Record<PinKind, number> = { bean: 1.1, leaf: 1, cup: 1, chain: 0.75 };
 
-// Drawn at 2x and registered with pixelRatio 2, so they stay sharp on retina screens.
+// Higher number draws on top where pins overlap.
+export const PIN_Z: Record<PinKind, number> = { chain: 0, cup: 1, leaf: 2, bean: 3 };
+
+// Drawn in a 64-unit box on a 128px canvas. Registered with pixelRatio 4, a pin is
+// 32 CSS px wide at size 1 and stays sharp even on 3x phone screens.
 const SIZE = 64;
+const SCALE = 2;
+export const PIXEL_RATIO = (SIZE * SCALE) / 32;
 
 type Colors = (typeof PIN_COLORS)[Theme];
 
@@ -106,9 +112,10 @@ function cup(ctx: CanvasRenderingContext2D, color: string, outline: string) {
 /** Draw one pin as raw image data for MapLibre's addImage. */
 export function drawPin(kind: PinKind, colors: Colors): ImageData {
   const canvas = document.createElement("canvas");
-  canvas.width = SIZE;
-  canvas.height = SIZE;
+  canvas.width = SIZE * SCALE;
+  canvas.height = SIZE * SCALE;
   const ctx = canvas.getContext("2d")!;
+  ctx.scale(SCALE, SCALE);
   const fill = {
     bean: colors.specialty,
     leaf: colors.matcha,
@@ -118,5 +125,5 @@ export function drawPin(kind: PinKind, colors: Colors): ImageData {
   if (kind === "bean") bean(ctx, fill, colors.outline);
   else if (kind === "leaf") leaf(ctx, fill, colors.outline);
   else cup(ctx, fill, colors.outline);
-  return ctx.getImageData(0, 0, SIZE, SIZE);
+  return ctx.getImageData(0, 0, SIZE * SCALE, SIZE * SCALE);
 }

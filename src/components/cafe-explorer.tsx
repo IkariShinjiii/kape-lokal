@@ -19,13 +19,16 @@ type GeoState = "idle" | "locating" | "ok" | "denied" | "unavailable";
 
 // Visitors farther than this from Iloilo get the whole-city view instead.
 const MAX_DISTANCE_FROM_ILOILO_M = 40_000;
-const SHEET_HEIGHT = 230;
+const SHEET_HEIGHT = 250;
 // The hover preview is 256px wide and about 230px tall.
 const PREVIEW_HALF_WIDTH = 136;
 const PREVIEW_FLIP_BELOW_Y = 270;
 
+// 40px tall: a comfortable thumb target.
 const pillBase =
-  "shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-semibold shadow-sm backdrop-blur transition duration-200 active:scale-95";
+  "grid min-h-10 shrink-0 place-items-center whitespace-nowrap rounded-full border px-4 text-sm font-semibold shadow-sm backdrop-blur transition duration-200 active:scale-95";
+// Keeps the controls clear of the notch and the screen edges.
+const safeX = "pl-[max(0.75rem,env(safe-area-inset-left))] pr-[max(0.75rem,env(safe-area-inset-right))]";
 const pillClass = (on: boolean) =>
   `${pillBase} ${
     on
@@ -128,22 +131,36 @@ export function CafeExplorer({
       <header
         className={
           mapMode
-            ? "pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-col gap-2 p-3"
-            : "flex flex-col gap-2 border-b border-line px-3 py-3"
+            ? `pointer-events-none absolute inset-x-0 top-0 z-20 flex flex-col gap-2 pt-[max(0.75rem,env(safe-area-inset-top))] pb-2 ${safeX}`
+            : `flex flex-col gap-2 border-b border-line pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 ${safeX}`
         }
       >
         <div className="flex items-center justify-between gap-2">
-          <h1 className="pointer-events-auto rounded-full border border-line bg-crema/90 px-4 py-1.5 font-display text-xl font-bold uppercase leading-none shadow-sm backdrop-blur">
+          <h1 className="pointer-events-auto grid min-h-10 place-items-center whitespace-nowrap rounded-full border border-line bg-crema/90 px-4 font-display text-xl font-bold uppercase leading-none tracking-wide shadow-sm backdrop-blur">
             {dict.meta.title}
           </h1>
           <div className="pointer-events-auto flex items-center gap-2">
+            {/* Icon only on phones so the header stays on one row. */}
             <button
               type="button"
               onClick={locate}
               disabled={geo === "locating"}
-              className={`${pillBase} border-line bg-crema/90 text-ember hover:border-ember disabled:opacity-60`}
+              aria-label={dict.home.nearMe}
+              className={`${pillBase} border-line bg-crema/90 px-0 text-ember hover:border-ember disabled:opacity-60 max-sm:size-10 sm:px-4`}
             >
-              ◎ {geo === "locating" ? dict.home.locating : dict.home.nearMe}
+              <span
+                aria-hidden
+                className={`flex items-center gap-1.5 ${geo === "locating" ? "animate-pulse" : ""}`}
+              >
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <circle cx="12" cy="12" r="6" />
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                </svg>
+                <span className="hidden sm:inline">
+                  {geo === "locating" ? dict.home.locating : dict.home.nearMe}
+                </span>
+              </span>
             </button>
             <ThemeToggle toLight={dict.theme.toLight} toDark={dict.theme.toDark} />
             <LanguageSwitch
@@ -157,7 +174,10 @@ export function CafeExplorer({
         <div
           role="group"
           aria-label={dict.filters.label}
-          className="pointer-events-auto -mx-3 flex items-center gap-2 overflow-x-auto px-3 pb-1"
+          // Scrolls sideways; the right edge fades out to hint that there is more.
+          className={`pointer-events-auto -mx-3 flex items-center gap-2 overflow-x-auto px-3 pb-1 pr-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+            mapMode ? "[mask-image:linear-gradient(to_right,#000_calc(100%-2.5rem),transparent)]" : ""
+          }`}
         >
           <div
             role="group"
@@ -170,7 +190,7 @@ export function CafeExplorer({
                 type="button"
                 aria-pressed={view === v}
                 onClick={() => setView(v)}
-                className={`relative rounded-full px-4 py-1 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
+                className={`relative min-h-9 rounded-full px-4 font-display text-sm font-bold uppercase tracking-widest transition-colors duration-200 ${
                   view === v ? "text-roast" : "text-mute"
                 }`}
               >
@@ -277,17 +297,17 @@ export function CafeExplorer({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.18 }}
-              className="pointer-events-none absolute bottom-6 left-3 z-10 flex max-w-[calc(100%-5rem)] flex-wrap items-center gap-2"
+              className="pointer-events-none absolute bottom-[max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem))] left-[max(0.75rem,env(safe-area-inset-left))] z-10 flex max-w-[calc(100%-8.5rem)] flex-col items-start gap-2"
             >
               <p
                 aria-live="polite"
-                className="pointer-events-auto rounded-full border border-line bg-crema/90 px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur"
+                className="pointer-events-auto grid min-h-9 place-items-center rounded-full border border-line bg-crema/90 px-3.5 text-xs font-semibold shadow-sm backdrop-blur"
               >
                 {visible.length === 0 ? dict.home.noResults : count}
               </p>
               <Link
                 href={`/${lang}/suggest`}
-                className="pointer-events-auto rounded-full border border-line bg-crema/90 px-3 py-1 text-xs text-mute shadow-sm backdrop-blur transition-colors hover:text-foam"
+                className="pointer-events-auto grid min-h-9 place-items-center rounded-full border border-line bg-crema/90 px-3.5 text-xs text-mute shadow-sm backdrop-blur transition-colors hover:text-foam"
               >
                 {dict.home.suggest}
               </Link>
@@ -304,13 +324,18 @@ export function CafeExplorer({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.8 }}
-              className="absolute inset-x-0 bottom-0 z-20 rounded-t-2xl border-t border-line bg-roast/95 p-3 pb-5 backdrop-blur"
+              className={`absolute inset-x-0 bottom-0 z-20 rounded-t-3xl border-t border-line bg-roast/95 pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-[0_-8px_30px_rgba(0,0,0,0.25)] backdrop-blur ${safeX}`}
             >
+              {/* Grab handle: the sheet reads as something you can dismiss. */}
+              <span
+                aria-hidden
+                className="absolute left-1/2 top-1.5 h-1 w-9 -translate-x-1/2 rounded-full bg-line"
+              />
               <button
                 type="button"
                 onClick={() => select(null)}
                 aria-label={dict.home.close}
-                className="absolute -top-11 right-3 grid size-9 place-items-center rounded-full border border-line bg-crema/90 text-foam shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95"
+                className="absolute -top-13 right-3 grid size-10 place-items-center rounded-full border border-line bg-crema/90 text-foam shadow-sm backdrop-blur transition duration-200 hover:border-ember active:scale-95"
               >
                 ✕
               </button>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { hasLocale, locales } from "@/lib/i18n";
@@ -17,6 +17,15 @@ const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
   weight: ["600", "700"],
 });
+
+// viewport-fit=cover lets the map run under the notch and home bar; the controls
+// keep clear of them with env(safe-area-inset-*).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#1a1411",
+};
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));

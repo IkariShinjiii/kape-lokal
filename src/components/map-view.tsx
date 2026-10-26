@@ -12,7 +12,7 @@ import { Protocol } from "pmtiles";
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import type { Cafe } from "@/lib/cafes";
 import { ILOILO_CENTER, type LatLng } from "@/lib/geo";
-import { PIN_KINDS, PIN_SIZE, drawPin, pinImageId, pinKind } from "@/lib/pin-icons";
+import { PIN_KINDS, PIN_SIZE, PIN_Z, PIXEL_RATIO, drawPin, pinImageId, pinKind } from "@/lib/pin-icons";
 import { PIN_COLORS, type Theme } from "@/lib/theme";
 import { useTheme } from "./use-theme";
 
@@ -60,6 +60,7 @@ function toGeoJson(cafes: Cafe[], selectedId: string | null | undefined) {
           icon: pinImageId(kind),
           // The selected pin grows; chains are drawn smaller.
           size: PIN_SIZE[kind] * (selected ? 1.3 : 1),
+          z: selected ? 10 : PIN_Z[kind],
           selected: selected ? 1 : 0,
         },
       };
@@ -146,7 +147,7 @@ export function MapView({
 
     map.on("load", () => {
       for (const kind of PIN_KINDS) {
-        map.addImage(pinImageId(kind), drawPin(kind, colors), { pixelRatio: 2 });
+        map.addImage(pinImageId(kind), drawPin(kind, colors), { pixelRatio: PIXEL_RATIO });
       }
       map.addSource("cafes", { type: "geojson", data: toGeoJson([], null) });
       map.addSource("me", {
@@ -170,7 +171,19 @@ export function MapView({
         source: "cafes",
         layout: {
           "icon-image": ["get", "icon"],
-          "icon-size": ["get", "size"],
+          // Small when the whole city is in view, full size up close, so pins
+          // don't pile on top of each other on a phone.
+          "icon-size": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            10, ["*", ["get", "size"], 0.5],
+            13, ["*", ["get", "size"], 0.75],
+            15, ["*", ["get", "size"], 1],
+            17, ["*", ["get", "size"], 1.2],
+          ],
+          // Where pins overlap, specialty beans and the selected pin draw on top.
+          "symbol-sort-key": ["get", "z"],
           // Every cafe stays visible, even where pins crowd together.
           "icon-allow-overlap": true,
           "icon-ignore-placement": true,
