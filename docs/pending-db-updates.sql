@@ -1,6 +1,6 @@
--- Pending corrections from the 2026-10-25 Google Maps audit.
--- These were NOT applied: the permission prompt declined the writes that publish
--- cafes or move pins. Review, then run in the Supabase SQL editor.
+-- Corrections from the 2026-10-25 Google Maps audit.
+-- APPLIED on 2026-10-26 through the Supabase SQL editor (28 published afterwards).
+-- Kept for the record; do not run again.
 -- Pins are Google Maps place coordinates; every one is within 150 m of the OSM
 -- point except where a comment says otherwise. Hours are in OSM format, which is
 -- what the app displays.
