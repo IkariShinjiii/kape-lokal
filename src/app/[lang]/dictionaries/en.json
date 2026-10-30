@@ -15,7 +15,12 @@
     "noResults": "No cafes match these filters yet.",
     "selectHint": "Tap a pin to see a cafe.",
     "close": "Close",
-    "suggest": "Know a cafe we're missing?"
+    "suggest": "Know a cafe we're missing?",
+    "inView": "{count} of {total} cafes in view",
+    "showAll": "Show all cafes",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "districts": "Jump to a district"
   },
   "filters": {
     "label": "Filters",

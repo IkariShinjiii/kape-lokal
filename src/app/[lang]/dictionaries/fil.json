@@ -15,7 +15,12 @@
     "noResults": "Wala pang cafe na tugma sa mga filter na ito.",
     "selectHint": "Pindutin ang pin para makita ang cafe.",
     "close": "Isara",
-    "suggest": "May kilala kang cafe na wala pa rito?"
+    "suggest": "May kilala kang cafe na wala pa rito?",
+    "inView": "{count} sa {total} na cafe ang nakikita",
+    "showAll": "Ipakita lahat ng cafe",
+    "zoomIn": "Palakihin",
+    "zoomOut": "Paliitin",
+    "districts": "Pumunta sa distrito"
   },
   "filters": {
     "label": "Mga filter",

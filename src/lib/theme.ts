@@ -12,6 +12,8 @@ export const PIN_COLORS = {
     chain: "#6b5d52",
     outline: "#1a1411", // roast
     me: "#6aa8ff",
+    clusterFill: "#251c17", // crema
+    clusterText: "#f1e6d8", // foam
   },
   light: {
     specialty: "#c4541a",
@@ -20,5 +22,7 @@ export const PIN_COLORS = {
     chain: "#a89888",
     outline: "#f6efe6", // roast
     me: "#1f6fd1",
+    clusterFill: "#ece1d3", // crema
+    clusterText: "#2a1f18", // foam
   },
 } as const satisfies Record<Theme, Record<string, string>>;

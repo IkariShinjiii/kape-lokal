@@ -2,7 +2,7 @@
 
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { Cafe } from "@/lib/cafes";
 import { t } from "@/lib/format";
@@ -11,7 +11,8 @@ import type { Locale } from "@/lib/i18n";
 import { CafeCard } from "./cafe-card";
 import { CafePreview } from "./cafe-preview";
 import { LanguageSwitch } from "./language-switch";
-import { MapView, type HoverInfo } from "./map-view";
+import { DISTRICT_ZOOM, DISTRICTS } from "@/lib/map-extras";
+import { MapView, type HoverInfo, type MapApi, type ViewBounds } from "./map-view";
 import { ThemeToggle } from "./theme-toggle";
 
 type TagFilter = "all" | "specialty_coffee" | "matcha";
@@ -39,6 +40,12 @@ const pillClass = (on: boolean) =>
 const segmentGroup =
   "box-border flex h-10 shrink-0 gap-0.5 rounded-full border border-line bg-crema/90 p-[3px] shadow-sm backdrop-blur";
 
+// Round 40px buttons on the map's right edge, centred icons (no side padding).
+const railButton =
+  "grid size-10 place-items-center rounded-full border border-line bg-crema/90 text-foam shadow-sm backdrop-blur transition duration-200 hover:border-ember hover:text-ember active:scale-95";
+const railStackButton =
+  "grid size-10 place-items-center text-foam transition-colors duration-200 hover:text-ember active:bg-roast/40";
+
 // With no location, local specialty cafes come first, then other local cafes, then chains.
 function rank(c: Cafe): number {
   if (c.isChain) return 2;
@@ -62,6 +69,25 @@ export function CafeExplorer({
   const [hover, setHover] = useState<HoverInfo | null>(null);
   const [userPos, setUserPos] = useState<LatLng | null>(null);
   const [geo, setGeo] = useState<GeoState>("idle");
+  const [bounds, setBounds] = useState<ViewBounds | null>(null);
+  const [districtsOpen, setDistrictsOpen] = useState(false);
+  const mapApi = useRef<MapApi | null>(null);
+  const districtsRef = useRef<HTMLDivElement>(null);
+
+  // The district menu closes on a click outside it or on Escape.
+  useEffect(() => {
+    if (!districtsOpen) return;
+    const onPointer = (e: PointerEvent) => {
+      if (!districtsRef.current?.contains(e.target as Node)) setDistrictsOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setDistrictsOpen(false);
+    document.addEventListener("pointerdown", onPointer);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onPointer);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [districtsOpen]);
 
   const visible = useMemo(() => {
     const filtered = cafes.filter(
@@ -126,6 +152,18 @@ export function CafeExplorer({
       ? dict.home.resultsOne
       : t(dict.home.results, { count: visible.length });
   const mapMode = view === "map";
+  // How many of the filtered cafes are on screen right now.
+  const inView = bounds
+    ? visibleCafes.filter(
+        (c) => c.lng >= bounds[0] && c.lat >= bounds[1] && c.lng <= bounds[2] && c.lat <= bounds[3],
+      ).length
+    : visible.length;
+  const mapCount =
+    visible.length === 0
+      ? dict.home.noResults
+      : inView < visible.length
+        ? t(dict.home.inView, { count: inView, total: visible.length })
+        : count;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -278,6 +316,8 @@ export function CafeExplorer({
           selectedId={selectedId}
           onSelect={select}
           onHover={setHover}
+          onBoundsChange={setBounds}
+          apiRef={mapApi}
           userPos={userPos}
           bottomPadding={selected ? SHEET_HEIGHT : 0}
         />
@@ -321,7 +361,7 @@ export function CafeExplorer({
                 aria-live="polite"
                 className="pointer-events-auto grid min-h-9 place-items-center rounded-full border border-line bg-crema/90 px-3.5 text-xs font-semibold shadow-sm backdrop-blur"
               >
-                {visible.length === 0 ? dict.home.noResults : count}
+                {mapCount}
               </p>
               <Link
                 href={`/${lang}/suggest`}
@@ -329,6 +369,87 @@ export function CafeExplorer({
               >
                 {dict.home.suggest}
               </Link>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Map controls: a rail above the map credit. Zoom buttons are for mouse
+            users; phones pinch, so they only get districts and show-all. */}
+        <AnimatePresence>
+          {!selected && (
+            <motion.div
+              key="map-rail"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.18 }}
+              className="absolute bottom-[calc(max(1.25rem,calc(env(safe-area-inset-bottom)+0.5rem))+2.25rem)] right-[max(0.75rem,env(safe-area-inset-right))] z-10 flex flex-col items-end gap-2"
+            >
+              <div ref={districtsRef} className="relative">
+                <button
+                  type="button"
+                  aria-label={dict.home.districts}
+                  aria-expanded={districtsOpen}
+                  aria-haspopup="menu"
+                  onClick={() => setDistrictsOpen((o) => !o)}
+                  className={`${railButton} ${districtsOpen ? "border-ember text-ember" : ""}`}
+                >
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M9 4 3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4Z" />
+                    <path d="M9 4v13.5M15 6.5V20" />
+                  </svg>
+                </button>
+                <AnimatePresence>
+                  {districtsOpen && (
+                      <motion.div
+                        role="menu"
+                        aria-label={dict.home.districts}
+                        initial={{ opacity: 0, x: 8, scale: 0.97 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: 8, scale: 0.97 }}
+                        transition={{ duration: 0.16, ease: "easeOut" }}
+                        className="absolute bottom-0 right-12 z-10 flex w-44 origin-bottom-right flex-col gap-0.5 rounded-2xl border border-line bg-crema/95 p-1.5 shadow-lg backdrop-blur"
+                      >
+                        <p className="px-3 pb-1 pt-1.5 font-display text-xs font-bold uppercase tracking-widest text-mute">
+                          {dict.home.districts}
+                        </p>
+                        {DISTRICTS.map((d) => (
+                          <button
+                            key={d.id}
+                            type="button"
+                            role="menuitem"
+                            onClick={() => {
+                              setDistrictsOpen(false);
+                              mapApi.current?.flyTo([...d.center], DISTRICT_ZOOM);
+                            }}
+                            className="min-h-10 rounded-xl px-3 text-left text-sm font-semibold text-foam transition-colors duration-150 hover:bg-roast/60 hover:text-ember"
+                          >
+                            {d.name}
+                          </button>
+                        ))}
+                      </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <div className="hidden flex-col overflow-hidden rounded-full border border-line bg-crema/90 shadow-sm backdrop-blur sm:flex">
+                <button type="button" aria-label={dict.home.zoomIn} onClick={() => mapApi.current?.zoomIn()} className={railStackButton}>
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M12 5v14M5 12h14" /></svg>
+                </button>
+                <span aria-hidden className="mx-2.5 h-px bg-line" />
+                <button type="button" aria-label={dict.home.zoomOut} onClick={() => mapApi.current?.zoomOut()} className={railStackButton}>
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><path d="M5 12h14" /></svg>
+                </button>
+              </div>
+              <button
+                type="button"
+                aria-label={dict.home.showAll}
+                onClick={() => mapApi.current?.showAll()}
+                className={railButton}
+              >
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M4 9V5a1 1 0 0 1 1-1h4M15 4h4a1 1 0 0 1 1 1v4M20 15v4a1 1 0 0 1-1 1h-4M9 20H5a1 1 0 0 1-1-1v-4" />
+                </svg>
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
