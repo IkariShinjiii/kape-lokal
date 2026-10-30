@@ -10,6 +10,7 @@ import { distanceMeters, ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { useFavorites } from "@/lib/favorites";
 import { openState } from "@/lib/hours";
+import { activeSponsorSlugs } from "@/lib/sponsors";
 import { CafeCard } from "./cafe-card";
 import { CafePreview } from "./cafe-preview";
 import { CafeSearch, searchText } from "./cafe-search";
@@ -81,6 +82,7 @@ export function CafeExplorer({
   // The clock behind "Open now", moved on every minute while that filter is on.
   const [now, setNow] = useState(() => Date.now());
   const { ids: savedIds } = useFavorites();
+  const sponsors = useMemo(() => activeSponsorSlugs(), []);
   const mapApi = useRef<MapApi | null>(null);
   const districtsRef = useRef<HTMLDivElement>(null);
 
@@ -123,14 +125,17 @@ export function CafeExplorer({
     }));
     // While searching, names that start with the text come first.
     const starts = (c: Cafe) => (q && searchText(c.name).startsWith(q) ? 0 : 1);
+    // Paid placements come first in the list (never while searching).
+    const sponsored = (c: Cafe) => (!q && sponsors.has(c.slug) ? 0 : 1);
     return withDistance.sort(
       (a, b) =>
+        sponsored(a.cafe) - sponsored(b.cafe) ||
         starts(a.cafe) - starts(b.cafe) ||
         (a.distance !== undefined && b.distance !== undefined
           ? a.distance - b.distance
           : rank(a.cafe) - rank(b.cafe) || a.cafe.name.localeCompare(b.cafe.name)),
     );
-  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, now, userPos]);
+  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, now, userPos, sponsors]);
 
   const visibleCafes = useMemo(() => visible.map((v) => v.cafe), [visible]);
   const selected = visible.find((v) => v.cafe.id === selectedId) ?? null;
@@ -603,7 +608,7 @@ export function CafeExplorer({
                       delay: Math.min(i, 8) * 0.035,
                     }}
                   >
-                    <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} />
+                    <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} sponsored={sponsors.has(cafe.slug)} />
                   </motion.li>
                 ))}
               </AnimatePresence>

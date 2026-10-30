@@ -62,5 +62,19 @@ Only three cafes carry the specialty tag, each with a source:
 - Drip Coffee & Community: Inquirer Lifestyle recommends it for specialty coffee (lifestyle.inquirer.net, "new coffee shops on our radar").
 No evidence found for Cicada, Coffee Brewtherhood, Chapter Coffee, Superhouse or bean there., so they stay untagged. Madge is a traditional coffee shop (since 1940), not specialty.
 
+### Added 2026-10-31
+The rule needs at least one source where the cafe describes itself as specialty, or two independent signs. The Iloilo Review's "Iloilo Café Guide (2026)" (theiloiloreview.com/food/cafes-and-bakeries/iloilo-cafe-guide/) lists 16 cafes as specialty. It counts as one sign, not proof on its own, because it includes at least one closed cafe.
+- **Fika Specialty Coffee:** the cafe's own name, and the Iloilo Review guide.
+- **La Roasteria (Molo):** the sign in its Google Maps photo reads "Bringing Specialty Coffee to Iloilo City". Google also lists it as a coffee roastery.
+- **SOUL Coffee (Jaro and Quezon St):** its own site (soulcoffeeph.com) says "Specialty coffee in the heart of Iloilo" and lists both branches. Also in the Iloilo Review guide.
+- **Kape ni Emman (Jaro):** its own site (emmancoffee.com) says "Traditionally Brewed Native Coffee & Specialty Coffee".
+- **Neighbor Coffee (Shops at Atria):** in the Iloilo Review guide. Its shop (neighborcoffee.ph) sells beans named by origin and producer ("Ethiopia", "Brazil Ipanema", "Marivic Dubria"). It also runs #PurposeBeyondCoffee, which funds training for coffee farmers in Leon. Only the Atria branch is tagged, since that is the branch the evidence names.
+- **Matcha: Le:Félin Home Cafe & Matcha Atelier:** the cafe's own name.
+
+Held back for now:
+- **Only in the guide:** Palpitate, Kyō Coffee, Paul Kaldi, The Good Locals, aroma. and Cafe Maya appear in the guide but nowhere else.
+- **Local Coffee (LoCo):** roasts single-origin, direct-trade Philippine Robusta in-house (localcoffee.ph) but never calls itself specialty.
+- **Chapter Coffee:** its site is now a domain for sale.
+
 ## Method
 Each cafe was looked up on Google Maps with a search centered on its OSM point. A cafe counted as verified only if Google listed it as open (or with hours or a phone) and its pin sat within about 150 m of ours. Where Google's pin was farther, the pin was corrected from Google's place coordinates, since those are more exact than a hand-placed OSM node.

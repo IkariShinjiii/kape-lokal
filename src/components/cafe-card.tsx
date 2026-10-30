@@ -15,9 +15,11 @@ type Props = {
   dict: Dictionary;
   /** Compact card for the map's bottom sheet. */
   sheet?: boolean;
+  /** Paid placement: shows a Sponsored label. */
+  sponsored?: boolean;
 };
 
-export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
+export function CafeCard({ cafe, distance, lang, dict, sheet = false, sponsored = false }: Props) {
   return (
     <article
       // In the map's bottom sheet the card sits flush on the sheet itself, so its
@@ -55,8 +57,13 @@ export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
       </div>
 
       {/* Skipped when empty: an empty row would still add a flex gap. */}
-      {(cafe.tags.length > 0 || cafe.isChain) && (
+      {(cafe.tags.length > 0 || cafe.isChain || sponsored) && (
         <div className="flex flex-wrap gap-1.5">
+          {sponsored && (
+            <span className="rounded-full border border-line px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-mute">
+              {dict.cafe.sponsored}
+            </span>
+          )}
           {cafe.tags.map((tag) => (
             <TagChip key={tag} tag={tag} label={dict.cafe.tags[tag]} />
           ))}

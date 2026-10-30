@@ -1,6 +1,6 @@
 # Kape Lokal: Plan
 
-Status: planning. No application code yet.
+Status: live at https://kape-lokal.vercel.app with 184 verified cafes (2026-10-31). See "Status" below.
 
 ## Product
 
@@ -158,7 +158,42 @@ The `edit_flags` table lets anyone insert a report, so it can be spammed. Before
 - App domain and hosting plan (Vercel free tier is fine to start).
 
 ## Milestones
-Status as of 2026-10-24:
+Status as of 2026-10-31:
+
+- **Live:** at kape-lokal.vercel.app, deployed automatically from the GitHub main branch.
+- **Cafes:** 184 published. The data comes from:
+  - OpenStreetMap
+  - Overture Maps open data (`scripts/overture/`)
+  - a district-by-district Google Maps sweep
+  
+  Every published cafe was checked open on Google. Closed ones are excluded, never deleted.
+- **Tags:**
+  - 10 specialty cafes and 2 matcha cafes, each with a source in `docs/google-maps-reference.md`.
+  - Chains are hidden unless "Include chains" is on.
+- **Map:**
+  - street and district labels, pin clusters
+  - a district jump menu, a live "in view" count, zoom and show-all buttons
+  - a pulsing location dot, a bean, leaf or cup pin per cafe, and a hover preview
+- **Finding cafes:**
+  - search by name or address
+  - Open now, Saved (on the device), Specialty, Matcha, Has menu and chains filters
+  - readable hours with a live Open now / Closed status in Philippine time
+- **Logos:** each cafe's Facebook profile picture, served through `/api/logo` so visitors' browsers don't contact Facebook. Covers about 155 cafes; the rest show their initial.
+- **Languages:** English, Filipino, Hiligaynon. Both translations need a native-speaker review.
+- **SEO and sharing:**
+  - sitemap and robots files
+  - language alternates
+  - schema.org data on cafe pages
+  - generated link-preview images for the home page and each cafe
+- **Admin:** photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
+- **Open items:**
+  - Re-read Sunday/Monday hours after the Nov 1–2 holidays.
+  - 75 cafes have no hours.
+  - Owner claim portal.
+  - Sponsor slot.
+  - Custom domain (set `NEXT_PUBLIC_SITE_URL` once connected).
+
+Status as of 2026-10-24 (history):
 
 1. Design tokens: **done** (Tailwind theme in `globals.css`).
 2. Scaffold, Supabase project, schema, row-level security, language routing: **done**.
@@ -194,7 +229,6 @@ For a deployed site, add its address under Supabase > Authentication > URL Confi
 
 ### Known limits
 
-- Opening hours show the raw OpenStreetMap text (for example `Mo-Su 08:00-22:00`). There is no "open now" yet.
 - Map labels and icons load from the free Protomaps asset host on GitHub Pages. The map tiles themselves are our own file.
 - The 3 test rows from earlier are still in the database. The admin page can exclude them, or run the delete SQL given earlier.
 - Overlapping access policies cause a performance notice in Supabase. It does not matter at this size.

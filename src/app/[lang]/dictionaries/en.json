@@ -59,7 +59,8 @@
     "opensAt": "opens {time}",
     "opensDayAt": "opens {day} {time}",
     "save": "Save this cafe",
-    "unsave": "Remove from saved"
+    "unsave": "Remove from saved",
+    "sponsored": "Sponsored"
   },
   "detail": {
     "back": "Back to cafes",

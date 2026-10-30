@@ -59,7 +59,8 @@
     "opensAt": "magbubukas {time}",
     "opensDayAt": "magbubukas {day} {time}",
     "save": "I-save ang cafe",
-    "unsave": "Alisin sa naka-save"
+    "unsave": "Alisin sa naka-save",
+    "sponsored": "Naka-sponsor"
   },
   "detail": {
     "back": "Balik sa mga cafe",
