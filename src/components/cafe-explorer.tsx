@@ -8,8 +8,11 @@ import type { Cafe } from "@/lib/cafes";
 import { t } from "@/lib/format";
 import { distanceMeters, ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
+import { useFavorites } from "@/lib/favorites";
+import { openState } from "@/lib/hours";
 import { CafeCard } from "./cafe-card";
 import { CafePreview } from "./cafe-preview";
+import { CafeSearch, searchText } from "./cafe-search";
 import { LanguageSwitch } from "./language-switch";
 import { DISTRICT_ZOOM, DISTRICTS } from "@/lib/map-extras";
 import { MapView, type HoverInfo, type MapApi, type ViewBounds } from "./map-view";
@@ -71,8 +74,21 @@ export function CafeExplorer({
   const [geo, setGeo] = useState<GeoState>("idle");
   const [bounds, setBounds] = useState<ViewBounds | null>(null);
   const [districtsOpen, setDistrictsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [openOnly, setOpenOnly] = useState(false);
+  const [savedOnly, setSavedOnly] = useState(false);
+  // The clock behind "Open now", moved on every minute while that filter is on.
+  const [now, setNow] = useState(() => Date.now());
+  const { ids: savedIds } = useFavorites();
   const mapApi = useRef<MapApi | null>(null);
   const districtsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!openOnly) return;
+    const timer = setInterval(() => setNow(Date.now()), 60_000);
+    return () => clearInterval(timer);
+  }, [openOnly]);
 
   // The district menu closes on a click outside it or on Escape.
   useEffect(() => {
@@ -90,22 +106,31 @@ export function CafeExplorer({
   }, [districtsOpen]);
 
   const visible = useMemo(() => {
+    const q = searchText(query.trim());
+    const at = new Date(now);
     const filtered = cafes.filter(
       (c) =>
         (includeChains || !c.isChain) &&
         (tagFilter === "all" || c.tags.includes(tagFilter)) &&
-        (!menuOnly || c.hasMenu),
+        (!menuOnly || c.hasMenu) &&
+        (!openOnly || openState(c.hours, at)?.open === true) &&
+        (!savedOnly || savedIds.includes(c.id)) &&
+        (!q || searchText(`${c.name} ${c.address ?? ""}`).includes(q)),
     );
     const withDistance = filtered.map((cafe) => ({
       cafe,
       distance: userPos ? distanceMeters(userPos, cafe) : undefined,
     }));
-    return withDistance.sort((a, b) =>
-      a.distance !== undefined && b.distance !== undefined
-        ? a.distance - b.distance
-        : rank(a.cafe) - rank(b.cafe) || a.cafe.name.localeCompare(b.cafe.name),
+    // While searching, names that start with the text come first.
+    const starts = (c: Cafe) => (q && searchText(c.name).startsWith(q) ? 0 : 1);
+    return withDistance.sort(
+      (a, b) =>
+        starts(a.cafe) - starts(b.cafe) ||
+        (a.distance !== undefined && b.distance !== undefined
+          ? a.distance - b.distance
+          : rank(a.cafe) - rank(b.cafe) || a.cafe.name.localeCompare(b.cafe.name)),
     );
-  }, [cafes, includeChains, tagFilter, menuOnly, userPos]);
+  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, now, userPos]);
 
   const visibleCafes = useMemo(() => visible.map((v) => v.cafe), [visible]);
   const selected = visible.find((v) => v.cafe.id === selectedId) ?? null;
@@ -176,11 +201,33 @@ export function CafeExplorer({
             : `flex flex-col gap-2 border-b border-line pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 ${safeX}`
         }
       >
-        <div className="flex items-center justify-between gap-2">
+        <div className="relative flex items-center justify-between gap-2">
           <h1 className="pointer-events-auto grid min-h-10 place-items-center whitespace-nowrap rounded-full border border-line bg-crema/90 px-4 font-display text-xl font-bold uppercase leading-none tracking-wide shadow-sm backdrop-blur">
             {dict.meta.title}
           </h1>
           <div className="pointer-events-auto flex items-center gap-2">
+            <CafeSearch
+              query={query}
+              onQuery={(q) => {
+                setQuery(q);
+                setSelectedId(null);
+              }}
+              matches={visibleCafes}
+              onPick={(id) => {
+                setQuery("");
+                setSearchOpen(false);
+                setView("map");
+                select(id);
+              }}
+              strings={{
+                placeholder: dict.home.search,
+                clear: dict.home.searchClear,
+                open: dict.home.search,
+                noMatch: dict.home.noResults,
+              }}
+              mobileOpen={searchOpen}
+              onMobileOpen={setSearchOpen}
+            />
             {/* Icon only on phones so the header stays on one row. */}
             <button
               type="button"
@@ -278,6 +325,30 @@ export function CafeExplorer({
               </button>
             ))}
           </div>
+          <button
+            type="button"
+            aria-pressed={openOnly}
+            onClick={() => {
+              setNow(Date.now());
+              setOpenOnly((v) => !v);
+            }}
+            className={`${pillClass(openOnly)} grid-flow-col gap-1.5`}
+          >
+            <span aria-hidden className={`size-1.5 rounded-full ${openOnly ? "bg-leaf" : "bg-mute"}`} />
+            {dict.filters.openNow}
+          </button>
+          <button
+            type="button"
+            aria-pressed={savedOnly}
+            onClick={() => setSavedOnly((v) => !v)}
+            className={`${pillClass(savedOnly)} grid-flow-col gap-1.5`}
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill={savedOnly ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden>
+              <path d="M12 20.5s-7.5-4.6-9.2-9.4C1.6 7.6 3.9 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.3 0 5.6 3.1 4.4 6.6-1.7 4.8-9.2 9.4-9.2 9.4Z" />
+            </svg>
+            {dict.filters.saved}
+            {savedIds.length > 0 && <span className="tabular-nums text-mute">{savedIds.length}</span>}
+          </button>
           <button
             type="button"
             aria-pressed={menuOnly}

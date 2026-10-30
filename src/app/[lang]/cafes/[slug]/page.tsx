@@ -4,13 +4,15 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CafeLogo } from "@/components/cafe-logo";
 import { OpenStatus } from "@/components/open-status";
+import { SaveButton } from "@/components/save-button";
 import { formatHours } from "@/lib/hours";
 import { MapView } from "@/components/map-view";
 import { ReportForm } from "@/components/report-form";
 import { ChainChip, TagChip } from "@/components/tag-chip";
 import { getCafeBySlug, type MenuItem } from "@/lib/cafes";
 import { directionsUrl } from "@/lib/geo";
-import { hasLocale, type Locale } from "@/lib/i18n";
+import { hasLocale, locales, type Locale } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 import { mediaUrl } from "@/lib/supabase/public";
 import { getDictionary } from "../../dictionaries";
 
@@ -18,7 +20,37 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/cafes/[slu
   const { lang, slug } = await params;
   if (!hasLocale(lang)) return {};
   const cafe = await getCafeBySlug(slug);
-  return cafe ? { title: `${cafe.name} · Kape Lokal` } : {};
+  if (!cafe) return {};
+  const hours = formatHours(cafe.hours, lang);
+  const description = [cafe.address, hours].filter(Boolean).join(" · ") || cafe.name;
+  const path = `/cafes/${cafe.slug}`;
+  return {
+    title: cafe.name,
+    description,
+    alternates: {
+      canonical: `/${lang}${path}`,
+      languages: Object.fromEntries(locales.map((l) => [l, `/${l}${path}`])),
+    },
+    openGraph: { title: cafe.name, description, url: `/${lang}${path}` },
+  };
+}
+
+/** schema.org data so search engines can show the address, hours and phone. */
+function cafeJsonLd(cafe: NonNullable<Awaited<ReturnType<typeof getCafeBySlug>>>, url: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    name: cafe.name,
+    url,
+    address: cafe.address
+      ? { "@type": "PostalAddress", streetAddress: cafe.address, addressLocality: "Iloilo City", addressCountry: "PH" }
+      : undefined,
+    geo: { "@type": "GeoCoordinates", latitude: cafe.lat, longitude: cafe.lng },
+    telephone: cafe.phone ?? undefined,
+    // Stored hours already use schema.org's "Mo-Fr 08:00-17:00" style.
+    openingHours: cafe.hours ? cafe.hours.split(/\s*;\s*/).filter((r) => !/off$/.test(r)) : undefined,
+    sameAs: [cafe.website, cafe.facebook?.startsWith("http") ? cafe.facebook : null].filter(Boolean),
+  };
 }
 
 export default function CafePage({ params }: PageProps<"/[lang]/cafes/[slug]">) {
@@ -72,6 +104,13 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
 
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-6 pb-28">
+      <script
+        type="application/ld+json"
+        // JSON.stringify output with "<" escaped cannot break out of the script tag.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(cafeJsonLd(cafe, `${SITE_URL}/${lang}/cafes/${cafe.slug}`)).replace(/</g, "\\u003c"),
+        }}
+      />
       {/* Inset to the same 16px edges as the content below, on every screen width. */}
       <div className="relative mx-4 mt-[max(1rem,env(safe-area-inset-top))] h-44 overflow-hidden rounded-2xl bg-gradient-to-br from-[#7a5238] to-[#2e1f16]">
         {cafe.coverImagePath && (
@@ -102,9 +141,16 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
 
       <div className="flex flex-col gap-6 px-4">
         <header className="flex flex-col gap-2">
-          <h1 className="font-display text-5xl font-bold uppercase leading-none">
-            {cafe.name}
-          </h1>
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="font-display text-5xl font-bold uppercase leading-none">
+              {cafe.name}
+            </h1>
+            <SaveButton
+              cafeId={cafe.id}
+              labels={{ save: dict.cafe.save, unsave: dict.cafe.unsave }}
+              className="mt-1"
+            />
+          </div>
           {(cafe.tags.length > 0 || cafe.isChain) && (
             <div className="flex flex-wrap gap-1.5">
               {cafe.tags.map((tag) => (

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CafeForm } from "@/components/admin/cafe-form";
+import { PhotoUpload } from "@/components/admin/photo-upload";
 import { AdminShell, adminButton, adminGhostButton, adminInput } from "@/components/admin/shell";
 import { ADMIN_HOME, requireSignedIn } from "@/lib/admin";
 import { mediaUrl } from "@/lib/supabase/public";
@@ -106,10 +107,7 @@ async function EditCafe({
             className="h-40 w-full rounded object-cover"
           />
         )}
-        <form action={uploadCoverImage.bind(null, id)} className="flex flex-wrap items-center gap-2">
-          <input type="file" name="image" accept="image/jpeg,image/png,image/webp" required className="text-sm" />
-          <button className={adminGhostButton}>Upload cover</button>
-        </form>
+        <PhotoUpload action={uploadCoverImage.bind(null, id)} label="Upload cover" />
       </section>
 
       <section id="menu" className="flex flex-col gap-4 border-t border-line pt-6 scroll-mt-4">
@@ -181,10 +179,7 @@ async function EditCafe({
             ))}
           </ul>
         )}
-        <form action={uploadMenuImage.bind(null, id)} className="flex flex-wrap items-center gap-2">
-          <input type="file" name="image" accept="image/jpeg,image/png,image/webp" required className="text-sm" />
-          <button className={adminGhostButton}>Upload menu photo</button>
-        </form>
+        <PhotoUpload action={uploadMenuImage.bind(null, id)} label="Upload menu photo" />
       </section>
     </AdminShell>
   );

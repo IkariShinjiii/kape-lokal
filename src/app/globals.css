@@ -56,6 +56,11 @@ body {
   outline-offset: 2px;
 }
 
+/* The search field's rounded frame turns orange on focus instead. */
+input[type="search"]:focus-visible {
+  outline: none;
+}
+
 /* Colors ease across when the theme changes. The class is added only for the
    moment of the switch, so ordinary hovers and scrolling are unaffected. */
 :root.theme-switching,

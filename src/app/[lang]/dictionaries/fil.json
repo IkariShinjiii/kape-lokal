@@ -1,7 +1,8 @@
 {
   "meta": {
     "title": "Kape Lokal",
-    "description": "Hanapin ang mga lokal na specialty coffee at matcha cafe malapit sa iyo sa Iloilo City."
+    "description": "Hanapin ang mga lokal na specialty coffee at matcha cafe malapit sa iyo sa Iloilo City.",
+    "ogCount": "{count} na cafe sa mapa"
   },
   "home": {
     "heading": "Mga cafe malapit sa iyo",
@@ -20,7 +21,9 @@
     "showAll": "Ipakita lahat ng cafe",
     "zoomIn": "Palakihin",
     "zoomOut": "Paliitin",
-    "districts": "Pumunta sa distrito"
+    "districts": "Pumunta sa distrito",
+    "search": "Maghanap ng cafe",
+    "searchClear": "Burahin ang hinahanap"
   },
   "filters": {
     "label": "Mga filter",
@@ -28,7 +31,9 @@
     "specialty": "Specialty",
     "matcha": "Matcha",
     "menu": "May menu",
-    "chains": "Isama ang mga chain"
+    "chains": "Isama ang mga chain",
+    "openNow": "Bukas ngayon",
+    "saved": "Naka-save"
   },
   "view": {
     "label": "Tanaw",
@@ -52,7 +57,9 @@
     "closedNow": "Sarado",
     "closesAt": "hanggang {time}",
     "opensAt": "magbubukas {time}",
-    "opensDayAt": "magbubukas {day} {time}"
+    "opensDayAt": "magbubukas {day} {time}",
+    "save": "I-save ang cafe",
+    "unsave": "Alisin sa naka-save"
   },
   "detail": {
     "back": "Balik sa mga cafe",

@@ -5,6 +5,7 @@ import { directionsUrl, formatDistance } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { CafeLogo } from "./cafe-logo";
 import { OpenStatus } from "./open-status";
+import { SaveButton } from "./save-button";
 import { ChainChip, TagChip } from "./tag-chip";
 
 type Props = {
@@ -43,11 +44,14 @@ export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
           )}
           <OpenStatus hours={cafe.hours} lang={lang} dict={dict} className="mt-1 text-xs" />
         </div>
-        {distance !== undefined && (
-          <p className="shrink-0 text-right font-display text-xl font-bold text-ember tabular-nums">
-            {formatDistance(distance)}
-          </p>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          {distance !== undefined && (
+            <p className="text-right font-display text-xl font-bold text-ember tabular-nums">
+              {formatDistance(distance)}
+            </p>
+          )}
+          <SaveButton cafeId={cafe.id} labels={{ save: dict.cafe.save, unsave: dict.cafe.unsave }} />
+        </div>
       </div>
 
       {/* Skipped when empty: an empty row would still add a flex gap. */}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { hasLocale, locales } from "@/lib/i18n";
+import { SITE_URL } from "@/lib/site";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import { getDictionary } from "./dictionaries";
 import "../globals.css";
@@ -37,7 +38,23 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang);
-  return { title: dict.meta.title, description: dict.meta.description };
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: dict.meta.title, template: `%s · ${dict.meta.title}` },
+    description: dict.meta.description,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+    },
+    openGraph: {
+      type: "website",
+      siteName: dict.meta.title,
+      title: dict.meta.title,
+      description: dict.meta.description,
+      locale: lang === "fil" ? "fil_PH" : "en_PH",
+    },
+    twitter: { card: "summary_large_image" },
+  };
 }
 
 export default async function RootLayout({

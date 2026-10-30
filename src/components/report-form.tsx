@@ -46,6 +46,14 @@ export function ReportForm({ cafeId, strings }: { cafeId: string; strings: Strin
         aria-hidden="true"
         className="absolute -left-[9999px] h-0 w-0 opacity-0"
       />
+      {/* When the form appeared, set in the browser. Bots that post instantly are ignored. */}
+      <input
+        type="hidden"
+        name="started"
+        ref={(el) => {
+          if (el && !el.value) el.value = String(Date.now());
+        }}
+      />
       <label className="flex flex-col gap-1 text-sm">
         {strings.note}
         <textarea
