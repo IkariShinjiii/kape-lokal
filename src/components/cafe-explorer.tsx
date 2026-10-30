@@ -256,7 +256,7 @@ export function CafeExplorer({
             <LanguageSwitch
               current={lang}
               label={dict.language.label}
-              names={{ en: dict.language.en, fil: dict.language.fil }}
+              names={{ en: dict.language.en, fil: dict.language.fil, hil: dict.language.hil }}
             />
           </div>
         </div>

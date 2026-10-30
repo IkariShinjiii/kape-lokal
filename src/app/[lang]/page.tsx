@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CafeExplorer } from "@/components/cafe-explorer";
 import { getCafes } from "@/lib/cafes";
-import { hasLocale } from "@/lib/i18n";
+import { hasLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "./dictionaries";
 
 export default async function Home({ params }: PageProps<"/[lang]">) {
@@ -17,7 +17,7 @@ export default async function Home({ params }: PageProps<"/[lang]">) {
   );
 }
 
-async function Explorer({ lang }: { lang: "en" | "fil" }) {
+async function Explorer({ lang }: { lang: Locale }) {
   const [cafes, dict] = await Promise.all([getCafes(), getDictionary(lang)]);
   return <CafeExplorer cafes={cafes} lang={lang} dict={dict} />;
 }

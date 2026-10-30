@@ -3,17 +3,18 @@
 // This turns them into readable text and works out whether a cafe is open now.
 // Only the common forms are understood; anything else is shown as stored.
 
-export type Locale = "en" | "fil";
+export type Locale = "en" | "fil" | "hil";
 
 const CODES = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"] as const;
 const SHORT: Record<Locale, string[]> = {
   en: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
   fil: ["Lun", "Mar", "Miy", "Huw", "Biy", "Sab", "Lin"],
+  hil: ["Lun", "Mar", "Miy", "Huw", "Biy", "Sab", "Dom"],
 };
-const DAILY: Record<Locale, string> = { en: "Daily", fil: "Araw-araw" };
-const CLOSED: Record<Locale, string> = { en: "Closed", fil: "Sarado" };
-const ALL_DAY: Record<Locale, string> = { en: "Open 24 hours", fil: "Bukas 24 oras" };
-const NOT_LISTED: Record<Locale, string> = { en: "not listed", fil: "walang nakalista" };
+const DAILY: Record<Locale, string> = { en: "Daily", fil: "Araw-araw", hil: "Kada adlaw" };
+const CLOSED: Record<Locale, string> = { en: "Closed", fil: "Sarado", hil: "Sirado" };
+const ALL_DAY: Record<Locale, string> = { en: "Open 24 hours", fil: "Bukas 24 oras", hil: "Bukas 24 oras" };
+const NOT_LISTED: Record<Locale, string> = { en: "not listed", fil: "walang nakalista", hil: "wala nakalista" };
 
 /** Minutes from midnight; an end of 24:00 is 1440. */
 type Range = [number, number];

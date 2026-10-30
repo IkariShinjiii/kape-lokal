@@ -100,7 +100,8 @@
   "language": {
     "label": "Language",
     "en": "English",
-    "fil": "Filipino"
+    "fil": "Filipino",
+    "hil": "Hiligaynon"
   },
   "theme": {
     "toLight": "Switch to light theme",

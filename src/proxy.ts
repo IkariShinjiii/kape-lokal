@@ -1,10 +1,12 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { defaultLocale, locales } from "@/lib/i18n";
 
-// Filipino speakers may send "fil" or the older "tl" in Accept-Language.
+// Filipino speakers may send "fil" or the older "tl" in Accept-Language;
+// Hiligaynon speakers "hil".
 function pickLocale(request: NextRequest): string {
   const header = request.headers.get("accept-language") ?? "";
   const first = header.split(",")[0]?.trim().toLowerCase() ?? "";
+  if (first.startsWith("hil")) return "hil";
   if (first.startsWith("fil") || first.startsWith("tl")) return "fil";
   return defaultLocale;
 }

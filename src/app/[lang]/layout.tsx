@@ -51,7 +51,7 @@ export async function generateMetadata({
       siteName: dict.meta.title,
       title: dict.meta.title,
       description: dict.meta.description,
-      locale: lang === "fil" ? "fil_PH" : "en_PH",
+      locale: lang === "en" ? "en_PH" : `${lang}_PH`,
     },
     twitter: { card: "summary_large_image" },
   };

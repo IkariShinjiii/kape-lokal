@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "title": "Kape Lokal",
+    "description": "Pangitaa ang lokal nga specialty coffee kag matcha nga mga cafe malapit sa imo sa Iloilo City.",
+    "ogCount": "{count} ka cafe sa mapa"
+  },
+  "home": {
+    "heading": "Mga cafe malapit sa imo",
+    "tagline": "Lokal nga specialty coffee kag matcha sa Iloilo City.",
+    "nearMe": "Malapit sa akon",
+    "locating": "Ginapangita ang imo lokasyon…",
+    "locationDenied": "Naka-off ang lokasyon. Tuguti ini sa imo browser para mahanay suno sa kalayuon.",
+    "locationUnavailable": "Wala namon makuha ang imo lokasyon. Ginapakita ang bug-os nga Iloilo City.",
+    "results": "{count} ka cafe",
+    "resultsOne": "1 ka cafe",
+    "noResults": "Wala pa sang cafe nga nagatugma sa sini nga mga filter.",
+    "selectHint": "Pinduta ang pin para makita ang cafe.",
+    "close": "Sirhan",
+    "suggest": "May kilala ka nga cafe nga wala pa diri?",
+    "inView": "{count} sa {total} ka cafe ang makita",
+    "showAll": "Ipakita ang tanan nga cafe",
+    "zoomIn": "Padakua",
+    "zoomOut": "Pagamya",
+    "districts": "Kadto sa distrito",
+    "search": "Mangita sang cafe",
+    "searchClear": "Kuhaa ang ginapangita"
+  },
+  "filters": {
+    "label": "Mga filter",
+    "all": "Tanan",
+    "specialty": "Specialty",
+    "matcha": "Matcha",
+    "menu": "May menu",
+    "chains": "Iupod ang chains",
+    "openNow": "Bukas subong",
+    "saved": "Gin-save"
+  },
+  "view": {
+    "label": "Talan-awon",
+    "map": "Mapa",
+    "list": "Lista"
+  },
+  "cafe": {
+    "directions": "Direksyon",
+    "viewMenu": "Tan-awa ang menu",
+    "viewCafe": "Detalye",
+    "away": "{distance} ang kalayuon",
+    "chain": "Chain",
+    "tags": {
+      "specialty_coffee": "Specialty",
+      "matcha": "Matcha",
+      "pastry": "Pastry",
+      "work_friendly": "Pwede magtrabaho",
+      "pet_friendly": "Pwede ang sapat"
+    },
+    "openNow": "Bukas subong",
+    "closedNow": "Sirado",
+    "closesAt": "tubtob {time}",
+    "opensAt": "mabukas {time}",
+    "opensDayAt": "mabukas {day} {time}",
+    "save": "I-save ini nga cafe",
+    "unsave": "Kuhaa sa gin-save"
+  },
+  "detail": {
+    "back": "Balik sa mga cafe",
+    "about": "Parte sa cafe",
+    "menu": "Menu",
+    "noMenu": "Wala pa sang menu.",
+    "noMenuHelp": "Wala pa ini nga cafe nagpaambit sang ila menu sa amon.",
+    "unavailable": "Wala anay",
+    "hours": "Oras",
+    "hoursUnknown": "Wala nakalista ang oras",
+    "location": "Lokasyon",
+    "contact": "Kontak",
+    "directionsInMaps": "Direksyon sa Google Maps"
+  },
+  "report": {
+    "title": "May sala?",
+    "intro": "Silingi kami kon ano ang daan na, pareho sang oras, menu ukon lokasyon.",
+    "note": "Ano ang dapat namon kay-uhon?",
+    "send": "Ipadala ang report",
+    "success": "Salamat. Tan-awon namon ini.",
+    "error": "Wala namon ini mapadala. Palihog tilawi liwat.",
+    "limit": "Madamo ka na napadala nga report. Palihog tilawi liwat sa ulihi.",
+    "empty": "Palihog magsulat anay sang malip-ot nga nota."
+  },
+  "suggest": {
+    "title": "Magsugid sang cafe",
+    "intro": "May paborito ka nga lokal nga cafe nga wala diri? Silingi kami kag usisaon namon antes idugang.",
+    "name": "Ngalan sang cafe",
+    "address": "Adres ukon lugar",
+    "link": "Link sa Facebook, Instagram ukon Google Maps",
+    "note": "May iban pa? (specialty coffee, matcha, oras)",
+    "send": "Ipadala",
+    "success": "Salamat. Usisaon namon ini dayon.",
+    "error": "Wala namon ini mapadala. Palihog tilawi liwat.",
+    "limit": "Madamo ka na napadala. Palihog tilawi liwat sa ulihi.",
+    "back": "Balik sa mga cafe"
+  },
+  "language": {
+    "label": "Lenggwahe",
+    "en": "English",
+    "fil": "Filipino",
+    "hil": "Hiligaynon"
+  },
+  "theme": {
+    "toLight": "Ilisan sa masanag nga tema",
+    "toDark": "Ilisan sa madulom nga tema"
+  },
+  "footer": {
+    "osmCredit": "Datos sang mapa © mga kontributor sang OpenStreetMap"
+  }
+}

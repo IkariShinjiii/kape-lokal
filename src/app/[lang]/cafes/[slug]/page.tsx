@@ -77,7 +77,7 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
   const [cafe, dict] = await Promise.all([getCafeBySlug(slug), getDictionary(lang)]);
   if (!cafe) notFound();
 
-  const price = new Intl.NumberFormat(lang === "fil" ? "fil-PH" : "en-PH", {
+  const price = new Intl.NumberFormat(lang === "en" ? "en-PH" : "fil-PH", {
     style: "currency",
     currency: "PHP",
     maximumFractionDigits: 0,
