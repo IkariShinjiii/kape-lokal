@@ -3,6 +3,7 @@ import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { Cafe } from "@/lib/cafes";
 import { directionsUrl, formatDistance } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
+import { CafeLogo } from "./cafe-logo";
 import { ChainChip, TagChip } from "./tag-chip";
 
 type Props = {
@@ -26,7 +27,8 @@ export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
       }`}
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
+        <CafeLogo name={cafe.name} src={cafe.logoUrl} size={sheet ? 48 : 44} />
+        <div className="min-w-0 flex-1">
           <h3 className="font-display text-2xl font-bold uppercase leading-none">
             <Link
               href={`/${lang}/cafes/${cafe.slug}`}

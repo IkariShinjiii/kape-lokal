@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { CafeLogo } from "@/components/cafe-logo";
 import { MapView } from "@/components/map-view";
 import { ReportForm } from "@/components/report-form";
 import { ChainChip, TagChip } from "@/components/tag-chip";
@@ -87,6 +88,14 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
         >
           ← {dict.detail.back}
         </Link>
+        <div className="absolute bottom-3 left-3">
+          <CafeLogo
+            name={cafe.name}
+            src={cafe.logoUrl}
+            size={72}
+            className="border-2 shadow-lg shadow-black/30"
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-6 px-4">

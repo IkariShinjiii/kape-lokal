@@ -1,4 +1,5 @@
 import { cacheLife, cacheTag } from "next/cache";
+import { logoUrl } from "@/lib/logo";
 import { createPublicClient } from "@/lib/supabase/public";
 import type { CafeTag } from "@/lib/tags";
 
@@ -14,6 +15,8 @@ export type Cafe = {
   tags: CafeTag[];
   hasMenu: boolean;
   coverImagePath: string | null;
+  /** The cafe's Facebook profile picture, via /api/logo. */
+  logoUrl: string | null;
 };
 
 export type MenuItem = {
@@ -52,7 +55,7 @@ type ListRow = {
   cover_image_path?: string | null;
 };
 
-const toCafe = (r: ListRow): Cafe => ({
+const toCafe = (r: ListRow, facebook: string | null): Cafe => ({
   id: r.id,
   slug: r.slug,
   name: r.name,
@@ -64,6 +67,7 @@ const toCafe = (r: ListRow): Cafe => ({
   tags: r.tags ?? [],
   hasMenu: r.has_menu,
   coverImagePath: r.cover_image_path ?? null,
+  logoUrl: logoUrl(facebook),
 });
 
 // All published cafes, chains included. The client hides chains unless asked.
@@ -72,9 +76,15 @@ export async function getCafes(): Promise<Cafe[]> {
   cacheLife("minutes");
   cacheTag("cafes");
 
-  const { data, error } = await createPublicClient().rpc("list_cafes");
-  if (error) throw new Error(`list_cafes failed: ${error.message}`);
-  return (data as ListRow[]).map(toCafe);
+  const client = createPublicClient();
+  const [list, links] = await Promise.all([
+    client.rpc("list_cafes"),
+    // Facebook pages for the logos. Optional: the map works without them.
+    client.from("cafes").select("id, facebook").eq("is_published", true).not("facebook", "is", null),
+  ]);
+  if (list.error) throw new Error(`list_cafes failed: ${list.error.message}`);
+  const facebook = new Map((links.data ?? []).map((r) => [r.id as string, r.facebook as string]));
+  return (list.data as ListRow[]).map((r) => toCafe(r, facebook.get(r.id) ?? null));
 }
 
 export async function getCafeBySlug(slug: string): Promise<CafeDetail | null> {

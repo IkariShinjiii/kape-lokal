@@ -2,19 +2,18 @@ import Image from "next/image";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { Cafe } from "@/lib/cafes";
 import { mediaUrl } from "@/lib/media";
+import { CafeLogo } from "./cafe-logo";
 import { ChainChip, TagChip } from "./tag-chip";
 
-// What the card shows before there is a photo: the cafe's initial on a tinted tile,
-// so a missing photo looks intentional instead of broken.
-function Placeholder({ name }: { name: string }) {
+// What the card shows before there is a photo: the cafe's logo (or initial) on a
+// tinted tile, so a missing photo looks intentional instead of broken.
+function Placeholder({ cafe }: { cafe: Cafe }) {
   return (
     <div
       aria-hidden
       className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ember/30 via-crema to-crema"
     >
-      <span className="font-display text-6xl font-bold uppercase text-ember/70">
-        {name.trim().charAt(0)}
-      </span>
+      <CafeLogo name={cafe.name} src={cafe.logoUrl} size={72} className="shadow-lg shadow-black/25" />
     </div>
   );
 }
@@ -33,7 +32,7 @@ export function CafePreview({ cafe, dict }: { cafe: Cafe; dict: Dictionary }) {
             className="object-cover"
           />
         ) : (
-          <Placeholder name={cafe.name} />
+          <Placeholder cafe={cafe} />
         )}
       </div>
       <div className="flex flex-col gap-1.5 p-3">
