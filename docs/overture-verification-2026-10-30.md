@@ -214,3 +214,11 @@ Also found: **Kai Royal Cafe (Infante St)**, which was published, is permanently
 - Kucho Cafe (Solid Bldg, Pison Ave) 4.5(122)
 - The Grind Coffee Co. (8 Ibarra St) 4.9(14); 8th Street Coffee (44 Jereos St) 4.5(54)
 - SOUL COFFEE Jaro (Rica Village) 4.9(176); Wander Cafe (18 de Julio St) 4.9(11)
+
+## Round 2 (same day)
+
+- **Low-review drafts published (48).** The open-on-Google drafts with fewer than 10 reviews are now live, at the owner's request. 6 pins were moved to Google's location: SunViews, Kaffina, Dulce's Flower Cafe, El Capitán, Himaya and JHES Brew.
+- **Google sweep.** We searched "coffee" and "cafe" around 9 points covering Jaro, City Proper, La Paz, Mandurriao, Molo, Arevalo, Lapuz, Diversion Road and the northern subdivisions. That found 382 places. 197 didn't match anything we have. After dropping chains, closed places, non-cafes and anything under 5 reviews, **52 new cafes were added** as published (source `manual`).
+  - Left out: places outside the city (The Drip Cafe, Zycles, Diwa, Ilovecoffee, HEbrews in Pakiad Oton, and Kiki's, which may be outside), hybrid shops (a carwash, a barbershop and a print shop), and Loca coffee (2.6 rating).
+- **Lavnder Café + Bar pin fixed.** It now sits at City Time Square, Diversion Road.
+- **Logos:** 136 of the 185 live cafes have a Facebook page. Branches use their brand's page. The rest show their initial.
