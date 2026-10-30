@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CafeLogo } from "@/components/cafe-logo";
+import { OpenStatus } from "@/components/open-status";
+import { formatHours } from "@/lib/hours";
 import { MapView } from "@/components/map-view";
 import { ReportForm } from "@/components/report-form";
 import { ChainChip, TagChip } from "@/components/tag-chip";
@@ -113,8 +115,11 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
           )}
           {cafe.address && <p className="text-mute">{cafe.address}</p>}
           <p className="text-sm text-mute">
-            {cafe.hours ? `${dict.detail.hours}: ${cafe.hours}` : dict.detail.hoursUnknown}
+            {cafe.hours
+              ? `${dict.detail.hours}: ${formatHours(cafe.hours, lang)}`
+              : dict.detail.hoursUnknown}
           </p>
+          <OpenStatus hours={cafe.hours} lang={lang} dict={dict} className="text-sm" />
         </header>
 
         {description && (

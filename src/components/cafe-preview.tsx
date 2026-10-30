@@ -2,7 +2,9 @@ import Image from "next/image";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { Cafe } from "@/lib/cafes";
 import { mediaUrl } from "@/lib/media";
+import type { Locale } from "@/lib/i18n";
 import { CafeLogo } from "./cafe-logo";
+import { OpenStatus } from "./open-status";
 import { ChainChip, TagChip } from "./tag-chip";
 
 // What the card shows before there is a photo: the cafe's logo (or initial) on a
@@ -19,7 +21,7 @@ function Placeholder({ cafe }: { cafe: Cafe }) {
 }
 
 /** The card that follows a pin on hover: photo, name, a few details. */
-export function CafePreview({ cafe, dict }: { cafe: Cafe; dict: Dictionary }) {
+export function CafePreview({ cafe, dict, lang }: { cafe: Cafe; dict: Dictionary; lang: Locale }) {
   return (
     <div className="w-64 overflow-hidden rounded-xl border border-line bg-crema shadow-xl shadow-black/30">
       <div className="relative h-28 w-full bg-roast">
@@ -40,7 +42,7 @@ export function CafePreview({ cafe, dict }: { cafe: Cafe; dict: Dictionary }) {
           {cafe.name}
         </h3>
         {cafe.address && <p className="line-clamp-2 text-xs text-mute">{cafe.address}</p>}
-        {cafe.hours && <p className="truncate text-xs text-mute">{cafe.hours}</p>}
+        <OpenStatus hours={cafe.hours} lang={lang} dict={dict} className="text-xs" />
         {(cafe.tags.length > 0 || cafe.isChain) && (
           <div className="flex flex-wrap gap-1">
             {cafe.tags.map((tag) => (

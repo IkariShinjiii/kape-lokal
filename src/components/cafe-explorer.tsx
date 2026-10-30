@@ -342,7 +342,7 @@ export function CafeExplorer({
                   : { top: hover.y + 20 }),
               }}
             >
-              <CafePreview cafe={hovered} dict={dict} />
+              <CafePreview cafe={hovered} dict={dict} lang={lang} />
             </motion.div>
           )}
         </AnimatePresence>

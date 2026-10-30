@@ -47,7 +47,12 @@
       "pastry": "Pastry",
       "work_friendly": "Work-friendly",
       "pet_friendly": "Pet-friendly"
-    }
+    },
+    "openNow": "Open now",
+    "closedNow": "Closed",
+    "closesAt": "until {time}",
+    "opensAt": "opens {time}",
+    "opensDayAt": "opens {day} {time}"
   },
   "detail": {
     "back": "Back to cafes",

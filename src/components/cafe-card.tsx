@@ -4,6 +4,7 @@ import type { Cafe } from "@/lib/cafes";
 import { directionsUrl, formatDistance } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { CafeLogo } from "./cafe-logo";
+import { OpenStatus } from "./open-status";
 import { ChainChip, TagChip } from "./tag-chip";
 
 type Props = {
@@ -40,9 +41,7 @@ export function CafeCard({ cafe, distance, lang, dict, sheet = false }: Props) {
           {cafe.address && (
             <p className="mt-1 truncate text-sm text-mute">{cafe.address}</p>
           )}
-          {!sheet && cafe.hours && (
-            <p className="truncate text-xs text-mute">{cafe.hours}</p>
-          )}
+          <OpenStatus hours={cafe.hours} lang={lang} dict={dict} className="mt-1 text-xs" />
         </div>
         {distance !== undefined && (
           <p className="shrink-0 text-right font-display text-xl font-bold text-ember tabular-nums">

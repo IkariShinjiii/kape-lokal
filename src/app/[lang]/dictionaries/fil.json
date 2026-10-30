@@ -47,7 +47,12 @@
       "pastry": "Pastry",
       "work_friendly": "Pwedeng pang-trabaho",
       "pet_friendly": "Pet-friendly"
-    }
+    },
+    "openNow": "Bukas ngayon",
+    "closedNow": "Sarado",
+    "closesAt": "hanggang {time}",
+    "opensAt": "magbubukas {time}",
+    "opensDayAt": "magbubukas {day} {time}"
   },
   "detail": {
     "back": "Balik sa mga cafe",
