@@ -222,3 +222,34 @@ Also found: **Kai Royal Cafe (Infante St)**, which was published, is permanently
   - Left out: places outside the city (The Drip Cafe, Zycles, Diwa, Ilovecoffee, HEbrews in Pakiad Oton, and Kiki's, which may be outside), hybrid shops (a carwash, a barbershop and a print shop), and Loca coffee (2.6 rating).
 - **Lavnder Café + Bar pin fixed.** It now sits at City Time Square, Diversion Road.
 - **Logos:** 136 of the 185 live cafes have a Facebook page. Branches use their brand's page. The rest show their initial.
+
+## Round 3 (2026-10-31)
+
+- **Added at the owner's request:** Kiiro Café by Zarcrème (Guzman St, Hibao-an Sur, in front of QMF Subdivision). It opened in mid-2026 as a branch of Zarcrème Coffee (Leganes). Google has it as a coffee shop with 4 reviews and no hours. The hours (7 AM–11 PM daily) come from its Instagram bio (@kiirobyzarcreme), and the logo from Zarcrème Coffee's Facebook page.
+- **Leads checked:**
+  - Added: Sa Poste (Festive Walk Parade), 4.9 (156).
+  - Ventuno New Mandurriao: it sits at the same spot as our excluded Ventuno record (6 m apart). Google has the old "Mandurriao Branch" listing as temporarily closed and a new "New Mandurriao Branch" listing as open with 48 reviews, so the record was brought back with the new branch's details.
+  - Dropped, outside Iloilo City: Blk21 Cafe in Guadalupe Village (Davao City), Wander Cafe on 18 de Julio St (Minglanilla, Cebu), LoCo GT Town Center and Barista Mama (both in Pavia).
+  - Held back: Bluejay Coffee and Deli. It is open, with reviews from the past month, but one review places it in SM City Iloilo while Google's pin is about 400 m away near Festive Walk. SM Supermalls (July 2025) says Bluejay has two branches in SM City.
+- **Closure re-check.** All 41 cafes excluded as closed were looked up again, reading only the place header and only for results within 150 m.
+  - Two exclusions were wrong:
+    - BLK 21 Café (Duran St) is open, so it is now published.
+    - Ventuno (see above).
+  - The others are still permanently or temporarily closed, or no longer on Google at all. Those stay excluded.
+  - New leads seen while checking: an open "Gee's Cafe" about 1 km from the closed one, and an open "Dulgies Desserts & Cafe" about 2.7 km from the closed Dulgies.
+    - Neither is published yet. Gee's Cafe has no reviews and no address. Dulgies Desserts & Cafe (Diversion Rd) is listed as a dessert shop with one review.
+- **Logos:**
+  - Bing searches found Facebook pages for 20 cafes without one: SOUL Coffee (both branches), Mostly Matcha, Tahi Cafe, Lore Coffee Station and others. Only pages whose name and city matched were used. 8th Street Coffee and Shore Time Cafe were left out because the matches were unclear.
+  - Facebook returns a grey silhouette instead of the real picture for newer-style pages (ids like 615… and 1000…) when there's no login. 11 live cafes were showing that silhouette. `/api/logo` now asks Facebook whether the picture is a silhouette and returns 404 if so, so the card shows the cafe's initial instead.
+- **Hours re-read (102 cafes with no hours or a partial week):**
+  - Google marks Nov 1–2 "Hours might differ" but still shows each cafe's regular schedule, so Sundays and Mondays could be read now instead of waiting for Nov 3.
+  - 63 cafes got updated hours and some missing phone numbers were filled.
+  - Overnight hours are rejoined: Google splits "8 PM–4 AM" across two days.
+  - Left out as likely owner typos:
+    - a day under 40% of the cafe's usual length, e.g. 37 Degrees "Sunday 8–10:30 AM"
+    - a single "Open 24 hours" day among normal days (Austere Cafe, Friday)
+    - Elizitea's and JHES Brew's AM/PM mix-ups
+  - Two cafes that were live turned out to be permanently closed and were unpublished: D' Cupp Coffee and Tea, and The Good Locals Co. (Mabini). The Diversion branch is open.
+  - DND Cafe & Restobar's pin moved 756 m to Google's location (413-A Avanceña St, Molo).
+  - Several cafes close on Saturday and early on Friday (Le:Félin, Eunisha, Greenhouse). That fits a Sabbath schedule, so those hours were kept.
+- **Totals:** 186 live cafes. 152 have hours, 139 have a phone, and 178 have a Facebook page (about 24 of those pages only give a silhouette, so the card shows the initial).

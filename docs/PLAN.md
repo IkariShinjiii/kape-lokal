@@ -158,15 +158,15 @@ The `edit_flags` table lets anyone insert a report, so it can be spammed. Before
 - App domain and hosting plan (Vercel free tier is fine to start).
 
 ## Milestones
-Status as of 2026-10-31:
+Status as of 2026-10-31 (evening):
 
 - **Live:** at kape-lokal.vercel.app, deployed automatically from the GitHub main branch.
-- **Cafes:** 184 published. The data comes from:
+- **Cafes:** 186 published. The data comes from:
   - OpenStreetMap
   - Overture Maps open data (`scripts/overture/`)
   - a district-by-district Google Maps sweep
   
-  Every published cafe was checked open on Google. Closed ones are excluded, never deleted.
+  Every published cafe was checked open on Google. Closed ones are excluded, never deleted. All 41 exclusions for closure were re-checked on 2026-10-31 (two were wrong and are now live); see `docs/overture-verification-2026-10-30.md`, Round 3.
 - **Tags:**
   - 10 specialty cafes and 2 matcha cafes, each with a source in `docs/google-maps-reference.md`.
   - Chains are hidden unless "Include chains" is on.
@@ -178,7 +178,7 @@ Status as of 2026-10-31:
   - search by name or address
   - Open now, Saved (on the device), Specialty, Matcha, Has menu and chains filters
   - readable hours with a live Open now / Closed status in Philippine time
-- **Logos:** each cafe's Facebook profile picture, served through `/api/logo` so visitors' browsers don't contact Facebook. Covers about 155 cafes; the rest show their initial.
+- **Logos:** each cafe's Facebook profile picture, served through `/api/logo` so visitors' browsers don't contact Facebook. 178 cafes have a Facebook page. Pages that Facebook only shows as a grey silhouette without a login return 404, so those cards show the initial.
 - **Languages:** English, Filipino, Hiligaynon. Both translations need a native-speaker review.
 - **SEO and sharing:**
   - sitemap and robots files
@@ -187,10 +187,10 @@ Status as of 2026-10-31:
   - generated link-preview images for the home page and each cafe
 - **Admin:** photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
 - **Open items:**
-  - Re-read Sunday/Monday hours after the Nov 1–2 holidays.
-  - 75 cafes have no hours.
+  - 34 cafes have no hours on Google; 47 have no phone.
+  - Leads not yet published: Bluejay Coffee and Deli (location unclear), Gee's Cafe, Dulgies Desserts & Cafe.
   - Owner claim portal.
-  - Sponsor slot.
+  - Sponsor slot: built, empty (`src/lib/sponsors.ts`).
   - Custom domain (set `NEXT_PUBLIC_SITE_URL` once connected).
 
 Status as of 2026-10-24 (history):
