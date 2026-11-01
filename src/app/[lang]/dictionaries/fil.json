@@ -36,7 +36,9 @@
     "menu": "May menu",
     "chains": "Isama ang mga chain",
     "openNow": "Bukas ngayon",
-    "saved": "Naka-save"
+    "saved": "Naka-save",
+    "openLate": "Bukas hanggang gabi",
+    "openLateHint": "Bukas hanggang 10 PM o mas gabi pa ngayong gabi"
   },
   "view": {
     "label": "Tanaw",

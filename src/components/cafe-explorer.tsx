@@ -2,14 +2,14 @@
 
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 import type { Cafe } from "@/lib/cafes";
 import { t } from "@/lib/format";
 import { distanceMeters, ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { useFavorites } from "@/lib/favorites";
-import { openState } from "@/lib/hours";
+import { openLate, openState } from "@/lib/hours";
 import { isMenuQuery, type MenuHit } from "@/lib/menu-search";
 import { activeSponsorSlugs } from "@/lib/sponsors";
 import { CafeCard, menuHitText } from "./cafe-card";
@@ -81,6 +81,7 @@ export function CafeExplorer({
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [openOnly, setOpenOnly] = useState(false);
+  const [lateOnly, setLateOnly] = useState(false);
   const [savedOnly, setSavedOnly] = useState(false);
   // Cafes whose menu matches the search, for the query they were fetched for.
   const [menuResult, setMenuResult] = useState<{ q: string; hits: Record<string, MenuHit> } | null>(null);
@@ -92,10 +93,10 @@ export function CafeExplorer({
   const districtsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!openOnly) return;
+    if (!openOnly && !lateOnly) return;
     const timer = setInterval(() => setNow(Date.now()), 60_000);
     return () => clearInterval(timer);
-  }, [openOnly]);
+  }, [openOnly, lateOnly]);
 
   // Drink and food search: asks the server which menus have what was typed,
   // a moment after typing stops. Name and address matching needs no request.
@@ -123,6 +124,41 @@ export function CafeExplorer({
   const menuHits = menuResult && menuResult.q === trimmed ? menuResult.hits : NO_HITS;
   const menuPending = isMenuQuery(trimmed) && menuResult?.q !== trimmed;
 
+  // Search log: what people look for and whether anything matched, so menus get
+  // added where they are wanted. Each search is sent once per visit, when typing
+  // pauses for 2 seconds, on "See all", or when a suggestion is picked.
+  const textMatches = useMemo(() => {
+    const q = searchText(trimmed);
+    if (!q) return 0;
+    return cafes.filter((c) => searchText(`${c.name} ${c.address ?? ""}`).includes(q) || c.id in menuHits)
+      .length;
+  }, [cafes, trimmed, menuHits]);
+  const loggedQueries = useRef(new Set<string>());
+  function logSearch(action: "typed" | "see_all" | "pick") {
+    const q = trimmed.toLowerCase().replace(/\s+/g, " ").slice(0, 60);
+    if (q.length < 2 || loggedQueries.current.has(q)) return;
+    loggedQueries.current.add(q);
+    const body = JSON.stringify({ q, results: textMatches, menuResults: Object.keys(menuHits).length, action, lang });
+    try {
+      if (!navigator.sendBeacon?.("/api/search-log", new Blob([body], { type: "application/json" }))) {
+        void fetch("/api/search-log", {
+          method: "POST",
+          body,
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+        }).catch(() => {});
+      }
+    } catch {
+      // Logging must never get in the way of searching.
+    }
+  }
+  const logTypedSearch = useEffectEvent(() => logSearch("typed"));
+  useEffect(() => {
+    if (!isMenuQuery(trimmed) || menuPending) return;
+    const timer = setTimeout(logTypedSearch, 2000);
+    return () => clearTimeout(timer);
+  }, [trimmed, menuPending]);
+
   // The district menu closes on a click outside it or on Escape.
   useEffect(() => {
     if (!districtsOpen) return;
@@ -147,6 +183,7 @@ export function CafeExplorer({
         (tagFilter === "all" || c.tags.includes(tagFilter)) &&
         (!menuOnly || c.hasMenu) &&
         (!openOnly || openState(c.hours, at)?.open === true) &&
+        (!lateOnly || openLate(c.hours, at)) &&
         (!savedOnly || savedIds.includes(c.id)) &&
         (!q || searchText(`${c.name} ${c.address ?? ""}`).includes(q) || c.id in menuHits),
     );
@@ -166,7 +203,7 @@ export function CafeExplorer({
           ? a.distance - b.distance
           : rank(a.cafe) - rank(b.cafe) || a.cafe.name.localeCompare(b.cafe.name)),
     );
-  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, menuHits, now, userPos, sponsors]);
+  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, lateOnly, savedOnly, savedIds, query, menuHits, now, userPos, sponsors]);
 
   const visibleCafes = useMemo(() => visible.map((v) => v.cafe), [visible]);
   const selected = visible.find((v) => v.cafe.id === selectedId) ?? null;
@@ -256,12 +293,14 @@ export function CafeExplorer({
               }}
               matches={visibleCafes}
               onPick={(id) => {
+                logSearch("pick");
                 setQuery("");
                 setSearchOpen(false);
                 setView("map");
                 select(id);
               }}
               onShowAll={() => {
+                logSearch("see_all");
                 setSearchOpen(false);
                 select(null);
                 if (mapMode) requestAnimationFrame(() => mapApi.current?.showAll());
@@ -386,6 +425,21 @@ export function CafeExplorer({
           >
             <span aria-hidden className={`size-1.5 rounded-full ${openOnly ? "bg-leaf" : "bg-mute"}`} />
             {dict.filters.openNow}
+          </button>
+          <button
+            type="button"
+            aria-pressed={lateOnly}
+            title={dict.filters.openLateHint}
+            onClick={() => {
+              setNow(Date.now());
+              setLateOnly((v) => !v);
+            }}
+            className={`${pillClass(lateOnly)} grid-flow-col gap-1.5`}
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill={lateOnly ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden>
+              <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />
+            </svg>
+            {dict.filters.openLate}
           </button>
           <button
             type="button"

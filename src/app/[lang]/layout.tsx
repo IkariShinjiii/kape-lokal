@@ -54,6 +54,9 @@ export async function generateMetadata({
       locale: lang === "en" ? "en_PH" : `${lang}_PH`,
     },
     twitter: { card: "summary_large_image" },
+    // Installed on an iPhone home screen, it opens full screen with the map
+    // running under the status bar (the page already keeps clear of it).
+    appleWebApp: { capable: true, title: dict.meta.title, statusBarStyle: "black-translucent" },
   };
 }
 

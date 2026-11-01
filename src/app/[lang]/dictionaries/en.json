@@ -36,7 +36,9 @@
     "menu": "Has menu",
     "chains": "Include chains",
     "openNow": "Open now",
-    "saved": "Saved"
+    "saved": "Saved",
+    "openLate": "Open late",
+    "openLateHint": "Open until 10 PM or later tonight"
   },
   "view": {
     "label": "View",

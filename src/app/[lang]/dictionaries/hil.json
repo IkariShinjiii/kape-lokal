@@ -36,7 +36,9 @@
     "menu": "May menu",
     "chains": "Iupod ang chains",
     "openNow": "Bukas subong",
-    "saved": "Gin-save"
+    "saved": "Gin-save",
+    "openLate": "Bukas tubtob gab-i",
+    "openLateHint": "Bukas tubtob 10 PM ukon mas ulihi pa subong nga gab-i"
   },
   "view": {
     "label": "Talan-awon",

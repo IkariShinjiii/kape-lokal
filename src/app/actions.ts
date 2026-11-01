@@ -1,27 +1,14 @@
 "use server";
 
-import { createHash } from "node:crypto";
-import { headers } from "next/headers";
 import { createPublicClient } from "@/lib/supabase/public";
+import { visitorHash } from "@/lib/visitor";
 
 export type FormState = {
   status: "idle" | "success" | "error" | "limit" | "empty";
 };
 
-// One stable, non-reversible id per visitor per day. The database enforces
-// 3 submissions per visitor per hour and 60 per hour overall.
-async function visitorHash(): Promise<string> {
-  const h = await headers();
-  const ip =
-    h.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    h.get("x-real-ip") ??
-    "unknown";
-  const day = new Date().toISOString().slice(0, 10);
-  return createHash("sha256")
-    .update(`${ip}|${day}|${process.env.REPORT_SALT ?? "kape-lokal"}`)
-    .digest("hex")
-    .slice(0, 32);
-}
+// The database enforces 3 submissions per visitor per hour and 60 per hour
+// overall, keyed by visitorHash().
 
 const clean = (v: FormDataEntryValue | null, max: number) =>
   typeof v === "string" ? v.trim().slice(0, max) : "";

@@ -18,6 +18,9 @@ export function AdminShell({
           Kape Lokal admin
         </Link>
         <div className="flex items-center gap-3 text-sm text-mute">
+          <Link href={`${ADMIN_HOME}/searches`} className="underline">
+            Searches
+          </Link>
           <Link href="/en" className="underline">
             View site
           </Link>

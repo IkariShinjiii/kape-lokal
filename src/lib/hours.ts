@@ -167,4 +167,21 @@ export function openState(osm: string | null | undefined, now: Date = new Date()
   return { open: false, opensAt: null, opensDay: null };
 }
 
+/** "Open late" means open until 10 PM or later. */
+export const LATE_FROM = 22 * 60;
+// Before 5 AM, "tonight" still means the night that started yesterday.
+const NIGHT_ENDS = 5 * 60;
+
+/**
+ * Whether tonight's hours run to 10 PM or later, past midnight included
+ * (e.g. 18:00-02:00 or open 24 hours). False when tonight's hours aren't known.
+ */
+export function openLate(osm: string | null | undefined, now: Date = new Date()): boolean {
+  const week = parseHours(osm);
+  if (!week) return false;
+  const { day, min } = manilaNow(now);
+  const ranges = week[min < NIGHT_ENDS ? (day + 6) % 7 : day];
+  return (ranges ?? []).some(([s, e]) => e >= LATE_FROM || e <= s);
+}
+
 export const dayName = (d: number, locale: Locale) => SHORT[locale][d];

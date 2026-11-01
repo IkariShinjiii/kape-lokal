@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { formatHours, manilaNow, openState, parseHours } from "../src/lib/hours.ts";
+import { formatHours, manilaNow, openLate, openState, parseHours } from "../src/lib/hours.ts";
 
 // 2026-11-04 is a Wednesday. Manila is UTC+8.
 const manila = (iso: string) => new Date(`${iso}+08:00`);
@@ -66,4 +66,26 @@ test("openState: closed day and unknown day", () => {
   });
   assert.equal(openState("Mo-Tu 08:00-17:00", manila("2026-11-04T10:00:00")), null);
   assert.deepEqual(openState("Mo-Su 00:00-24:00", manila("2026-11-04T03:00:00")), { open: true, closesAt: null });
+});
+
+test("openLate: tonight's hours reach 10 PM or later", () => {
+  // Wednesday evening.
+  const wed = manila("2026-11-04T19:00:00");
+  assert.equal(openLate("Mo-Su 08:00-22:00", wed), true);
+  assert.equal(openLate("Mo-Su 08:00-21:30", wed), false);
+  assert.equal(openLate("Mo-Su 18:00-02:00", wed), true);
+  assert.equal(openLate("Mo-Su 00:00-24:00", wed), true);
+  assert.equal(openLate("Mo-Fr 13:00-09:00", wed), true);
+  // Only Wednesday matters on a Wednesday.
+  assert.equal(openLate("Mo-Tu 08:00-23:00; We 08:00-20:00", wed), false);
+  assert.equal(openLate("We off", wed), false);
+  assert.equal(openLate("Th 08:00-23:00", wed), false);
+  assert.equal(openLate(null, wed), false);
+});
+
+test("openLate: after midnight counts as the night before", () => {
+  // 1 AM Thursday is still Wednesday night.
+  const lateWed = manila("2026-11-05T01:00:00");
+  assert.equal(openLate("We 18:00-02:00; Th 08:00-17:00", lateWed), true);
+  assert.equal(openLate("We 08:00-17:00; Th 08:00-23:00", lateWed), false);
 });

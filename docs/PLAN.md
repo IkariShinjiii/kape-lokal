@@ -176,7 +176,7 @@ Status as of 2026-10-31 (evening):
   - a pulsing location dot, a bean, leaf or cup pin per cafe, and a hover preview
 - **Finding cafes:**
   - search by name, address, or a drink or food on the menu ("caramel macchiato" lists every cafe that serves one, nearest first, with the price). Matching ignores accents and doubled letters, so common misspellings work. Served by `/api/menu-search` (`src/lib/menu-search.ts`). It only finds cafes whose menu has been entered.
-  - Open now, Saved (on the device), Specialty, Matcha, Has menu and chains filters
+  - Open now, Open late (open until 10 PM or later tonight; before 5 AM it means the night before), Saved (on the device), Specialty, Matcha, Has menu and chains filters
   - readable hours with a live Open now / Closed status in Philippine time
 - **Logos:** each cafe's Facebook profile picture, served through `/api/logo` so visitors' browsers don't contact Facebook. 178 cafes have a Facebook page. Pages that Facebook only shows as a grey silhouette without a login return 404, so those cards show the initial.
 - **Languages:** English, Filipino, Hiligaynon. Both translations need a native-speaker review.
@@ -185,6 +185,8 @@ Status as of 2026-10-31 (evening):
   - language alternates
   - schema.org data on cafe pages
   - generated link-preview images for the home page and each cafe
+- **Installable:** a web app manifest (`src/app/manifest.ts`) and generated bean icons (`/app-icon/192`, `/app-icon/512`, `/apple-icon`) let phones add Kape Lokal to the home screen, where it opens full screen.
+- **Search log:** each search is recorded once per visit in `search_events` (text, cafes matched, menu matches, language, and a daily visitor hash used only for the rate limit), sent by `navigator.sendBeacon` to `/api/search-log`. The admin "Searches" page lists the last 30 days: what found nothing, and what is searched most.
 - **Ratings:** Kape Lokal shows no star ratings. Copying Google's would break its terms, so each cafe page links to its Google listing ("Ratings and reviews on Google").
 - **Admin:** "Read menu" sends up to 4 menu photos to Claude (claude-opus-5-5, low effort, structured JSON output) and lists the items and prices for checking before they are saved. Needs `ANTHROPIC_API_KEY` in Vercel and `.env.local`; until then the admin page says so. Photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
 - **Open items:**
