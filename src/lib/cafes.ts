@@ -1,5 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { logoUrl } from "@/lib/logo";
+import type { MenuEntry } from "@/lib/menu-search";
 import { createPublicClient } from "@/lib/supabase/public";
 import type { CafeTag } from "@/lib/tags";
 
@@ -85,6 +86,39 @@ export async function getCafes(): Promise<Cafe[]> {
   if (list.error) throw new Error(`list_cafes failed: ${list.error.message}`);
   const facebook = new Map((links.data ?? []).map((r) => [r.id as string, r.facebook as string]));
   return (list.data as ListRow[]).map((r) => toCafe(r, facebook.get(r.id) ?? null));
+}
+
+/**
+ * Every available menu item of every published cafe (row-level security hides
+ * the rest), for drink and food search. Read in pages because Supabase returns
+ * at most 1000 rows per request.
+ */
+export async function getMenuEntries(): Promise<MenuEntry[]> {
+  "use cache";
+  cacheLife("minutes");
+  cacheTag("cafes");
+
+  const client = createPublicClient();
+  const PAGE = 1000;
+  const out: MenuEntry[] = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await client
+      .from("menu_items")
+      .select("cafe_id, name, category, price_php")
+      .eq("is_available", true)
+      .order("id")
+      .range(from, from + PAGE - 1);
+    if (error) throw new Error(`menu_items failed: ${error.message}`);
+    for (const r of data) {
+      out.push({
+        cafeId: r.cafe_id as string,
+        name: r.name as string,
+        category: (r.category as string | null) ?? null,
+        price: r.price_php === null ? null : Number(r.price_php),
+      });
+    }
+    if (data.length < PAGE) return out;
+  }
 }
 
 export async function getCafeBySlug(slug: string): Promise<CafeDetail | null> {

@@ -22,8 +22,11 @@
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
     "districts": "Jump to a district",
-    "search": "Search cafes",
-    "searchClear": "Clear search"
+    "search": "Search cafes or drinks",
+    "searchClear": "Clear search",
+    "searchAll": "See all {count}",
+    "menuNoMatch": "No cafe lists “{q}” yet. Menus are still being added.",
+    "searching": "Searching…"
   },
   "filters": {
     "label": "Filters",
@@ -60,7 +63,8 @@
     "opensDayAt": "opens {day} {time}",
     "save": "Save this cafe",
     "unsave": "Remove from saved",
-    "sponsored": "Sponsored"
+    "sponsored": "Sponsored",
+    "moreOnMenu": "+{count} more"
   },
   "detail": {
     "back": "Back to cafes",
@@ -73,7 +77,8 @@
     "hoursUnknown": "Hours not listed",
     "location": "Location",
     "contact": "Contact",
-    "directionsInMaps": "Directions in Google Maps"
+    "directionsInMaps": "Directions in Google Maps",
+    "googleReviews": "Ratings and reviews on Google"
   },
   "report": {
     "title": "Something wrong?",

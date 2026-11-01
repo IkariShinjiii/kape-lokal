@@ -175,7 +175,7 @@ Status as of 2026-10-31 (evening):
   - a district jump menu, a live "in view" count, zoom and show-all buttons
   - a pulsing location dot, a bean, leaf or cup pin per cafe, and a hover preview
 - **Finding cafes:**
-  - search by name or address
+  - search by name, address, or a drink or food on the menu ("caramel macchiato" lists every cafe that serves one, nearest first, with the price). Matching ignores accents and doubled letters, so common misspellings work. Served by `/api/menu-search` (`src/lib/menu-search.ts`). It only finds cafes whose menu has been entered.
   - Open now, Saved (on the device), Specialty, Matcha, Has menu and chains filters
   - readable hours with a live Open now / Closed status in Philippine time
 - **Logos:** each cafe's Facebook profile picture, served through `/api/logo` so visitors' browsers don't contact Facebook. 178 cafes have a Facebook page. Pages that Facebook only shows as a grey silhouette without a login return 404, so those cards show the initial.
@@ -185,8 +185,10 @@ Status as of 2026-10-31 (evening):
   - language alternates
   - schema.org data on cafe pages
   - generated link-preview images for the home page and each cafe
-- **Admin:** photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
+- **Ratings:** Kape Lokal shows no star ratings. Copying Google's would break its terms, so each cafe page links to its Google listing ("Ratings and reviews on Google").
+- **Admin:** "Read menu" sends up to 4 menu photos to Claude (claude-opus-5-5, low effort, structured JSON output) and lists the items and prices for checking before they are saved. Needs `ANTHROPIC_API_KEY` in Vercel and `.env.local`; until then the admin page says so. Photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
 - **Open items:**
+  - Menus: none entered yet, so drink search finds nothing until menus are read in. Add `ANTHROPIC_API_KEY` first.
   - 34 cafes have no hours on Google; 47 have no phone.
   - Leads not yet published: Bluejay Coffee and Deli (location unclear), Gee's Cafe, Dulgies Desserts & Cafe.
   - Owner claim portal.

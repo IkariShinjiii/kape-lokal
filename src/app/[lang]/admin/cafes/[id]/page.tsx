@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CafeForm } from "@/components/admin/cafe-form";
+import { MenuReader } from "@/components/admin/menu-reader";
 import { PhotoUpload } from "@/components/admin/photo-upload";
 import { AdminShell, adminButton, adminGhostButton, adminInput } from "@/components/admin/shell";
 import { ADMIN_HOME, requireSignedIn } from "@/lib/admin";
@@ -12,6 +13,8 @@ import {
   addMenuItem,
   deleteMenuImage,
   deleteMenuItem,
+  readMenuPhotos,
+  saveMenuItems,
   uploadCoverImage,
   uploadMenuImage,
 } from "../../actions";
@@ -113,6 +116,13 @@ async function EditCafe({
       <section id="menu" className="flex flex-col gap-4 border-t border-line pt-6 scroll-mt-4">
         <h2 className="font-display text-2xl font-bold uppercase text-ember">Menu</h2>
 
+        <MenuReader
+          read={readMenuPhotos.bind(null, id)}
+          save={saveMenuItems.bind(null, id)}
+          existing={items.map((item) => item.name)}
+          enabled={Boolean(process.env.ANTHROPIC_API_KEY)}
+        />
+
         {items.length > 0 && (
           <ul className="flex flex-col">
             {items.map((item) => (
@@ -136,6 +146,7 @@ async function EditCafe({
           </ul>
         )}
 
+        <h3 className="text-sm text-mute">Or add one item by hand</h3>
         <form action={addMenuItem.bind(null, id)} className="grid gap-3 rounded bg-crema p-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1 text-sm">
             Item name

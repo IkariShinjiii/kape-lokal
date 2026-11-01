@@ -5,6 +5,8 @@ import { updateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { ADMIN_HOME, ADMIN_LOGIN, assertAdmin } from "@/lib/admin";
+import { cleanMenuItems, type ReadItem } from "@/lib/menu-items";
+import { MENU_IMAGE_TYPES, MenuReaderError, readMenu, type MenuImageType } from "@/lib/menu-reader";
 import { slugify } from "@/lib/slug";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { CAFE_TAGS, type CafeTag } from "@/lib/tags";
@@ -140,6 +142,83 @@ export async function addMenuItem(cafeId: string, formData: FormData) {
     price_php: price,
     is_available: formData.get("is_available") === "on",
   });
+  if (error) back(path, { error: error.message });
+
+  updateTag("cafes");
+  redirect(`${path}?saved=1#menu`);
+}
+
+export type MenuReadState =
+  | { status: "idle" }
+  | { status: "error"; message: string }
+  | { status: "done"; id: string; items: ReadItem[]; note: string | null };
+
+const MAX_MENU_PHOTOS = 4;
+
+/** Sends up to four menu photos to Claude and returns the items for review. */
+export async function readMenuPhotos(
+  _cafeId: string,
+  _prev: MenuReadState,
+  formData: FormData,
+): Promise<MenuReadState> {
+  await assertAdmin();
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return { status: "error", message: "Menu reading isn't set up yet: ANTHROPIC_API_KEY is missing." };
+  }
+  const files = formData
+    .getAll("photos")
+    .filter((f): f is File => f instanceof File && f.size > 0)
+    .slice(0, MAX_MENU_PHOTOS);
+  if (files.length === 0) return { status: "error", message: "Choose at least one photo." };
+  for (const f of files) {
+    if (!(MENU_IMAGE_TYPES as readonly string[]).includes(f.type)) {
+      return { status: "error", message: `${f.name} isn't a JPEG, PNG or WebP photo.` };
+    }
+    if (f.size > MAX_IMAGE_BYTES) return { status: "error", message: `${f.name} is over 5 MB.` };
+  }
+
+  const images = await Promise.all(
+    files.map(async (f) => ({
+      data: Buffer.from(await f.arrayBuffer()).toString("base64"),
+      mediaType: f.type as MenuImageType,
+    })),
+  );
+  try {
+    const { items, note } = await readMenu(images);
+    if (items.length === 0) {
+      return { status: "error", message: note ?? "No menu items were found in these photos." };
+    }
+    return { status: "done", id: randomUUID(), items, note };
+  } catch (error) {
+    if (error instanceof MenuReaderError) return { status: "error", message: error.message };
+    console.error("readMenuPhotos", error);
+    return { status: "error", message: "Something went wrong reading the menu. Try again." };
+  }
+}
+
+/** Saves the items the admin kept after checking them, after the existing ones. */
+export async function saveMenuItems(cafeId: string, formData: FormData) {
+  const { supabase } = await assertAdmin();
+  const path = `${ADMIN_HOME}/cafes/${cafeId}`;
+  let raw: unknown = null;
+  try {
+    raw = JSON.parse(text(formData.get("items")));
+  } catch {}
+  const items = cleanMenuItems(raw);
+  if (items.length === 0) back(path, { error: "No menu items to save." });
+
+  const { data: last } = await supabase
+    .from("menu_items")
+    .select("sort_order")
+    .eq("cafe_id", cafeId)
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const start = (last?.sort_order ?? -1) + 1;
+
+  const { error } = await supabase.from("menu_items").insert(
+    items.map((item, i) => ({ ...item, cafe_id: cafeId, is_available: true, sort_order: start + i })),
+  );
   if (error) back(path, { error: error.message });
 
   updateTag("cafes");

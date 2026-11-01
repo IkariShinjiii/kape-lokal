@@ -22,8 +22,11 @@
     "zoomIn": "Palakihin",
     "zoomOut": "Paliitin",
     "districts": "Pumunta sa distrito",
-    "search": "Maghanap ng cafe",
-    "searchClear": "Burahin ang hinahanap"
+    "search": "Maghanap ng cafe o inumin",
+    "searchClear": "Burahin ang hinahanap",
+    "searchAll": "Tingnan lahat ({count})",
+    "menuNoMatch": "Wala pang cafe na may “{q}” sa menu. Dinadagdagan pa ang mga menu.",
+    "searching": "Naghahanap…"
   },
   "filters": {
     "label": "Mga filter",
@@ -60,7 +63,8 @@
     "opensDayAt": "magbubukas {day} {time}",
     "save": "I-save ang cafe",
     "unsave": "Alisin sa naka-save",
-    "sponsored": "Naka-sponsor"
+    "sponsored": "Naka-sponsor",
+    "moreOnMenu": "+{count} pa"
   },
   "detail": {
     "back": "Balik sa mga cafe",
@@ -73,7 +77,8 @@
     "hoursUnknown": "Walang nakalistang oras",
     "location": "Lokasyon",
     "contact": "Kontak",
-    "directionsInMaps": "Direksyon sa Google Maps"
+    "directionsInMaps": "Direksyon sa Google Maps",
+    "googleReviews": "Mga rating at review sa Google"
   },
   "report": {
     "title": "May mali ba?",

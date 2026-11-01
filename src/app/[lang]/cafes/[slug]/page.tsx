@@ -10,7 +10,8 @@ import { MapView } from "@/components/map-view";
 import { ReportForm } from "@/components/report-form";
 import { ChainChip, TagChip } from "@/components/tag-chip";
 import { getCafeBySlug, type MenuItem } from "@/lib/cafes";
-import { directionsUrl } from "@/lib/geo";
+import { pesoFormat } from "@/lib/format";
+import { directionsUrl, googleListingUrl } from "@/lib/geo";
 import { hasLocale, locales, type Locale } from "@/lib/i18n";
 import { SITE_URL } from "@/lib/site";
 import { mediaUrl } from "@/lib/supabase/public";
@@ -77,11 +78,7 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
   const [cafe, dict] = await Promise.all([getCafeBySlug(slug), getDictionary(lang)]);
   if (!cafe) notFound();
 
-  const price = new Intl.NumberFormat(lang === "en" ? "en-PH" : "fil-PH", {
-    style: "currency",
-    currency: "PHP",
-    maximumFractionDigits: 0,
-  });
+  const price = pesoFormat(lang);
   const description =
     lang === "fil"
       ? (cafe.descriptionFil ?? cafe.descriptionEn)
@@ -166,6 +163,17 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
               : dict.detail.hoursUnknown}
           </p>
           <OpenStatus hours={cafe.hours} lang={lang} dict={dict} className="text-sm" />
+          <a
+            href={googleListingUrl(cafe)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-fit items-center gap-1.5 text-sm text-ember underline-offset-4 hover:underline"
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden>
+              <path d="m12 3.5 2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z" />
+            </svg>
+            {dict.detail.googleReviews} ↗
+          </a>
         </header>
 
         {description && (

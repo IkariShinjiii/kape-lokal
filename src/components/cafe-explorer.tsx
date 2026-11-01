@@ -10,8 +10,9 @@ import { distanceMeters, ILOILO_CENTER, type LatLng } from "@/lib/geo";
 import type { Locale } from "@/lib/i18n";
 import { useFavorites } from "@/lib/favorites";
 import { openState } from "@/lib/hours";
+import { isMenuQuery, type MenuHit } from "@/lib/menu-search";
 import { activeSponsorSlugs } from "@/lib/sponsors";
-import { CafeCard } from "./cafe-card";
+import { CafeCard, menuHitText } from "./cafe-card";
 import { CafePreview } from "./cafe-preview";
 import { CafeSearch, searchText } from "./cafe-search";
 import { LanguageSwitch } from "./language-switch";
@@ -50,6 +51,8 @@ const railButton =
 const railStackButton =
   "grid size-10 place-items-center text-foam transition-colors duration-200 hover:text-ember active:bg-roast/40";
 
+const NO_HITS: Record<string, MenuHit> = {};
+
 // With no location, local specialty cafes come first, then other local cafes, then chains.
 function rank(c: Cafe): number {
   if (c.isChain) return 2;
@@ -79,6 +82,8 @@ export function CafeExplorer({
   const [searchOpen, setSearchOpen] = useState(false);
   const [openOnly, setOpenOnly] = useState(false);
   const [savedOnly, setSavedOnly] = useState(false);
+  // Cafes whose menu matches the search, for the query they were fetched for.
+  const [menuResult, setMenuResult] = useState<{ q: string; hits: Record<string, MenuHit> } | null>(null);
   // The clock behind "Open now", moved on every minute while that filter is on.
   const [now, setNow] = useState(() => Date.now());
   const { ids: savedIds } = useFavorites();
@@ -91,6 +96,32 @@ export function CafeExplorer({
     const timer = setInterval(() => setNow(Date.now()), 60_000);
     return () => clearInterval(timer);
   }, [openOnly]);
+
+  // Drink and food search: asks the server which menus have what was typed,
+  // a moment after typing stops. Name and address matching needs no request.
+  const trimmed = query.trim();
+  useEffect(() => {
+    if (!isMenuQuery(trimmed)) return;
+    const ctrl = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/menu-search?q=${encodeURIComponent(trimmed.toLowerCase())}`, {
+          signal: ctrl.signal,
+        });
+        if (!res.ok) return;
+        const body = (await res.json()) as { hits: Record<string, MenuHit> };
+        setMenuResult({ q: trimmed, hits: body.hits });
+      } catch {
+        // Aborted or offline: the name and address search still works.
+      }
+    }, 250);
+    return () => {
+      clearTimeout(timer);
+      ctrl.abort();
+    };
+  }, [trimmed]);
+  const menuHits = menuResult && menuResult.q === trimmed ? menuResult.hits : NO_HITS;
+  const menuPending = isMenuQuery(trimmed) && menuResult?.q !== trimmed;
 
   // The district menu closes on a click outside it or on Escape.
   useEffect(() => {
@@ -117,7 +148,7 @@ export function CafeExplorer({
         (!menuOnly || c.hasMenu) &&
         (!openOnly || openState(c.hours, at)?.open === true) &&
         (!savedOnly || savedIds.includes(c.id)) &&
-        (!q || searchText(`${c.name} ${c.address ?? ""}`).includes(q)),
+        (!q || searchText(`${c.name} ${c.address ?? ""}`).includes(q) || c.id in menuHits),
     );
     const withDistance = filtered.map((cafe) => ({
       cafe,
@@ -135,7 +166,7 @@ export function CafeExplorer({
           ? a.distance - b.distance
           : rank(a.cafe) - rank(b.cafe) || a.cafe.name.localeCompare(b.cafe.name)),
     );
-  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, now, userPos, sponsors]);
+  }, [cafes, includeChains, tagFilter, menuOnly, openOnly, savedOnly, savedIds, query, menuHits, now, userPos, sponsors]);
 
   const visibleCafes = useMemo(() => visible.map((v) => v.cafe), [visible]);
   const selected = visible.find((v) => v.cafe.id === selectedId) ?? null;
@@ -182,6 +213,12 @@ export function CafeExplorer({
       ? dict.home.resultsOne
       : t(dict.home.results, { count: visible.length });
   const mapMode = view === "map";
+  const hitText = (hit: MenuHit) => menuHitText(hit, lang, dict);
+  const noMatch = menuPending
+    ? dict.home.searching
+    : isMenuQuery(trimmed)
+      ? t(dict.home.menuNoMatch, { q: trimmed })
+      : dict.home.noResults;
   // How many of the filtered cafes are on screen right now.
   const inView = bounds
     ? visibleCafes.filter(
@@ -224,11 +261,19 @@ export function CafeExplorer({
                 setView("map");
                 select(id);
               }}
+              onShowAll={() => {
+                setSearchOpen(false);
+                select(null);
+                if (mapMode) requestAnimationFrame(() => mapApi.current?.showAll());
+              }}
+              menuHits={menuHits}
+              hitText={hitText}
               strings={{
                 placeholder: dict.home.search,
                 clear: dict.home.searchClear,
                 open: dict.home.search,
-                noMatch: dict.home.noResults,
+                noMatch,
+                showAll: t(dict.home.searchAll, { count: visible.length }),
               }}
               mobileOpen={searchOpen}
               onMobileOpen={setSearchOpen}
@@ -376,6 +421,21 @@ export function CafeExplorer({
             </p>
           )}
         </div>
+        {trimmed && !searchOpen && (
+          <div className="pointer-events-auto flex w-fit max-w-full items-center rounded-full border border-ember bg-crema/90 pl-3.5 text-sm font-semibold text-ember shadow-sm backdrop-blur sm:hidden">
+            <button type="button" onClick={() => setSearchOpen(true)} className="min-h-9 min-w-0 truncate text-left">
+              “{trimmed}” · {visible.length}
+            </button>
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label={dict.home.searchClear}
+              className="grid size-9 shrink-0 place-items-center"
+            >
+              ✕
+            </button>
+          </div>
+        )}
         {geoMessage && (
           <p className="pointer-events-auto w-fit rounded-full border border-line bg-crema/90 px-3 py-1 text-sm text-mute shadow-sm backdrop-blur">
             {geoMessage}
@@ -566,6 +626,7 @@ export function CafeExplorer({
                   distance={selected.distance}
                   lang={lang}
                   dict={dict}
+                  menuHit={menuHits[selected.cafe.id]}
                 />
               </motion.div>
               <p className="mt-2 flex items-center justify-between gap-3 text-xs text-mute">
@@ -587,7 +648,7 @@ export function CafeExplorer({
           className="flex-1 overflow-y-auto px-4 pb-8"
         >
           {visible.length === 0 ? (
-            <p className="py-10 text-center text-mute">{dict.home.noResults}</p>
+            <p className="py-10 text-center text-mute">{trimmed ? noMatch : dict.home.noResults}</p>
           ) : (
             <ul className="relative mt-3 flex flex-col gap-3">
               <AnimatePresence mode="popLayout">
@@ -608,7 +669,14 @@ export function CafeExplorer({
                       delay: Math.min(i, 8) * 0.035,
                     }}
                   >
-                    <CafeCard cafe={cafe} distance={distance} lang={lang} dict={dict} sponsored={sponsors.has(cafe.slug)} />
+                    <CafeCard
+                      cafe={cafe}
+                      distance={distance}
+                      lang={lang}
+                      dict={dict}
+                      sponsored={sponsors.has(cafe.slug)}
+                      menuHit={menuHits[cafe.id]}
+                    />
                   </motion.li>
                 ))}
               </AnimatePresence>

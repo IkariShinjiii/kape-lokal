@@ -15,6 +15,32 @@ type Props = {
 };
 
 /**
+ * Shrinks a photo in the browser to a JPEG with its longest side at 1600 px.
+ * Returns null when the browser can't read the format (e.g. HEIC on desktop).
+ */
+export async function shrinkPhoto(
+  file: File,
+): Promise<{ file: File; preview: string; note: string } | null> {
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", QUALITY));
+    if (!blob) return null;
+    return {
+      file: new File([blob], file.name.replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" }),
+      preview: URL.createObjectURL(blob),
+      note: `${canvas.width}×${canvas.height}, ${Math.round(blob.size / 1024)} KB`,
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Photo upload that works straight from a phone: the picture is shrunk in the
  * browser (longest side 1600 px, JPEG) before it is sent, so big camera photos
  * fit the 5 MB limit and upload quickly on mobile data.
@@ -31,29 +57,19 @@ export function PhotoUpload({ action, label }: Props) {
     setNote(null);
     if (!file) return setPreview(null);
     setNote("Optimizing…");
-    try {
-      const bitmap = await createImageBitmap(file);
-      const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
-      const canvas = document.createElement("canvas");
-      canvas.width = Math.round(bitmap.width * scale);
-      canvas.height = Math.round(bitmap.height * scale);
-      canvas.getContext("2d")!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-      const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", QUALITY));
-      if (!blob) throw new Error("encode");
-      const small = new File([blob], file.name.replace(/\.\w+$/, "") + ".jpg", { type: "image/jpeg" });
+    const small = await shrinkPhoto(file);
+    if (small) {
       const dt = new DataTransfer();
-      dt.items.add(small);
+      dt.items.add(small.file);
       e.target.files = dt.files;
-      setPreview(URL.createObjectURL(blob));
-      setNote(`${canvas.width}×${canvas.height}, ${Math.round(blob.size / 1024)} KB`);
-      setReady(true);
-    } catch {
-      // The browser can't read this format (e.g. HEIC on desktop): send it as is
-      // and let the server check it.
+      setPreview(small.preview);
+      setNote(small.note);
+    } else {
+      // The browser can't read this format: send it as is and let the server check it.
       setPreview(null);
       setNote("Couldn't shrink this photo here; it will be uploaded as is.");
-      setReady(true);
     }
+    setReady(true);
   }
 
   return (

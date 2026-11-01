@@ -24,5 +24,12 @@ export function directionsUrl({ lat, lng }: LatLng): string {
   return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 }
 
+// The cafe's Google Maps listing, where its star rating and reviews live. Kape
+// Lokal links there instead of copying Google's ratings, which its terms forbid.
+export function googleListingUrl({ name, address }: { name: string; address: string | null }): string {
+  const query = [name, address, "Iloilo City"].filter(Boolean).join(", ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 // Iloilo City center, used when the visitor has not shared their location.
 export const ILOILO_CENTER: LatLng = { lat: 10.7202, lng: 122.5621 };
