@@ -26,7 +26,8 @@
     "searchClear": "Kuhaa ang ginapangita",
     "searchAll": "Tan-awa ang tanan ({count})",
     "menuNoMatch": "Wala pa sang cafe nga may “{q}” sa menu. Ginadugang pa ang mga menu.",
-    "searching": "Ginapangita…"
+    "searching": "Ginapangita…",
+    "savedEmpty": "Wala ka pa sang gin-save. I-tap ang ♡ sa isa ka cafe para i-save ini."
   },
   "filters": {
     "label": "Mga filter",
@@ -104,6 +105,11 @@
     "error": "Wala namon ini mapadala. Palihog tilawi liwat.",
     "limit": "Madamo ka na napadala. Palihog tilawi liwat sa ulihi.",
     "back": "Balik sa mga cafe"
+  },
+  "notFound": {
+    "title": "Wala makita ang pahina",
+    "body": "Wala sa Kape Lokal ining cafe ukon pahina. Basi naglipat ukon nagsira na ini, ukon may sala sa link.",
+    "back": "Balik sa mapa"
   },
   "language": {
     "label": "Lenggwahe",

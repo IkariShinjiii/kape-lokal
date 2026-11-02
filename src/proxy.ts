@@ -24,7 +24,7 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Skip Next internals, API routes, the sign-in callback, files with an
-  // extension (icons, images, map files) and the generated app icons, which
-  // have no extension.
-  matcher: ["/((?!_next|api|auth|app-icon|apple-icon|.*\\..*).*)"],
+  // extension (icons, images, map files), the map's fonts and icons, and the
+  // generated app icons, which have no extension.
+  matcher: ["/((?!_next|api|auth|map-assets|app-icon|apple-icon|.*\\..*).*)"],
 };

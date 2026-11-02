@@ -26,7 +26,8 @@
     "searchClear": "Burahin ang hinahanap",
     "searchAll": "Tingnan lahat ({count})",
     "menuNoMatch": "Wala pang cafe na may “{q}” sa menu. Dinadagdagan pa ang mga menu.",
-    "searching": "Naghahanap…"
+    "searching": "Naghahanap…",
+    "savedEmpty": "Wala ka pang naka-save. I-tap ang ♡ sa isang cafe para i-save ito."
   },
   "filters": {
     "label": "Mga filter",
@@ -104,6 +105,11 @@
     "error": "Hindi namin naipadala iyon. Pakisubukan ulit.",
     "limit": "Ilang mungkahi na ang naipadala mo. Pakisubukan ulit mamaya.",
     "back": "Balik sa mga cafe"
+  },
+  "notFound": {
+    "title": "Hindi makita ang pahina",
+    "body": "Wala sa Kape Lokal ang cafe o pahinang ito. Maaaring lumipat o nagsara na ito, o may mali sa link.",
+    "back": "Bumalik sa mapa"
   },
   "language": {
     "label": "Wika",

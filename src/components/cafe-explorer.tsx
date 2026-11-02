@@ -89,6 +89,10 @@ export function CafeExplorer({
   const [now, setNow] = useState(() => Date.now());
   const { ids: savedIds } = useFavorites();
   const sponsors = useMemo(() => activeSponsorSlugs(), []);
+  // A filter that can't match any cafe stays hidden until one would: no chain
+  // is published yet, and menus are still being added.
+  const anyChain = useMemo(() => cafes.some((c) => c.isChain), [cafes]);
+  const anyMenu = useMemo(() => cafes.some((c) => c.hasMenu), [cafes]);
   const mapApi = useRef<MapApi | null>(null);
   const districtsRef = useRef<HTMLDivElement>(null);
 
@@ -105,16 +109,18 @@ export function CafeExplorer({
     if (!isMenuQuery(trimmed)) return;
     const ctrl = new AbortController();
     const timer = setTimeout(async () => {
+      let hits: Record<string, MenuHit> = {};
       try {
         const res = await fetch(`/api/menu-search?q=${encodeURIComponent(trimmed.toLowerCase())}`, {
           signal: ctrl.signal,
         });
-        if (!res.ok) return;
-        const body = (await res.json()) as { hits: Record<string, MenuHit> };
-        setMenuResult({ q: trimmed, hits: body.hits });
+        if (res.ok) hits = ((await res.json()) as { hits: Record<string, MenuHit> }).hits;
       } catch {
-        // Aborted or offline: the name and address search still works.
+        if (ctrl.signal.aborted) return; // replaced by newer typing
       }
+      // A failed lookup counts as no menu matches, so "Searching…" never sticks.
+      // The name and address search still works.
+      setMenuResult({ q: trimmed, hits });
     }, 250);
     return () => {
       clearTimeout(timer);
@@ -262,9 +268,11 @@ export function CafeExplorer({
         (c) => c.lng >= bounds[0] && c.lat >= bounds[1] && c.lng <= bounds[2] && c.lat <= bounds[3],
       ).length
     : visible.length;
+  // "Saved" with nothing saved says how to save, instead of "no cafes match".
+  const emptyText = savedOnly && savedIds.length === 0 ? dict.home.savedEmpty : dict.home.noResults;
   const mapCount =
     visible.length === 0
-      ? dict.home.noResults
+      ? emptyText
       : inView < visible.length
         ? t(dict.home.inView, { count: inView, total: visible.length })
         : count;
@@ -453,22 +461,26 @@ export function CafeExplorer({
             {dict.filters.saved}
             {savedIds.length > 0 && <span className="tabular-nums text-mute">{savedIds.length}</span>}
           </button>
-          <button
-            type="button"
-            aria-pressed={menuOnly}
-            onClick={() => setMenuOnly((v) => !v)}
-            className={pillClass(menuOnly)}
-          >
-            {dict.filters.menu}
-          </button>
-          <button
-            type="button"
-            aria-pressed={includeChains}
-            onClick={() => setIncludeChains((v) => !v)}
-            className={pillClass(includeChains)}
-          >
-            {dict.filters.chains}
-          </button>
+          {anyMenu && (
+            <button
+              type="button"
+              aria-pressed={menuOnly}
+              onClick={() => setMenuOnly((v) => !v)}
+              className={pillClass(menuOnly)}
+            >
+              {dict.filters.menu}
+            </button>
+          )}
+          {anyChain && (
+            <button
+              type="button"
+              aria-pressed={includeChains}
+              onClick={() => setIncludeChains((v) => !v)}
+              className={pillClass(includeChains)}
+            >
+              {dict.filters.chains}
+            </button>
+          )}
           {!mapMode && (
             <p className="shrink-0 pl-1 text-sm text-mute" aria-live="polite">
               {count}
@@ -702,7 +714,7 @@ export function CafeExplorer({
           className="flex-1 overflow-y-auto px-4 pb-8"
         >
           {visible.length === 0 ? (
-            <p className="py-10 text-center text-mute">{trimmed ? noMatch : dict.home.noResults}</p>
+            <p className="py-10 text-center text-mute">{trimmed ? noMatch : emptyText}</p>
           ) : (
             <ul className="relative mt-3 flex flex-col gap-3">
               <AnimatePresence mode="popLayout">

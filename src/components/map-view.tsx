@@ -102,11 +102,13 @@ function toGeoJson(cafes: Cafe[], selectedId: string | null | undefined) {
 
 function buildStyle(theme: Theme, withLabels: boolean): StyleSpecification {
   const base = layers("protomaps", namedFlavor(theme), withLabels ? { lang: "en" } : undefined);
+  // Label fonts and map icons come through our own /map-assets route, which the
+  // CDN caches. Straight from GitHub they held up the first draw by several seconds.
+  const assets = `${window.location.origin}/map-assets`;
   return {
     version: 8,
-    glyphs:
-      "https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf",
-    sprite: `https://protomaps.github.io/basemaps-assets/sprites/v4/${theme}`,
+    glyphs: `${assets}/fonts/{fontstack}/{range}.pbf`,
+    sprite: `${assets}/sprites/v4/${theme}`,
     sources: {
       protomaps: {
         type: "vector",
@@ -147,6 +149,8 @@ export function MapView({
   // Where the visitor was looking, kept across a theme change (the map is
   // rebuilt with the other style).
   const viewRef = useRef<{ center: [number, number]; zoom: number } | null>(null);
+  // The last shared location the camera flew to, so it flies once per share.
+  const flownToRef = useRef<LatLng | null>(null);
   const [loaded, setLoaded] = useState(false);
   const { theme } = useTheme();
   const colors = PIN_COLORS[theme];
@@ -417,7 +421,8 @@ export function MapView({
     onBoundsRef.current?.(boundsOf(map));
   }, [cafes, selectedId, loaded, userPos, bottomPadding]);
 
-  // Show the visitor and fly to them when they share their location.
+  // Show the visitor and fly to them when they share their location. Only a new
+  // share moves the camera: closing a cafe or switching theme leaves the view alone.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded) return;
@@ -435,16 +440,17 @@ export function MapView({
           ]
         : [],
     });
-    if (userPos) {
+    if (userPos && flownToRef.current !== userPos) {
+      flownToRef.current = userPos;
       fittedRef.current = true;
       map.flyTo({
         center: [userPos.lng, userPos.lat],
         zoom: 15,
-        padding: { bottom: bottomPadding },
+        padding: { bottom: paddingRef.current },
         duration: prefersReducedMotion() ? 0 : undefined,
       });
     }
-  }, [userPos, loaded, bottomPadding]);
+  }, [userPos, loaded]);
 
   // Bring a selected cafe into view above the bottom sheet, close enough that it
   // is out of any bubble.

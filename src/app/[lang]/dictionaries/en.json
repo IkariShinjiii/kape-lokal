@@ -26,7 +26,8 @@
     "searchClear": "Clear search",
     "searchAll": "See all {count}",
     "menuNoMatch": "No cafe lists “{q}” yet. Menus are still being added.",
-    "searching": "Searching…"
+    "searching": "Searching…",
+    "savedEmpty": "Nothing saved yet. Tap ♡ on a cafe to save it."
   },
   "filters": {
     "label": "Filters",
@@ -104,6 +105,11 @@
     "error": "We couldn't send that. Please try again.",
     "limit": "You've sent a few suggestions already. Please try again later.",
     "back": "Back to cafes"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This cafe or page isn't on Kape Lokal. It may have moved or closed, or the link has a typo.",
+    "back": "Back to the map"
   },
   "language": {
     "label": "Language",

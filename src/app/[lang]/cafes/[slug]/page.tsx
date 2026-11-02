@@ -10,6 +10,7 @@ import { MapView } from "@/components/map-view";
 import { ReportForm } from "@/components/report-form";
 import { ChainChip, TagChip } from "@/components/tag-chip";
 import { getCafeBySlug, type MenuItem } from "@/lib/cafes";
+import { facebookUrl, instagramHandle, telHref, websiteLabel, websiteUrl } from "@/lib/contact";
 import { pesoFormat } from "@/lib/format";
 import { directionsUrl, googleListingUrl } from "@/lib/geo";
 import { hasLocale, locales, type Locale } from "@/lib/i18n";
@@ -50,8 +51,13 @@ function cafeJsonLd(cafe: NonNullable<Awaited<ReturnType<typeof getCafeBySlug>>>
     telephone: cafe.phone ?? undefined,
     // Stored hours already use schema.org's "Mo-Fr 08:00-17:00" style.
     openingHours: cafe.hours ? cafe.hours.split(/\s*;\s*/).filter((r) => !/off$/.test(r)) : undefined,
-    sameAs: [cafe.website, cafe.facebook?.startsWith("http") ? cafe.facebook : null].filter(Boolean),
+    sameAs: [websiteUrl(cafe.website), facebookUrl(cafe.facebook), instagramUrl(cafe.instagram)].filter(Boolean),
   };
+}
+
+function instagramUrl(value: string | null): string | null {
+  const handle = instagramHandle(value);
+  return handle ? `https://www.instagram.com/${handle}/` : null;
 }
 
 export default function CafePage({ params }: PageProps<"/[lang]/cafes/[slug]">) {
@@ -84,20 +90,16 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
       ? (cafe.descriptionFil ?? cafe.descriptionEn)
       : (cafe.descriptionEn ?? cafe.descriptionFil);
   const hasMenu = cafe.menuItems.length > 0 || cafe.menuImages.length > 0;
+  const website = websiteUrl(cafe.website);
+  const facebook = facebookUrl(cafe.facebook);
+  const instagram = instagramHandle(cafe.instagram);
+  // Phone numbers open the dialer; the rest open in a new tab.
   const contacts = [
-    cafe.phone && { label: cafe.phone, href: undefined },
-    cafe.website && { label: cafe.website, href: cafe.website },
-    cafe.facebook && {
-      label: "Facebook",
-      href: cafe.facebook.startsWith("http")
-        ? cafe.facebook
-        : `https://facebook.com/${cafe.facebook.replace(/^@/, "")}`,
-    },
-    cafe.instagram && {
-      label: `@${cafe.instagram.replace(/^@/, "")}`,
-      href: `https://instagram.com/${cafe.instagram.replace(/^@/, "")}`,
-    },
-  ].filter(Boolean) as { label: string; href?: string }[];
+    cafe.phone && { label: cafe.phone, href: telHref(cafe.phone), external: false },
+    website && { label: websiteLabel(website), href: website, external: true },
+    facebook && { label: "Facebook", href: facebook, external: true },
+    instagram && { label: `@${instagram}`, href: `https://www.instagram.com/${instagram}/`, external: true },
+  ].filter(Boolean) as { label: string; href: string | null; external: boolean }[];
 
   return (
     <main className="mx-auto flex w-full max-w-xl flex-col gap-6 pb-28">
@@ -259,8 +261,7 @@ async function Detail({ params }: Pick<PageProps<"/[lang]/cafes/[slug]">, "param
                   {c.href ? (
                     <a
                       href={c.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="text-ember underline"
                     >
                       {c.label}
