@@ -253,3 +253,36 @@ Also found: **Kai Royal Cafe (Infante St)**, which was published, is permanently
   - DND Cafe & Restobar's pin moved 756 m to Google's location (413-A Avanceña St, Molo).
   - Several cafes close on Saturday and early on Friday (Le:Félin, Eunisha, Greenhouse). That fits a Sabbath schedule, so those hours were kept.
 - **Totals:** 186 live cafes. 152 have hours, 139 have a phone, and 178 have a Facebook page (about 24 of those pages only give a silhouette, so the card shows the initial).
+
+## Facebook pass (2026-11-02)
+
+Google had no hours for 34 live cafes and no phone for 47. Each of those cafes' own Facebook pages (64 pages) was read for its hours and phone.
+
+- **Rule for hours:** use them only when Facebook says they were updated within the past 2 years and the page's address matches ours. "Always open" was ignored, because Facebook shows it when the owner never set hours.
+- **Hours added (10):**
+  - Amore Coffee. Its pinned post gives the same hours.
+  - Brewing Point
+  - Coffee All Day
+  - Dolce Cafe
+  - Justina's
+  - Kape ni Emman
+  - Kyo Train Cafe
+  - Notepads Cafe
+  - re.al brew café
+  - SunViews Café
+- **Phones added (3):** Boom Coffee, re.al brew café, Umi Coffee.
+- **Address:** Clutch Cafe is "C1 Road, Villa Arevalo", from its own page. It was "Molo, Iloilo City".
+- **Left out, hours too old (3–6 years):** Noble City Café, El-Rae Cafe, Elynna's Cafe, Kabuki Cafe, Kafe Arka, Kaffeine Coffee and Tea, Neighbor Coffee (The Daily Social), Owl's Café, Palpitate Coffee, Rosted Iloilo.
+- **Left out for other reasons:**
+  - Cafe et Al: its page gives a different address in Molo (Maloto Garrison St, South Fundidor).
+  - Garahe Cafe: its page lists Saturday as "8 PM–6 PM".
+  - Branch phones not used where the page belongs to another branch:
+    - 48 Coffee: the page is the Bolilao branch.
+    - Madge Cafe: the page is the La Paz Market branch.
+    - Mauiz Cafe: the page is in Gen. Hughes.
+    - Sa Poste: the page is the Del Carmen St branch.
+    - The Good Locals Co.: the page is the closed Mabini branch.
+- **Leads, still not published:**
+  - Gee's Cafe: the new Google listing (coffee store, no reviews, no address) has a different phone number from the cafe's Facebook page, which still shows the closed Aurora Subdivision address. So it can't yet be confirmed as the same cafe, or as open.
+  - Dulgies Desserts & Cafe: a cake and halo-halo stall at the entrance of Ted's Batchoy on Diversion Rd (Taft North). Nothing on its page or in its one Google review mentions coffee.
+- **Totals:** 186 live cafes. 162 have hours and 142 have a phone.

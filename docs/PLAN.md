@@ -191,8 +191,8 @@ Status as of 2026-10-31 (evening):
 - **Admin:** "Read menu" sends up to 4 menu photos to Claude (claude-opus-5-5, low effort, structured JSON output) and lists the items and prices for checking before they are saved. Needs `ANTHROPIC_API_KEY` in Vercel and `.env.local`; until then the admin page says so. Photo uploads shrink pictures in the browser, so phone photos work. The public forms have a honeypot, a too-fast check, a link limit and database rate limits.
 - **Open items:**
   - Menus: none entered yet, so drink search finds nothing until menus are read in. Add `ANTHROPIC_API_KEY` first.
-  - 34 cafes have no hours on Google; 47 have no phone.
-  - Leads not yet published: Bluejay Coffee and Deli (location unclear), Gee's Cafe, Dulgies Desserts & Cafe.
+  - 24 cafes have no usable hours and 44 have no phone, after checking Google and each cafe's Facebook page (2026-11-02). Ten of the 24 have Facebook hours older than 3 years, which were left out; see `docs/overture-verification-2026-10-30.md`, "Facebook pass".
+  - Leads not yet published: Bluejay Coffee and Deli (location unclear) and Gee's Cafe (new listing unconfirmed). Dulgies Desserts & Cafe was dropped as a dessert stall.
   - Owner claim portal.
   - Sponsor slot: built, empty (`src/lib/sponsors.ts`).
   - Custom domain (set `NEXT_PUBLIC_SITE_URL` once connected).
