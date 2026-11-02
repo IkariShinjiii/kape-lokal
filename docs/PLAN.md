@@ -158,18 +158,20 @@ The `edit_flags` table lets anyone insert a report, so it can be spammed. Before
 - App domain and hosting plan (Vercel free tier is fine to start).
 
 ## Milestones
-Status as of 2026-10-31 (evening):
+Status as of 2026-11-02:
 
 - **Live:** at kape-lokal.vercel.app, deployed automatically from the GitHub main branch.
-- **Cafes:** 186 published. The data comes from:
+- **Cafes:** 219 published: 198 local and 21 chain branches. The data comes from:
   - OpenStreetMap
   - Overture Maps open data (`scripts/overture/`)
   - a district-by-district Google Maps sweep
   
-  Every published cafe was checked open on Google. Closed ones are excluded, never deleted. All 41 exclusions for closure were re-checked on 2026-10-31 (two were wrong and are now live); see `docs/overture-verification-2026-10-30.md`, Round 3.
+  Every published cafe was checked open, on Google or on its own active Facebook page. Closed ones are excluded, never deleted. All 41 exclusions for closure were re-checked on 2026-10-31 (two were wrong and are now live); see `docs/overture-verification-2026-10-30.md`, Round 3.
+
+  On 2026-11-02 all 141 drafts were checked: 33 published, 84 excluded with a reason, and 24 left as drafts with open questions. See that file, "Draft cleanup".
 - **Tags:**
   - 10 specialty cafes and 2 matcha cafes, each with a source in `docs/google-maps-reference.md`.
-  - Chains are hidden unless "Include chains" is on.
+  - Chains are hidden unless "Include chains" is on. The filter appears now that 21 chain branches are live (Starbucks, Coffeebreak, Coffee Bean, Bo's, Seattle's Best, Don Macchiatos, Pickup). Milk tea and donut chains are excluded as not cafes.
 - **Map:**
   - street and district labels, pin clusters
   - a district jump menu, a live "in view" count, zoom and show-all buttons

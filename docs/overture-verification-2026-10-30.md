@@ -286,3 +286,59 @@ Google had no hours for 34 live cafes and no phone for 47. Each of those cafes' 
   - Gee's Cafe: the new Google listing (coffee store, no reviews, no address) has a different phone number from the cafe's Facebook page, which still shows the closed Aurora Subdivision address. So it can't yet be confirmed as the same cafe, or as open.
   - Dulgies Desserts & Cafe: a cake and halo-halo stall at the entrance of Ted's Batchoy on Diversion Rd (Taft North). Nothing on its page or in its one Google review mentions coffee.
 - **Totals:** 186 live cafes. 162 have hours and 142 have a phone.
+
+## Draft cleanup (2026-11-02)
+
+All 141 drafts were checked. Result: 33 published, 84 excluded (with a reason, never deleted), 24 left as drafts.
+
+- **How:**
+  - Local drafts with a Facebook page: each page was read for its type, its address, and the date of its latest post. The date comes from the page's own data: the newest `creation_time`.
+  - The rest were looked up on Google Maps, centered on our pin.
+  - For a Facebook-only cafe, publishing needs all of: the official page of a cafe, a post since August 2026, and an address matching our pin.
+  - A page with no posts since before 2025 counts as likely closed.
+- **Published, local (12):**
+  - 48 Coffee Co. & Yu Chin (Bolilao)
+  - Bean & Tea (Iloilo Doctors)
+  - Coffee Brewtherhood (SM City)
+  - Coffee But Better
+  - Hereafter
+  - MUG Kapeka (Daisue)
+  - OG Kopi
+  - SO Cafe and Bar
+  - Tinukib Café (its own page calls it a café and souvenir shop)
+  - Cravery 2.0 Bite & Brew Haven (moved to Lopez Jaena St, CPU Gate 4; pin from Google)
+  - LaBomba Cafe (pin moved about 4 km to Google's, on Lopez Jaena St, Jaro)
+  - Mac's Garahe (pin moved 1.4 km to Google's, at 1 Baldoza St)
+- **Published, chains (21, shown only with "Include chains"):** each branch is open on Google within 60 m of our pin, and pins were set to Google's.
+  - Starbucks ×6: SM City, SM Southpoint, Atria, One Techno Place, Festive Walk Mall, Robinsons Iloilo.
+  - Coffeebreak ×8: Metro, Avenue, La Paz, Buhang, Mandurriao, NXT Megaworld, NXT SM Southpoint, Elite Festive Walk.
+  - The Coffee Bean & Tea Leaf ×2 (SM Store, Atria), Bo's Coffee ×2 (Robinsons Jaro, Atria), Seattle's Best (SM City), Don Macchiatos (WVSU), Pickup Coffee (Enterprise One).
+- **Hours checked:** hours carried over from OpenStreetMap were checked against Google.
+  - Tinukib was wrong (now Mo-Sa 10:00-19:00).
+  - Coffee Bean SM Store closes at 21:45.
+  - The others matched.
+- **Excluded (84), by reason:**
+  - Duplicates: the second Monkey Grounds point, a stale Madge point, and Jekyll & Hyde (Coffee Degree's secret menu, at the same spot).
+  - Likely closed:
+    - 32 pages had no posts for 1–15 years. Among them are Aldea's, Cafe 604, Chambee, Latte Coffee Cafe ×3, Layag, Le Reve and The Molo Mansion Cafe (VÈLO Bistro now runs Molo Mansion's café).
+    - Kofi & Kompany's page now belongs to a BBQ restaurant.
+    - Garahe ni Panoi's page is gone.
+  - Not a cafe:
+    - catering (BabySam's), a pisonet internet shop (Poste de Gracia), a bar and grill (King's Place), an internet cafe in Bacolod (Zodiacs), a fast-food restaurant (RUSH Cafe)
+    - milk tea chains: Sharetea ×2, Tiger Sugar, Macao Imperial Tea, Kkopi.Tea, Coftea, Cha Tuk Chak, Moonleaf
+    - donut and bakery chains: Dunkin' ×2, J.Co, Mister Donut, JD ×2
+  - Temporarily closed: Panay Grind & Sip.
+  - Not found on Google or Facebook (old OpenStreetMap points, 17): Benito's Place, Café Panay, Café Seoul, Celo, Centrale, Ceylon Coffee Club, Coffee Stroll, David Tea House, De Leonian's Kapehan, Jom's Coffee, K Spice, Kape Benderan, Krema, Newpost, Pie's Surprise, Sailor's Cafe, The Meating Point.
+  - Chain branches Google doesn't have at our pin:
+    - Pickup Coffee ×6, Coffeebreak ×1, Coffee Bean ×1, But First Coffee.
+    - Little Farmers ×2: the SM City listing is permanently closed.
+- **Still drafts (24), and why:**
+  - Facebook active, but the last post is 4–9 months old: Abyan's (Google pin 25 km off), Cafébarn (coffee cart), Café Suville (home-based), Legacy Mansion, Netibo (Google pin 10 km off), Roven Coffee Hub, Sanctis (same address as Roven), Teakoff Café, IHakos Garden Café.
+  - Only an auto-made Facebook page (recent check-ins, no owner page): Black Scoop, Cafe Iloilo (listed as a restaurant), Fuel.ph, Payag, RJ's Kapehan, Solace, Zatassa (Atria), Tinagong Dagat (Sarabia Manor hotel poolside café).
+  - Thin evidence:
+    - Cup Point: 1 follower, and its address is 1.5 km from our pin.
+    - Loco (food park stall).
+    - Papoo, Santé Barley, Taza Verde: 1–3 Google reviews.
+    - StirBear: has its own site.
+  - Xin Café: the Google lookup failed. Retry it.
+- **Totals:** 219 live cafes: 198 local and 21 chains.
