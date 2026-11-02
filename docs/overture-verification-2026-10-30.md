@@ -342,3 +342,20 @@ All 141 drafts were checked. Result: 33 published, 84 excluded (with a reason, n
     - StirBear: has its own site.
   - Xin Café: the Google lookup failed. Retry it.
 - **Totals:** 219 live cafes: 198 local and 21 chains.
+
+### Thin listings rule (2026-11-02, from the owner)
+
+Don't add a cafe whose Facebook page or Google listing has little information. Before publishing, it needs a real address, plus hours or a phone, from its own page or its Google listing, and proof it is open.
+
+- **The 24 leftover drafts:** all excluded with the reason "Not enough information on Facebook or Google".
+- **Hours added to today's 33 additions:**
+  - All 21 chain branches now have Google hours, and some also got a phone.
+  - Bean & Tea, Cravery 2.0, MUG Kapeka and SO Cafe got Facebook hours updated within 2 years.
+  - 48 Coffee Co. (Bolilao), Coffee Brewtherhood (SM City), Hereafter and OG Kopi still have no usable hours. Their Facebook hours are 4–5 years old. They stay listed because each has an address, a phone and recent posts.
+- **New:** Coffeebreak (CPU), on Lopez Jaena St, Jaro. It's on Google with 103 reviews, hours Mo-Su 08:00-23:00 and coffeebreak.ph.
+- **Not added:**
+  - What's Up? (a bar).
+  - Black Cat Cafè: 4 reviews and no phone, and its Facebook address doesn't match Google's.
+  - Wheels & Brews: 3 reviews and no Facebook page.
+  - Coffeebreak Jibao-an and the SM Hypermarket DECA Homes Coffee Break look outside Iloilo City.
+- **Totals:** 220 live cafes: 198 local and 22 chains.

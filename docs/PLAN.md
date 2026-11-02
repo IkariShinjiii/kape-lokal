@@ -161,7 +161,7 @@ The `edit_flags` table lets anyone insert a report, so it can be spammed. Before
 Status as of 2026-11-02:
 
 - **Live:** at kape-lokal.vercel.app, deployed automatically from the GitHub main branch.
-- **Cafes:** 219 published: 198 local and 21 chain branches. The data comes from:
+- **Cafes:** 220 published: 198 local and 22 chain branches. Rule from the owner: a cafe is only added when its Facebook page or Google listing has real details (address plus hours or phone). The data comes from:
   - OpenStreetMap
   - Overture Maps open data (`scripts/overture/`)
   - a district-by-district Google Maps sweep
@@ -171,7 +171,7 @@ Status as of 2026-11-02:
   On 2026-11-02 all 141 drafts were checked: 33 published, 84 excluded with a reason, and 24 left as drafts with open questions. See that file, "Draft cleanup".
 - **Tags:**
   - 10 specialty cafes and 2 matcha cafes, each with a source in `docs/google-maps-reference.md`.
-  - Chains are hidden unless "Include chains" is on. The filter appears now that 21 chain branches are live (Starbucks, Coffeebreak, Coffee Bean, Bo's, Seattle's Best, Don Macchiatos, Pickup). Milk tea and donut chains are excluded as not cafes.
+  - Chains are hidden unless "Include chains" is on. The filter appears now that 22 chain branches are live (Starbucks, Coffeebreak, Coffee Bean, Bo's, Seattle's Best, Don Macchiatos, Pickup). Milk tea and donut chains are excluded as not cafes.
 - **Map:**
   - street and district labels, pin clusters
   - a district jump menu, a live "in view" count, zoom and show-all buttons
